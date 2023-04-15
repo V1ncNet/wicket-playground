@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.apache.wicket.Page;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
+import org.apache.wicket.csp.ContentSecurityPolicySettings;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.context.ApplicationContext;
@@ -33,6 +34,9 @@ public class WicketApplication extends WebApplication implements ApplicationCont
     protected void init() {
         super.init();
 
+        ContentSecurityPolicySettings cspSettings = getCspSettings();
+        configure(cspSettings);
+
         ComponentInstantiationListenerCollection componentInstantiationListeners = getComponentInstantiationListeners();
         configure(componentInstantiationListeners);
 
@@ -45,6 +49,11 @@ public class WicketApplication extends WebApplication implements ApplicationCont
         mountPages();
 
         WicketWebjars.install(this, webjarsSettings);
+    }
+
+    private void configure(ContentSecurityPolicySettings settings) {
+        settings.blocking().strict()
+        ;
     }
 
     private void configure(ComponentInstantiationListenerCollection listeners) {
