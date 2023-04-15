@@ -8,6 +8,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.filter.HeaderResponseContainer;
 import org.apache.wicket.markup.html.TransparentWebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
@@ -64,6 +65,11 @@ public abstract class PlaygroundPage extends WebPage {
 
     protected IModel<?> titleModel() {
         return () -> "Wicket Playground";
+    }
+
+    @Override
+    public void renderHead(IHeaderResponse response) {
+        response.render(PlaygroundCssResourceReference.asHeaderItem());
     }
 
 
