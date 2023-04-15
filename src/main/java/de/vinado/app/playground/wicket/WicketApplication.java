@@ -9,11 +9,14 @@ import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.settings.MarkupSettings;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+
+import java.nio.charset.StandardCharsets;
 
 @Profile("wicket")
 @Component
@@ -34,6 +37,9 @@ public class WicketApplication extends WebApplication implements ApplicationCont
     protected void init() {
         super.init();
 
+        MarkupSettings markupSettings = getMarkupSettings();
+        configure(markupSettings);
+
         ContentSecurityPolicySettings cspSettings = getCspSettings();
         configure(cspSettings);
 
@@ -49,6 +55,12 @@ public class WicketApplication extends WebApplication implements ApplicationCont
         mountPages();
 
         WicketWebjars.install(this, webjarsSettings);
+    }
+
+    private void configure(MarkupSettings settings) {
+        settings.setDefaultMarkupEncoding(StandardCharsets.UTF_8.name());
+        settings.setCompressWhitespace(usesDeploymentConfig());
+        settings.setStripComments(usesDeploymentConfig());
     }
 
     private void configure(ContentSecurityPolicySettings settings) {
