@@ -6,7 +6,10 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.filter.HeaderResponseContainer;
 import org.apache.wicket.markup.html.TransparentWebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.IModel;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import static de.vinado.app.playground.wicket.DefaultJavaScriptFilteredIntoFooterHeaderResponseDecorator.DEFAULT_FOOTER_FILTER_NAME;
@@ -27,6 +30,21 @@ public abstract class PlaygroundPage extends WebPage {
 
     private Component footerBucket(String wicketId) {
         return new HeaderResponseContainer(wicketId, DEFAULT_FOOTER_FILTER_NAME);
+    }
+
+    @Override
+    protected void onBeforeRender() {
+        add(title("title"));
+
+        super.onBeforeRender();
+    }
+
+    private Label title(String wicketId) {
+        return new Label(wicketId, titleModel());
+    }
+
+    protected IModel<?> titleModel() {
+        return () -> "Wicket Playground";
     }
 
 
