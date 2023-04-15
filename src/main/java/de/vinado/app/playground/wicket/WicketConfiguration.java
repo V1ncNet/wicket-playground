@@ -6,6 +6,7 @@ import org.apache.wicket.spring.SpringWebApplicationFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import java.util.EnumSet;
 import javax.servlet.DispatcherType;
@@ -15,6 +16,7 @@ import javax.servlet.ServletContext;
 import static javax.servlet.DispatcherType.*;
 import static org.apache.wicket.protocol.http.WicketFilter.*;
 
+@Profile("wicket")
 @Configuration
 @EnableConfigurationProperties(WicketProperties.class)
 @RequiredArgsConstructor

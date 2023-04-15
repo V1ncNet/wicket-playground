@@ -1,5 +1,7 @@
 spring:
   main.banner-mode: "off"
+  profiles:
+    default: wicket
 
 app:
   wicket:
