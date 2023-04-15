@@ -20,6 +20,10 @@
         <resource.delimiter>^</resource.delimiter>
         <java.version>11</java.version>
 
+        <sass.source.directory>${project.basedir}/src/main/resources/scss</sass.source.directory>
+        <sass.target.directory>${project.build.directory}/generated-sources/src/main/resources/css</sass.target.directory>
+
+        <dependency.sass.version>1.58.3</dependency.sass.version>
         <dependency.wicket.version>9.12.0</dependency.wicket.version>
         <dependency.wicket-webjars.version>3.0.6</dependency.wicket-webjars.version>
         <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
@@ -27,6 +31,8 @@
 
         <webjar.bootstrap.version>5.2.3</webjar.bootstrap.version>
         <webjar.bootstrap-icons.version>1.10.3</webjar.bootstrap-icons.version>
+
+        <plugin.sass.version>1.0.2</plugin.sass.version>
     </properties>
 
     <dependencyManagement>
@@ -134,6 +140,9 @@
             <resource>
                 <filtering>false</filtering>
                 <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/*.scss</exclude>
+                </excludes>
             </resource>
             <resource>
                 <filtering>false</filtering>
@@ -144,6 +153,12 @@
                 <excludes>
                     <exclude>**/*.java</exclude>
                 </excludes>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/generated-sources/src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
             </resource>
         </resources>
         <testResources>
@@ -163,6 +178,16 @@
             </testResource>
         </testResources>
 
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>us.hebi.sass</groupId>
+                    <artifactId>sass-cli-maven-plugin</artifactId>
+                    <version>${plugin.sass.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -174,6 +199,25 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>us.hebi.sass</groupId>
+                <artifactId>sass-cli-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sassVersion>${dependency.sass.version}</sassVersion>
+                    <args>
+                        <arg>--embed-source-map</arg>
+                        <arg>${sass.source.directory}:${sass.target.directory}</arg>
+                    </args>
                 </configuration>
             </plugin>
         </plugins>
