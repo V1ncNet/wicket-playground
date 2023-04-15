@@ -1,5 +1,6 @@
 package de.vinado.app.playground.wicket.navigation;
 
+import de.vinado.app.playground.wicket.image.IconType;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 public class NavigationItem implements Serializable {
 
     Class<? extends Page> page;
+    IconType icon;
     Serializable label;
     PageParameters parameters;
     boolean enabled;
@@ -27,8 +29,14 @@ public class NavigationItem implements Serializable {
 
         private final Class<? extends Page> page;
         private final Serializable label;
+        private IconType icon;
         private PageParameters parameters = new PageParameters();
         private boolean enabled = true;
+
+        public Builder icon(IconType icon) {
+            this.icon = icon;
+            return this;
+        }
 
         public Builder parameters(PageParameters parameters) {
             this.parameters = parameters;
@@ -41,7 +49,7 @@ public class NavigationItem implements Serializable {
         }
 
         public NavigationItem build() {
-            return new NavigationItem(page, label, parameters, enabled);
+            return new NavigationItem(page, icon, label, parameters, enabled);
         }
     }
 }

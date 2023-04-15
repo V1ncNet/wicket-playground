@@ -1,8 +1,10 @@
 package de.vinado.app.playground.wicket.navigation;
 
+import de.vinado.app.playground.wicket.image.Icon;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.IGenericComponent;
 import org.apache.wicket.Page;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border;
@@ -39,6 +41,7 @@ public class Sidebar extends Border implements IGenericComponent<Stream<Navigati
         AbstractItem child = abstractItem(repeater);
 
         child.queue(linkFor("link", item));
+        child.queue(iconFor("icon", item));
         child.queue(labelFor("label", item));
     }
 
@@ -64,6 +67,12 @@ public class Sidebar extends Border implements IGenericComponent<Stream<Navigati
 
     private boolean isActive(NavigationItem item) {
         return Objects.equals(item.getPage(), getPage().getPageClass());
+    }
+
+    private Icon iconFor(String wicketId, NavigationItem item) {
+        Icon icon = new Icon(wicketId, item::getIcon);
+        icon.add(AttributeAppender.append("class", "me-2"));
+        return icon;
     }
 
     private Label labelFor(String wicketId, NavigationItem item) {
