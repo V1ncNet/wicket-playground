@@ -24,7 +24,7 @@ public class WicketConfiguration {
     public static final String APP_ROOT = "/*";
 
     private static final String RUNTIME_CONFIGURATION_PARAM = "configuration";
-    public static final EnumSet<DispatcherType> DISPATCHER_TYPES = EnumSet.of(REQUEST, ERROR, FORWARD, ASYNC);
+    private static final EnumSet<DispatcherType> DISPATCHER_TYPES = EnumSet.of(REQUEST, ERROR, FORWARD, ASYNC);
 
     private final WicketProperties properties;
 
