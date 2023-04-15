@@ -1,6 +1,7 @@
 package de.vinado.app.playground.wicket;
 
 import de.vinado.app.playground.wicket.bootstrap.BootstrapBehavior;
+import de.vinado.app.playground.wicket.navigation.Sidebar;
 import de.vinado.app.playground.wicket.test.SpringEnabledWicketTestCase;
 import org.apache.wicket.markup.html.TransparentWebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -41,5 +42,12 @@ class HomePageTests extends SpringEnabledWicketTestCase {
         tester.startPage(HomePage.class);
 
         tester.assertComponent("title", Label.class);
+    }
+
+    @Test
+    void renderingPage_shouldRenderNavigation() {
+        tester.startPage(HomePage.class);
+
+        tester.assertComponent("navigation", Sidebar.class);
     }
 }
