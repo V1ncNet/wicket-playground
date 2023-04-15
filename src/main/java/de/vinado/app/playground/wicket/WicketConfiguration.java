@@ -2,12 +2,15 @@ package de.vinado.app.playground.wicket;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.wicket.protocol.http.WicketFilter;
+import org.apache.wicket.protocol.ws.javax.JavaxWebSocketFilter;
+import org.apache.wicket.protocol.ws.javax.WicketServerEndpointConfig;
 import org.apache.wicket.spring.SpringWebApplicationFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 import java.util.EnumSet;
 import javax.servlet.DispatcherType;
@@ -30,7 +33,7 @@ public class WicketConfiguration {
 
     @Bean
     public FilterRegistrationBean<WicketFilter> wicketFilter() {
-        WicketFilter filter = new WicketFilter();
+        WicketFilter filter = new JavaxWebSocketFilter();
         FilterRegistrationBean<WicketFilter> registration = new FilterRegistrationBean<>(filter);
         registration.setName("wicket.playground");
         registration.addInitParameter(APP_FACT_PARAM, SpringWebApplicationFactory.class.getName());
@@ -38,7 +41,18 @@ public class WicketConfiguration {
         registration.addInitParameter(FILTER_MAPPING_PARAM, APP_ROOT);
         registration.addInitParameter(RUNTIME_CONFIGURATION_PARAM, properties.getRuntimeConfiguration().name());
         registration.setDispatcherTypes(DISPATCHER_TYPES);
+        registration.setAsyncSupported(true);
         registration.addUrlPatterns(APP_ROOT);
         return registration;
+    }
+
+    @Bean
+    public ServerEndpointExporter serverEndpointExporter() {
+        return new ServerEndpointExporter();
+    }
+
+    @Bean
+    public WicketServerEndpointConfig wicketServerEndpointConfig() {
+        return new WicketServerEndpointConfig();
     }
 }

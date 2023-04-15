@@ -41,6 +41,11 @@
                 <version>${dependency.wicket.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.wicket</groupId>
+                <artifactId>wicket-native-websocket-javax</artifactId>
+                <version>${dependency.wicket.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.yahoo.platform.yui</groupId>
                 <artifactId>yuicompressor</artifactId>
                 <version>${dependency.yuicompressor.version}</version>
@@ -68,6 +73,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.wicket</groupId>
@@ -76,6 +85,10 @@
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-native-websocket-javax</artifactId>
         </dependency>
         <dependency>
             <groupId>com.yahoo.platform.yui</groupId>
