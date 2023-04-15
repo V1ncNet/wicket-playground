@@ -10,6 +10,8 @@ import org.apache.wicket.application.ComponentInstantiationListenerCollection;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
 import org.apache.wicket.markup.html.HeaderResponseDecoratorCollection;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.protocol.ws.WebSocketAwareResourceIsolationRequestCycleListener;
+import org.apache.wicket.request.cycle.RequestCycleListenerCollection;
 import org.apache.wicket.request.resource.caching.NoOpResourceCachingStrategy;
 import org.apache.wicket.settings.DebugSettings;
 import org.apache.wicket.settings.MarkupSettings;
@@ -65,6 +67,9 @@ public class WicketApplication extends WebApplication implements ApplicationCont
         HeaderResponseDecoratorCollection headerResponseDecorators = getHeaderResponseDecorators();
         configure(headerResponseDecorators);
 
+        RequestCycleListenerCollection requestCycleListeners = getRequestCycleListeners();
+        configure(requestCycleListeners);
+
         mountPages();
 
         WicketWebjars.install(this, webjarsSettings);
@@ -111,6 +116,10 @@ public class WicketApplication extends WebApplication implements ApplicationCont
 
     private void configure(HeaderResponseDecoratorCollection decorators) {
         decorators.add(new DefaultJavaScriptFilteredIntoFooterHeaderResponseDecorator());
+    }
+
+    private void configure(RequestCycleListenerCollection listeners) {
+        listeners.add(new WebSocketAwareResourceIsolationRequestCycleListener());
     }
 
     private void mountPages() {
