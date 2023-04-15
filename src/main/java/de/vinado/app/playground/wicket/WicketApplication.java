@@ -10,6 +10,7 @@ import org.apache.wicket.application.ComponentInstantiationListenerCollection;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.settings.MarkupSettings;
+import org.apache.wicket.settings.ResourceSettings;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -52,6 +53,9 @@ public class WicketApplication extends WebApplication implements ApplicationCont
         WebjarsSettings webjarsSettings = getWebjarsSettings();
         configure(webjarsSettings);
 
+        ResourceSettings resourceSettings = getResourceSettings();
+        configure(resourceSettings);
+
         mountPages();
 
         WicketWebjars.install(this, webjarsSettings);
@@ -78,6 +82,10 @@ public class WicketApplication extends WebApplication implements ApplicationCont
 
     private void configure(WebjarsSettings settings) {
         settings.useCdnResources(false);
+    }
+
+    private void configure(ResourceSettings settings) {
+        settings.setResourcePollFrequency(null);
     }
 
     private void mountPages() {
