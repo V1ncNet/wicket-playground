@@ -22,6 +22,8 @@
 
         <dependency.wicket.version>9.12.0</dependency.wicket.version>
         <dependency.wicket-webjars.version>3.0.6</dependency.wicket-webjars.version>
+
+        <webjar.bootstrap.version>5.2.3</webjar.bootstrap.version>
     </properties>
 
     <dependencyManagement>
@@ -40,6 +42,11 @@
                 <groupId>de.agilecoders.wicket.webjars</groupId>
                 <artifactId>wicket-webjars</artifactId>
                 <version>${dependency.wicket-webjars.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>bootstrap</artifactId>
+                <version>${webjar.bootstrap.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -61,6 +68,10 @@
         <dependency>
             <groupId>de.agilecoders.wicket.webjars</groupId>
             <artifactId>wicket-webjars</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
         </dependency>
 
         <dependency>
