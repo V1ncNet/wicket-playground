@@ -9,7 +9,6 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 
-import java.io.Serializable;
 import java.util.Locale;
 
 import static de.vinado.app.playground.wicket.DefaultJavaScriptFilteredIntoFooterHeaderResponseDecorator.DEFAULT_FOOTER_FILTER_NAME;
