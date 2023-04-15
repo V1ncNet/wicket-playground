@@ -54,7 +54,9 @@ public class Sidebar extends Border implements IGenericComponent<Stream<Navigati
         if (isActive(item)) {
             link.add(new AttributeModifier("class", "nav-link active"));
             link.add(new AttributeModifier("aria-current", "page"));
-        } else {
+        } else if (!item.isEnabled()) {
+            link.add(new AttributeModifier("class", "nav-link disabled"));
+        } else if (!isActive(item)) {
             link.add(new AttributeModifier("class", "nav-link link-dark"));
         }
         return link;
