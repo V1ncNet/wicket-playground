@@ -2,8 +2,10 @@ package de.vinado.app.playground.wicket;
 
 import de.agilecoders.wicket.webjars.WicketWebjars;
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
+import de.vinado.app.playground.wicket.bootstrap.BootstrapResourceAppender;
 import lombok.Setter;
 import org.apache.wicket.Page;
+import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
@@ -34,6 +36,9 @@ public class WicketApplication extends WebApplication implements ApplicationCont
         ComponentInstantiationListenerCollection componentInstantiationListeners = getComponentInstantiationListeners();
         configure(componentInstantiationListeners);
 
+        ComponentInitializationListenerCollection componentInitializationListeners = getComponentInitializationListeners();
+        configure(componentInitializationListeners);
+
         WebjarsSettings webjarsSettings = getWebjarsSettings();
         configure(webjarsSettings);
 
@@ -44,6 +49,10 @@ public class WicketApplication extends WebApplication implements ApplicationCont
 
     private void configure(ComponentInstantiationListenerCollection listeners) {
         listeners.add(new SpringComponentInjector(this, applicationContext));
+    }
+
+    private void configure(ComponentInitializationListenerCollection listeners) {
+        listeners.add(new BootstrapResourceAppender());
     }
 
     private void configure(WebjarsSettings settings) {
