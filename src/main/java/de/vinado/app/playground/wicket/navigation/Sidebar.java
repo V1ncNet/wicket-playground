@@ -1,6 +1,7 @@
 package de.vinado.app.playground.wicket.navigation;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.IGenericComponent;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
@@ -9,14 +10,15 @@ import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.model.IModel;
 
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public abstract class Sidebar extends Border {
+public class Sidebar extends Border implements IGenericComponent<Stream<NavigationItem>, Sidebar> {
 
-    public Sidebar(String id) {
-        super(id);
+    public Sidebar(String id, IModel<Stream<NavigationItem>> model) {
+        super(id, model);
     }
 
     @Override
@@ -26,14 +28,12 @@ public abstract class Sidebar extends Border {
         RepeatingView items = items("items");
         addToBorder(items);
 
-        navigationEntries().forEach(item -> add(item, items));
+        getModelObject().forEach(item -> add(item, items));
     }
 
     private RepeatingView items(String wicketId) {
         return new RepeatingView(wicketId);
     }
-
-    protected abstract Stream<NavigationItem> navigationEntries();
 
     private void add(NavigationItem item, RepeatingView repeater) {
         AbstractItem child = abstractItem(repeater);

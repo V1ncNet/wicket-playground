@@ -12,13 +12,7 @@ class SidebarTests extends SpringEnabledWicketTestCase {
 
     @BeforeEach
     void setUp() {
-        sidebar = new Sidebar("sidebar") {
-
-            @Override
-            protected Stream<NavigationItem> navigationEntries() {
-                return Stream.empty();
-            }
-        };
+        sidebar = new Sidebar("sidebar", Stream::empty);
     }
 
     @Test
