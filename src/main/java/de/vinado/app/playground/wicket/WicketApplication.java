@@ -1,5 +1,7 @@
 package de.vinado.app.playground.wicket;
 
+import de.agilecoders.wicket.webjars.WicketWebjars;
+import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
 import lombok.Setter;
 import org.apache.wicket.Page;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
@@ -17,6 +19,9 @@ public class WicketApplication extends WebApplication implements ApplicationCont
     @Setter
     private ApplicationContext applicationContext;
 
+    @Setter
+    private WebjarsSettings webjarsSettings;
+
     @Override
     public Class<? extends Page> getHomePage() {
         return HomePage.class;
@@ -29,13 +34,29 @@ public class WicketApplication extends WebApplication implements ApplicationCont
         ComponentInstantiationListenerCollection componentInstantiationListeners = getComponentInstantiationListeners();
         configure(componentInstantiationListeners);
 
+        WebjarsSettings webjarsSettings = getWebjarsSettings();
+        configure(webjarsSettings);
+
         mountPages();
+
+        WicketWebjars.install(this, webjarsSettings);
     }
 
     private void configure(ComponentInstantiationListenerCollection listeners) {
         listeners.add(new SpringComponentInjector(this, applicationContext));
     }
 
+    private void configure(WebjarsSettings settings) {
+        settings.useCdnResources(false);
+    }
+
     private void mountPages() {
+    }
+
+    public WebjarsSettings getWebjarsSettings() {
+        if (null == webjarsSettings) {
+            webjarsSettings = new WebjarsSettings();
+        }
+        return webjarsSettings;
     }
 }
