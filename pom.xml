@@ -24,11 +24,11 @@
         <sass.target.directory>${project.build.directory}/generated-sources/src/main/resources/css</sass.target.directory>
         <webjars.target.directory>${project.build.directory}/webjars</webjars.target.directory>
 
+        <dependency.closure.version>v20230411</dependency.closure.version>
         <dependency.sass.version>1.58.3</dependency.sass.version>
         <dependency.wicket.version>9.12.0</dependency.wicket.version>
         <dependency.wicket-webjars.version>3.0.6</dependency.wicket-webjars.version>
         <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
-        <dependency.closure.version>v20230411</dependency.closure.version>
 
         <webjar.bootstrap.version>5.2.3</webjar.bootstrap.version>
         <webjar.bootstrap-icons.version>1.10.3</webjar.bootstrap-icons.version>
