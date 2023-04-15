@@ -22,6 +22,7 @@
 
         <sass.source.directory>${project.basedir}/src/main/resources/scss</sass.source.directory>
         <sass.target.directory>${project.build.directory}/generated-sources/src/main/resources/css</sass.target.directory>
+        <webjars.target.directory>${project.build.directory}/webjars</webjars.target.directory>
 
         <dependency.sass.version>1.58.3</dependency.sass.version>
         <dependency.wicket.version>9.12.0</dependency.wicket.version>
@@ -202,6 +203,27 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>org.webjars</groupId>
+                            <artifactId>bootstrap</artifactId>
+                            <outputDirectory>${webjars.target.directory}/bootstrap</outputDirectory>
+                        </artifactItem>
+                    </artifactItems>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>us.hebi.sass</groupId>
                 <artifactId>sass-cli-maven-plugin</artifactId>
                 <executions>
@@ -216,6 +238,7 @@
                     <sassVersion>${dependency.sass.version}</sassVersion>
                     <args>
                         <arg>--embed-source-map</arg>
+                        <arg>--load-path=${webjars.target.directory}/bootstrap/META-INF/resources/webjars/bootstrap/${webjar.bootstrap.version}</arg>
                         <arg>${sass.source.directory}:${sass.target.directory}</arg>
                     </args>
                 </configuration>
