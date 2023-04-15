@@ -8,6 +8,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
+import org.apache.wicket.markup.html.HeaderResponseDecoratorCollection;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.settings.DebugSettings;
 import org.apache.wicket.settings.MarkupSettings;
@@ -60,6 +61,9 @@ public class WicketApplication extends WebApplication implements ApplicationCont
         DebugSettings debugSettings = getDebugSettings();
         configure(debugSettings);
 
+        HeaderResponseDecoratorCollection headerResponseDecorators = getHeaderResponseDecorators();
+        configure(headerResponseDecorators);
+
         mountPages();
 
         WicketWebjars.install(this, webjarsSettings);
@@ -99,6 +103,10 @@ public class WicketApplication extends WebApplication implements ApplicationCont
             settings.setComponentPathAttributeName("data-wicket-path");
             settings.setOutputMarkupContainerClassName(usesDevelopmentConfig());
         }
+    }
+
+    private void configure(HeaderResponseDecoratorCollection decorators) {
+        decorators.add(new DefaultJavaScriptFilteredIntoFooterHeaderResponseDecorator());
     }
 
     private void mountPages() {
