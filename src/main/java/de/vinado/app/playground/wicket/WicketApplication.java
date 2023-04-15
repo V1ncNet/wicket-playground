@@ -10,6 +10,7 @@ import org.apache.wicket.application.ComponentInstantiationListenerCollection;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
 import org.apache.wicket.markup.html.HeaderResponseDecoratorCollection;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.resource.caching.NoOpResourceCachingStrategy;
 import org.apache.wicket.settings.DebugSettings;
 import org.apache.wicket.settings.MarkupSettings;
 import org.apache.wicket.settings.ResourceSettings;
@@ -96,6 +97,7 @@ public class WicketApplication extends WebApplication implements ApplicationCont
         settings.setResourcePollFrequency(null);
         settings.setCssCompressor(new YuiCssCompressor());
         settings.setJavaScriptCompressor(new GoogleClosureJavaScriptCompressor());
+        settings.setCachingStrategy(new NoOpResourceCachingStrategy());
     }
 
     private void configure(DebugSettings settings) {
