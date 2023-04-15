@@ -2,6 +2,7 @@ package de.vinado.app.playground.wicket;
 
 import de.vinado.app.playground.wicket.bootstrap.BootstrapBehavior;
 import de.vinado.app.playground.wicket.test.SpringEnabledWicketTestCase;
+import org.apache.wicket.markup.html.TransparentWebMarkupContainer;
 import org.junit.jupiter.api.Test;
 
 class HomePageTests extends SpringEnabledWicketTestCase {
@@ -25,5 +26,12 @@ class HomePageTests extends SpringEnabledWicketTestCase {
         tester.startPage(HomePage.class);
 
         tester.assertBehavior("", BootstrapBehavior.class);
+    }
+
+    @Test
+    void renderingPage_shouldConfigureHtmlElement() {
+        tester.startPage(HomePage.class);
+
+        tester.assertComponent("html", TransparentWebMarkupContainer.class);
     }
 }
