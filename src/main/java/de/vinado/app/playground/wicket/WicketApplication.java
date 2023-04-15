@@ -3,7 +3,6 @@ package de.vinado.app.playground.wicket;
 import lombok.Setter;
 import org.apache.wicket.Page;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
-import org.apache.wicket.mock.MockHomePage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.context.ApplicationContext;
@@ -20,7 +19,7 @@ public class WicketApplication extends WebApplication implements ApplicationCont
 
     @Override
     public Class<? extends Page> getHomePage() {
-        return MockHomePage.class;
+        return HomePage.class;
     }
 
     @Override
