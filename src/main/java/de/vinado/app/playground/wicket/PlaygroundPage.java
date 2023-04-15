@@ -1,5 +1,6 @@
 package de.vinado.app.playground.wicket;
 
+import de.vinado.app.playground.wicket.bootstrap.icon.Bi;
 import de.vinado.app.playground.wicket.empty.EmptyPage;
 import de.vinado.app.playground.wicket.navigation.NavigationItem;
 import de.vinado.app.playground.wicket.navigation.Sidebar;
@@ -22,8 +23,8 @@ import static de.vinado.app.playground.wicket.JavaScriptFilteredIntoFooterHeader
 public abstract class PlaygroundPage extends WebPage {
 
     public static final NavigationItem[] ITEMS = {
-        NavigationItem.builder(HomePage.class, "Home").build(),
-        NavigationItem.builder(EmptyPage.class, "Empty").build(),
+        NavigationItem.builder(HomePage.class, "Home").icon(Bi.HOUSE).build(),
+        NavigationItem.builder(EmptyPage.class, "Empty").icon(Bi.FILE).build(),
     };
 
     @Override
