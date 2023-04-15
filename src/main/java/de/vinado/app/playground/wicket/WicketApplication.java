@@ -94,6 +94,8 @@ public class WicketApplication extends WebApplication implements ApplicationCont
 
     private void configure(ResourceSettings settings) {
         settings.setResourcePollFrequency(null);
+        settings.setCssCompressor(new YuiCssCompressor());
+        settings.setJavaScriptCompressor(new GoogleClosureJavaScriptCompressor());
     }
 
     private void configure(DebugSettings settings) {

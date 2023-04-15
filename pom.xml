@@ -22,6 +22,8 @@
 
         <dependency.wicket.version>9.12.0</dependency.wicket.version>
         <dependency.wicket-webjars.version>3.0.6</dependency.wicket-webjars.version>
+        <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
+        <dependency.closure.version>v20230411</dependency.closure.version>
 
         <webjar.bootstrap.version>5.2.3</webjar.bootstrap.version>
     </properties>
@@ -37,6 +39,16 @@
                 <groupId>org.apache.wicket</groupId>
                 <artifactId>wicket-spring</artifactId>
                 <version>${dependency.wicket.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yahoo.platform.yui</groupId>
+                <artifactId>yuicompressor</artifactId>
+                <version>${dependency.yuicompressor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.javascript</groupId>
+                <artifactId>closure-compiler-unshaded</artifactId>
+                <version>${dependency.closure.version}</version>
             </dependency>
             <dependency>
                 <groupId>de.agilecoders.wicket.webjars</groupId>
@@ -64,6 +76,14 @@
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.yahoo.platform.yui</groupId>
+            <artifactId>yuicompressor</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.javascript</groupId>
+            <artifactId>closure-compiler-unshaded</artifactId>
         </dependency>
         <dependency>
             <groupId>de.agilecoders.wicket.webjars</groupId>
