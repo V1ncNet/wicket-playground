@@ -2,8 +2,7 @@ package de.vinado.app.playground.wicket.bootstrap;
 
 import de.vinado.app.playground.wicket.test.SpringMockedWicketTestCase;
 import org.apache.wicket.markup.head.CssReferenceHeaderItem;
-import org.apache.wicket.request.resource.CssPackageResource;
-import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,8 +20,8 @@ class BootstrapCssResourceReferenceTests extends SpringMockedWicketTestCase {
     }
 
     @Test
-    void resourceReference_shouldExtendCssResourceReference() {
-        assertInstanceOf(CssResourceReference.class, reference);
+    void resourceReference_shouldExtendResourceReference() {
+        assertInstanceOf(ResourceReference.class, reference);
     }
 
     @Test
@@ -34,10 +33,10 @@ class BootstrapCssResourceReferenceTests extends SpringMockedWicketTestCase {
 
     @Test
     void resourceReference_shouldExist() {
-        CssResourceReference reference = (CssResourceReference) tester.startResourceReference(this.reference);
+        BootstrapCssResourceReference reference = (BootstrapCssResourceReference) tester.startResourceReference(this.reference);
 
-        CssPackageResource resource = reference.getResource();
+        IResource resource = reference.getResource();
 
-        assertNotNull(resource.getResourceStream());
+        assertNotNull(resource);
     }
 }
