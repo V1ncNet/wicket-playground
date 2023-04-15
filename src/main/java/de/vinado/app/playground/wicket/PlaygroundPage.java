@@ -11,7 +11,7 @@ import org.apache.wicket.model.IModel;
 
 import java.util.Locale;
 
-import static de.vinado.app.playground.wicket.DefaultJavaScriptFilteredIntoFooterHeaderResponseDecorator.DEFAULT_FOOTER_FILTER_NAME;
+import static de.vinado.app.playground.wicket.JavaScriptFilteredIntoFooterHeaderResponseDecorator.FILTER_NAME;
 
 public abstract class PlaygroundPage extends WebPage {
 
@@ -28,7 +28,7 @@ public abstract class PlaygroundPage extends WebPage {
     }
 
     private Component footerBucket(String wicketId) {
-        return new HeaderResponseContainer(wicketId, DEFAULT_FOOTER_FILTER_NAME);
+        return new HeaderResponseContainer(wicketId, FILTER_NAME);
     }
 
     @Override

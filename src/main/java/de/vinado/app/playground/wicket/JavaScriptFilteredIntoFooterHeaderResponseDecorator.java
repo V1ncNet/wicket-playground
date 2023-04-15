@@ -4,12 +4,12 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.markup.html.IHeaderResponseDecorator;
 
-public class DefaultJavaScriptFilteredIntoFooterHeaderResponseDecorator implements IHeaderResponseDecorator {
+public class JavaScriptFilteredIntoFooterHeaderResponseDecorator implements IHeaderResponseDecorator {
 
-    public static final String DEFAULT_FOOTER_FILTER_NAME = "wicket-default-footer-filter";
+    public static final String FILTER_NAME = "footer-bucket";
 
     @Override
     public IHeaderResponse decorate(IHeaderResponse response) {
-        return new JavaScriptFilteredIntoFooterHeaderResponse(response, DEFAULT_FOOTER_FILTER_NAME);
+        return new JavaScriptFilteredIntoFooterHeaderResponse(response, FILTER_NAME);
     }
 }

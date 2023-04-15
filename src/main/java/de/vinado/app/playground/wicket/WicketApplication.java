@@ -115,7 +115,7 @@ public class WicketApplication extends WebApplication implements ApplicationCont
     }
 
     private void configure(HeaderResponseDecoratorCollection decorators) {
-        decorators.add(new DefaultJavaScriptFilteredIntoFooterHeaderResponseDecorator());
+        decorators.add(new JavaScriptFilteredIntoFooterHeaderResponseDecorator());
     }
 
     private void configure(RequestCycleListenerCollection listeners) {
