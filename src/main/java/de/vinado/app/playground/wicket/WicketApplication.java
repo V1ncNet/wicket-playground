@@ -3,6 +3,7 @@ package de.vinado.app.playground.wicket;
 import de.agilecoders.wicket.webjars.WicketWebjars;
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
 import de.vinado.app.playground.wicket.bootstrap.BootstrapResourceAppender;
+import de.vinado.app.playground.wicket.empty.EmptyPage;
 import lombok.Setter;
 import org.apache.wicket.Page;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
@@ -123,6 +124,7 @@ public class WicketApplication extends WebApplication implements ApplicationCont
     }
 
     private void mountPages() {
+        mountPage("empty", EmptyPage.class);
     }
 
     public WebjarsSettings getWebjarsSettings() {

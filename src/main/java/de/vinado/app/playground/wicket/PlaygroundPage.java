@@ -1,5 +1,6 @@
 package de.vinado.app.playground.wicket;
 
+import de.vinado.app.playground.wicket.empty.EmptyPage;
 import de.vinado.app.playground.wicket.navigation.NavigationItem;
 import de.vinado.app.playground.wicket.navigation.Sidebar;
 import org.apache.wicket.Component;
@@ -21,6 +22,8 @@ import static de.vinado.app.playground.wicket.JavaScriptFilteredIntoFooterHeader
 public abstract class PlaygroundPage extends WebPage {
 
     public static final NavigationItem[] ITEMS = {
+        NavigationItem.builder(HomePage.class, "Home").build(),
+        NavigationItem.builder(EmptyPage.class, "Empty").build(),
     };
 
     @Override
