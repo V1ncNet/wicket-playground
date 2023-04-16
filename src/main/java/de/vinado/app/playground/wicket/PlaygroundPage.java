@@ -1,5 +1,6 @@
 package de.vinado.app.playground.wicket;
 
+import de.vinado.app.playground.document.presentation.ui.PreviewPage;
 import de.vinado.app.playground.wicket.bootstrap.icon.Bi;
 import de.vinado.app.playground.wicket.empty.EmptyPage;
 import de.vinado.app.playground.wicket.navigation.NavigationItem;
@@ -26,6 +27,7 @@ public abstract class PlaygroundPage extends WebPage {
     public static final NavigationItem[] ITEMS = {
         NavigationItem.builder(HomePage.class, "Home").icon(Bi.HOUSE).build(),
         NavigationItem.builder(EmptyPage.class, "Empty").icon(Bi.FILE).build(),
+        NavigationItem.builder(PreviewPage.class, "Document Preview").icon(Bi.FILETYPE_PDF).build()
     };
 
     @Override
