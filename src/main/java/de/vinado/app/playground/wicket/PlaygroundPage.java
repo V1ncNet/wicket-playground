@@ -6,6 +6,7 @@ import de.vinado.app.playground.wicket.empty.EmptyPage;
 import de.vinado.app.playground.wicket.navigation.NavigationItem;
 import de.vinado.app.playground.wicket.navigation.Sidebar;
 import org.apache.wicket.Component;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -29,13 +30,15 @@ public abstract class PlaygroundPage extends WebPage {
         NavigationItem.builder(PreviewPage.class, "Document Preview").icon(Bi.FILETYPE_PDF).build()
     };
 
+    private Sidebar content;
+
     @Override
     protected void onInitialize() {
         super.onInitialize();
 
-        add(html("html"));
-        add(navigation("navigation"));
-        add(footerBucket("footer-bucket"));
+        super.add(html("html"));
+        super.add(content = navigation("navigation"));
+        super.add(footerBucket("footer-bucket"));
     }
 
     private TransparentWebMarkupContainer html(String wicketId) {
@@ -53,7 +56,7 @@ public abstract class PlaygroundPage extends WebPage {
 
     @Override
     protected void onBeforeRender() {
-        add(title("title"));
+        super.add(title("title"));
 
         super.onBeforeRender();
     }
@@ -71,6 +74,10 @@ public abstract class PlaygroundPage extends WebPage {
         response.render(PlaygroundCssResourceReference.asHeaderItem());
     }
 
+    @Override
+    public MarkupContainer add(Component... children) {
+        return content.add(children);
+    }
 
     private static class HtmlTag extends TransparentWebMarkupContainer {
 
