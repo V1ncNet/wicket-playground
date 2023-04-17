@@ -20,9 +20,9 @@ class PreviewPageTests extends SpringEnabledWicketTestCase {
     }
 
     @Test
-    void renderingPage_shouldNotRenderPreview() {
+    void renderingPage_shouldRenderPreview() {
         tester.startPage(PreviewPage.class);
 
-        tester.assertInvisible("navigation:navigation_body:preview");
+        tester.assertComponent("navigation:navigation_body:preview", MediaViewer.class);
     }
 }
