@@ -81,6 +81,7 @@ public class WicketApplication extends WebApplication implements ApplicationCont
         settings.setDefaultMarkupEncoding(StandardCharsets.UTF_8.name());
         settings.setCompressWhitespace(usesDeploymentConfig());
         settings.setStripComments(usesDeploymentConfig());
+        settings.setStripWicketTags(true);
     }
 
     private void configure(ContentSecurityPolicySettings settings) {
@@ -108,11 +109,9 @@ public class WicketApplication extends WebApplication implements ApplicationCont
     }
 
     private void configure(DebugSettings settings) {
-        if (usesDeploymentConfig()) {
-            settings.setComponentUseCheck(false);
-        } else {
+        if (usesDevelopmentConfig()) {
             settings.setComponentPathAttributeName("data-wicket-path");
-            settings.setOutputMarkupContainerClassName(usesDevelopmentConfig());
+            settings.setOutputMarkupContainerClassName(true);
         }
     }
 
