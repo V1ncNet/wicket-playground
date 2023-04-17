@@ -7,7 +7,6 @@ import de.vinado.app.playground.wicket.navigation.NavigationItem;
 import de.vinado.app.playground.wicket.navigation.Sidebar;
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
-import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.filter.HeaderResponseContainer;
@@ -33,8 +32,6 @@ public abstract class PlaygroundPage extends WebPage {
     @Override
     protected void onInitialize() {
         super.onInitialize();
-
-        add(AttributeAppender.append("class", "container-fluid"));
 
         add(html("html"));
         add(navigation("navigation"));
