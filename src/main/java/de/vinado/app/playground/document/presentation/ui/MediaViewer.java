@@ -15,6 +15,10 @@ public class MediaViewer extends GenericPanel<ViewableDocument> {
         super(id);
     }
 
+    public MediaViewer(String id, IModel<ViewableDocument> model) {
+        super(id, model);
+    }
+
     @Override
     protected void onInitialize() {
         super.onInitialize();
