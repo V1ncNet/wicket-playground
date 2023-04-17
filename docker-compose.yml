@@ -1,0 +1,7 @@
+services:
+  preview:
+    image: vinado/preview-service
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
