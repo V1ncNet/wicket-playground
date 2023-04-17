@@ -24,8 +24,8 @@ import static de.vinado.app.playground.wicket.JavaScriptFilteredIntoFooterHeader
 public abstract class PlaygroundPage extends WebPage {
 
     public static final NavigationItem[] ITEMS = {
+        NavigationItem.builder(PreviewPage.class, "Document Preview").icon(Bi.FILETYPE_PDF).build(),
         NavigationItem.builder(EmptyPage.class, "Empty").icon(Bi.FILE).build(),
-        NavigationItem.builder(PreviewPage.class, "Document Preview").icon(Bi.FILETYPE_PDF).build()
     };
 
     private Sidebar content;

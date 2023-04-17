@@ -37,7 +37,7 @@ public class WicketApplication extends WebApplication implements ApplicationCont
 
     @Override
     public Class<? extends Page> getHomePage() {
-        return EmptyPage.class;
+        return PreviewPage.class;
     }
 
     @Override
@@ -124,6 +124,7 @@ public class WicketApplication extends WebApplication implements ApplicationCont
 
     private void mountPages() {
         mountPage("preview", PreviewPage.class);
+        mountPage("empty", EmptyPage.class);
     }
 
     public WebjarsSettings getWebjarsSettings() {

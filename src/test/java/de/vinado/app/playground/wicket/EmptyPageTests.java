@@ -11,7 +11,7 @@ class EmptyPageTests extends SpringEnabledWicketTestCase {
 
     @Test
     void callingUrl_shouldRenderPage() {
-        tester.executeUrl("/");
+        tester.executeUrl("empty");
 
         tester.assertRenderedPage(EmptyPage.class);
     }
