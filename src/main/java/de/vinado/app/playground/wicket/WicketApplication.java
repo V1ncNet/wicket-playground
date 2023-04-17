@@ -4,7 +4,6 @@ import de.agilecoders.wicket.webjars.WicketWebjars;
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
 import de.vinado.app.playground.document.presentation.ui.PreviewPage;
 import de.vinado.app.playground.wicket.bootstrap.BootstrapResourceAppender;
-import de.vinado.app.playground.wicket.empty.EmptyPage;
 import lombok.Setter;
 import org.apache.wicket.Page;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
@@ -38,7 +37,7 @@ public class WicketApplication extends WebApplication implements ApplicationCont
 
     @Override
     public Class<? extends Page> getHomePage() {
-        return HomePage.class;
+        return EmptyPage.class;
     }
 
     @Override
@@ -124,7 +123,6 @@ public class WicketApplication extends WebApplication implements ApplicationCont
     }
 
     private void mountPages() {
-        mountPage("empty", EmptyPage.class);
         mountPage("preview", PreviewPage.class);
     }
 

@@ -7,46 +7,46 @@ import org.apache.wicket.markup.html.TransparentWebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.junit.jupiter.api.Test;
 
-class HomePageTests extends SpringEnabledWicketTestCase {
+class EmptyPageTests extends SpringEnabledWicketTestCase {
 
     @Test
     void callingUrl_shouldRenderPage() {
         tester.executeUrl("/");
 
-        tester.assertRenderedPage(HomePage.class);
+        tester.assertRenderedPage(EmptyPage.class);
     }
 
     @Test
     void renderingPage_shouldRenderPage() {
-        tester.startPage(HomePage.class);
+        tester.startPage(EmptyPage.class);
 
-        tester.assertRenderedPage(HomePage.class);
+        tester.assertRenderedPage(EmptyPage.class);
     }
 
     @Test
     void renderingPage_shouldApplyBootstrap() {
-        tester.startPage(HomePage.class);
+        tester.startPage(EmptyPage.class);
 
         tester.assertBehavior("", BootstrapBehavior.class);
     }
 
     @Test
     void renderingPage_shouldConfigureHtmlElement() {
-        tester.startPage(HomePage.class);
+        tester.startPage(EmptyPage.class);
 
         tester.assertComponent("html", TransparentWebMarkupContainer.class);
     }
 
     @Test
     void renderingPage_shouldRenderTitle() {
-        tester.startPage(HomePage.class);
+        tester.startPage(EmptyPage.class);
 
         tester.assertComponent("title", Label.class);
     }
 
     @Test
     void renderingPage_shouldRenderNavigation() {
-        tester.startPage(HomePage.class);
+        tester.startPage(EmptyPage.class);
 
         tester.assertComponent("navigation", Sidebar.class);
     }
