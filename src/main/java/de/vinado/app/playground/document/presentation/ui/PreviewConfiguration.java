@@ -1,5 +1,6 @@
 package de.vinado.app.playground.document.presentation.ui;
 
+import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
 import lombok.RequiredArgsConstructor;
 import org.apache.wicket.csp.CSPDirective;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
@@ -15,11 +16,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Configuration
 @EnableConfigurationProperties(PreviewProperties.class)
 @RequiredArgsConstructor
-public class PreviewConfiguration {
+public class PreviewConfiguration implements WicketConfigurer {
 
     private final PreviewProperties properties;
 
     @Autowired
+    @Override
     public void init(WebApplication webApplication) {
         ContentSecurityPolicySettings cspSettings = webApplication.getCspSettings();
         configure(cspSettings);
