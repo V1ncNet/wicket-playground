@@ -26,11 +26,17 @@ public class PreviewConfiguration implements WicketConfigurer {
     public void init(WebApplication webApplication) {
         ContentSecurityPolicySettings cspSettings = webApplication.getCspSettings();
         configure(cspSettings);
+
+        mountPages(webApplication);
     }
 
     private void configure(ContentSecurityPolicySettings settings) {
         settings.blocking()
             .add(CSPDirective.FRAME_SRC, properties.getBaseUrl() + "/");
+    }
+
+    private void mountPages(WebApplication webApplication) {
+        webApplication.mountPage("preview", PreviewPage.class);
     }
 
     @Bean

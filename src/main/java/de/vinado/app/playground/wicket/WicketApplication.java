@@ -82,8 +82,6 @@ public class WicketApplication extends WebApplication implements ApplicationCont
         RequestCycleListenerCollection requestCycleListeners = getRequestCycleListeners();
         configure(requestCycleListeners);
 
-        mountPages();
-
         WicketWebjars.install(this, webjarsSettings);
 
         configurers().forEach(configurer -> configurer.init(this));
@@ -133,11 +131,6 @@ public class WicketApplication extends WebApplication implements ApplicationCont
 
     private void configure(RequestCycleListenerCollection listeners) {
         listeners.add(new WebSocketAwareResourceIsolationRequestCycleListener());
-    }
-
-    private void mountPages() {
-        mountPage("preview", PreviewPage.class);
-        mountPage("empty", EmptyPage.class);
     }
 
     public WebjarsSettings getWebjarsSettings() {

@@ -6,7 +6,9 @@ import de.vinado.app.playground.wicket.test.SpringEnabledWicketTestCase;
 import org.apache.wicket.markup.html.TransparentWebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ContextConfiguration;
 
+@ContextConfiguration(classes = EmptyPageConfiguration.class)
 class EmptyPageTests extends SpringEnabledWicketTestCase {
 
     @Test

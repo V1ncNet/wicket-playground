@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.net.URL;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import java.util.UUID;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
+@ContextConfiguration(classes = PreviewConfiguration.class)
 class PreviewPageTests extends SpringEnabledWicketTestCase {
 
     @MockBean
