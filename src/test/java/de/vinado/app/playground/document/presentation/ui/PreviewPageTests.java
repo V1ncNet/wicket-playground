@@ -1,5 +1,6 @@
 package de.vinado.app.playground.document.presentation.ui;
 
+import de.vinado.app.playground.wicket.navigation.NavigationItemSupplier;
 import de.vinado.app.playground.wicket.test.SpringEnabledWicketTestCase;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.net.URL;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -17,11 +19,15 @@ import static org.mockito.Mockito.*;
 class PreviewPageTests extends SpringEnabledWicketTestCase {
 
     @MockBean
+    private NavigationItemSupplier supplier;
+
+    @MockBean
     private PreviewUrlProvider previewUrlProvider;
 
     @BeforeEach
     @SneakyThrows
     void setUp() {
+        when(supplier.get()).thenAnswer(i -> Stream.empty());
         when(previewUrlProvider.resolve(any())).thenReturn(randomUrl());
     }
 

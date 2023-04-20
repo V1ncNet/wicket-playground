@@ -1,6 +1,9 @@
 package de.vinado.app.playground.document.presentation.ui;
 
+import de.vinado.app.playground.wicket.bootstrap.icon.Bi;
 import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
+import de.vinado.app.playground.wicket.navigation.NavigationItem;
+import de.vinado.app.playground.wicket.navigation.NavigationItemRegistry;
 import lombok.RequiredArgsConstructor;
 import org.apache.wicket.csp.CSPDirective;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
@@ -37,6 +40,11 @@ public class PreviewConfiguration implements WicketConfigurer {
 
     private void mountPages(WebApplication webApplication) {
         webApplication.mountPage("preview", PreviewPage.class);
+    }
+
+    @Override
+    public void addNavigationItems(NavigationItemRegistry registry) {
+        registry.register(NavigationItem.builder(PreviewPage.class, "Document Preview").icon(Bi.FILETYPE_PDF).build());
     }
 
     @Bean

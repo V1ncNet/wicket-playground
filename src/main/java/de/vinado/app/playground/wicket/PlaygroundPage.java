@@ -1,8 +1,7 @@
 package de.vinado.app.playground.wicket;
 
-import de.vinado.app.playground.document.presentation.ui.PreviewPage;
-import de.vinado.app.playground.wicket.bootstrap.icon.Bi;
 import de.vinado.app.playground.wicket.navigation.NavigationItem;
+import de.vinado.app.playground.wicket.navigation.NavigationItemSupplier;
 import de.vinado.app.playground.wicket.navigation.Sidebar;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
@@ -14,8 +13,8 @@ import org.apache.wicket.markup.html.TransparentWebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.stream.Stream;
 
@@ -23,10 +22,8 @@ import static de.vinado.app.playground.wicket.JavaScriptFilteredIntoFooterHeader
 
 public abstract class PlaygroundPage extends WebPage {
 
-    public static final NavigationItem[] ITEMS = {
-        NavigationItem.builder(PreviewPage.class, "Document Preview").icon(Bi.FILETYPE_PDF).build(),
-        NavigationItem.builder(EmptyPage.class, "Empty").icon(Bi.FILE).build(),
-    };
+    @SpringBean
+    private NavigationItemSupplier supplier;
 
     private Sidebar content;
 
@@ -44,7 +41,7 @@ public abstract class PlaygroundPage extends WebPage {
     }
 
     private Sidebar navigation(String wicketId) {
-        IModel<Stream<NavigationItem>> model = () -> Arrays.stream(ITEMS);
+        IModel<Stream<NavigationItem>> model = supplier::get;
         return new Sidebar(wicketId, model);
     }
 
