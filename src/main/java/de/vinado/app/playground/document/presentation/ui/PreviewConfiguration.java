@@ -5,13 +5,15 @@ import lombok.RequiredArgsConstructor;
 import org.apache.wicket.csp.CSPDirective;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @Profile("wicket")
 @Configuration
 @EnableConfigurationProperties(PreviewProperties.class)
@@ -20,7 +22,6 @@ public class PreviewConfiguration implements WicketConfigurer {
 
     private final PreviewProperties properties;
 
-    @Autowired
     @Override
     public void init(WebApplication webApplication) {
         ContentSecurityPolicySettings cspSettings = webApplication.getCspSettings();

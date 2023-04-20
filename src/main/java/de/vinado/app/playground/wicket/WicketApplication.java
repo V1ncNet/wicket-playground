@@ -4,6 +4,7 @@ import de.agilecoders.wicket.webjars.WicketWebjars;
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
 import de.vinado.app.playground.document.presentation.ui.PreviewPage;
 import de.vinado.app.playground.wicket.bootstrap.BootstrapResourceAppender;
+import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
 import lombok.Setter;
 import org.apache.wicket.Page;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
@@ -18,12 +19,16 @@ import org.apache.wicket.settings.DebugSettings;
 import org.apache.wicket.settings.MarkupSettings;
 import org.apache.wicket.settings.ResourceSettings;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @Profile("wicket")
 @Component
@@ -34,6 +39,12 @@ public class WicketApplication extends WebApplication implements ApplicationCont
 
     @Setter
     private WebjarsSettings webjarsSettings;
+
+    private final List<WicketConfigurer> configurers;
+
+    public WicketApplication(@Autowired(required = false) List<WicketConfigurer> configurers) {
+        this.configurers = configurers;
+    }
 
     @Override
     public Class<? extends Page> getHomePage() {
@@ -74,6 +85,8 @@ public class WicketApplication extends WebApplication implements ApplicationCont
         mountPages();
 
         WicketWebjars.install(this, webjarsSettings);
+
+        configurers().forEach(configurer -> configurer.init(this));
     }
 
     private void configure(MarkupSettings settings) {
@@ -132,5 +145,10 @@ public class WicketApplication extends WebApplication implements ApplicationCont
             webjarsSettings = new WebjarsSettings();
         }
         return webjarsSettings;
+    }
+
+    private Stream<WicketConfigurer> configurers() {
+        return Optional.ofNullable(configurers).stream()
+            .flatMap(List::stream);
     }
 }
