@@ -9,6 +9,8 @@ import lombok.Setter;
 import org.apache.wicket.Page;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
+import org.apache.wicket.csp.CSPDirective;
+import org.apache.wicket.csp.CSPDirectiveSrcValue;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
 import org.apache.wicket.markup.html.HeaderResponseDecoratorCollection;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -96,6 +98,7 @@ public class WicketApplication extends WebApplication implements ApplicationCont
 
     private void configure(ContentSecurityPolicySettings settings) {
         settings.blocking().strict()
+            .add(CSPDirective.STYLE_SRC, CSPDirectiveSrcValue.SELF)
         ;
     }
 
