@@ -51,7 +51,7 @@ public class PreviewConfiguration implements WicketConfigurer {
     public PreviewUrlProvider previewUrlProvider() {
         return document -> UriComponentsBuilder.fromHttpUrl(properties.getBaseUrl().toString())
             .path("/preview/pdf")
-            .query("url={url}")
+            .query("uri={uri}")
             .build(document.getUri())
             .toURL();
     }
