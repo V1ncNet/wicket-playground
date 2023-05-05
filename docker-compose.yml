@@ -1,6 +1,6 @@
 services:
   preview:
-    image: vinado/preview-service:0.4.0
+    image: vinado/preview-service:0.4.1
     ports:
       - "3000:3000"
     environment:
