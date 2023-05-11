@@ -21,17 +21,6 @@ public class SecuredConfiguration implements WicketConfigurer {
 
     private static final String PATH = "secured";
 
-    @Bean
-    public SecurityFilterChain securedFilterChain(HttpSecurity http) throws Exception {
-        http.antMatcher("/" + PATH + "/**")
-            .authorizeHttpRequests(authorize -> authorize
-                .anyRequest().authenticated())
-            .oauth2Login()
-        ;
-
-        return http.build();
-    }
-
     @Override
     public void init(WebApplication webApplication) {
         mountPages(webApplication);
@@ -44,5 +33,21 @@ public class SecuredConfiguration implements WicketConfigurer {
     @Override
     public void addNavigationItems(NavigationItemRegistry registry) {
         registry.register(NavigationItem.builder(SecuredPage.class, "Secured").icon(LOCK).build());
+    }
+
+
+    @Configuration
+    static class WebConfiguration {
+
+        @Bean
+        public SecurityFilterChain securedFilterChain(HttpSecurity http) throws Exception {
+            http.antMatcher("/" + PATH + "/**")
+                .authorizeHttpRequests(authorize -> authorize
+                    .anyRequest().authenticated())
+                .oauth2Login()
+            ;
+
+            return http.build();
+        }
     }
 }
