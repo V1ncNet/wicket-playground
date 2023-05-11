@@ -22,9 +22,13 @@ clients, users, their roles and claims for the project.
 
 ### Users
 
-| Username       | Password       | Description            | Realm  | URL                                         |
-|----------------|----------------|------------------------|--------|---------------------------------------------|
-| `landlord`[^1] | `Prop3r7y`[^1] | Keycloak administrator | master | http://localhost:8180/admin/master/console/ |
+Keycloak is preconfigured with a variety of users that are more or less useful. The username-password-combination
+`adult:B4nk` might be the only one you ever need for development and manual testing.
+
+| Username             | Password            | Description            | Realm      | URL                                             |
+|----------------------|---------------------|------------------------|------------|-------------------------------------------------|
+| <mark>`adult`</mark> | <mark>`B4nk`</mark> | Realm superuser        | playground | http://localhost:8180/admin/playground/console/ |
+| `landlord`[^1]       | `Prop3r7y`[^1]      | Keycloak administrator | master     | http://localhost:8180/admin/master/console/     |
 
 [^1]: Corresponds to the values of `KEYCLOAK_ADMIN` and `KEYCLOAK_ADMIN_PASSWORD`, set for Composes' _keycloak-server_.
 

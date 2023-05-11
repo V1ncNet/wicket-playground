@@ -371,6 +371,29 @@
   "webAuthnPolicyPasswordlessCreateTimeout" : 0,
   "webAuthnPolicyPasswordlessAvoidSameAuthenticatorRegister" : false,
   "webAuthnPolicyPasswordlessAcceptableAaguids" : [ ],
+  "users" : [ {
+    "id" : "6fe6dccb-5f67-4810-bad1-923fa13a6f2e",
+    "createdTimestamp" : 1683800159228,
+    "username" : "adult",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "",
+    "lastName" : "",
+    "credentials" : [ {
+      "id" : "01a7ef97-a072-4260-a87e-6163391c4ec8",
+      "type" : "password",
+      "userLabel" : "My password",
+      "createdDate" : 1683800178232,
+      "secretData" : "{\"value\":\"u1i1oSMWaew3ItpggNJ/h0ux1cpf1fSLL97T1tFOFoQ=\",\"salt\":\"3dYMDe6sSb5C1Dcdy9h31w==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-playground" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ],
   "scopeMappings" : [ {
     "clientScope" : "offline_access",
     "roles" : [ "offline_access" ]
