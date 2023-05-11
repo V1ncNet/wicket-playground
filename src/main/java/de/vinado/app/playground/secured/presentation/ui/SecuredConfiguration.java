@@ -1,6 +1,8 @@
 package de.vinado.app.playground.secured.presentation.ui;
 
 import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
+import de.vinado.app.playground.wicket.navigation.NavigationItem;
+import de.vinado.app.playground.wicket.navigation.NavigationItemRegistry;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +11,8 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+
+import static de.vinado.app.playground.wicket.bootstrap.icon.Bi.LOCK;
 
 @Order(Ordered.HIGHEST_PRECEDENCE + 100)
 @Profile("wicket")
@@ -35,5 +39,10 @@ public class SecuredConfiguration implements WicketConfigurer {
 
     private void mountPages(WebApplication webApplication) {
         webApplication.mountPage(PATH, SecuredPage.class);
+    }
+
+    @Override
+    public void addNavigationItems(NavigationItemRegistry registry) {
+        registry.register(NavigationItem.builder(SecuredPage.class, "Secured").icon(LOCK).build());
     }
 }

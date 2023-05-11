@@ -11,6 +11,7 @@ public class Bi extends AbstractIconType {
 
     public static final IconType FILE = new Bi("file");
     public static final IconType FILETYPE_PDF = new Bi("filetype-pdf");
+    public static final IconType LOCK = new Bi("lock");
     public static final IconType HOUSE = new Bi("house");
 
     @Getter(AccessLevel.PROTECTED)
