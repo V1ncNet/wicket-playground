@@ -1,21 +1,15 @@
 package de.vinado.app.playground.security.web.oauth2;
 
-import org.springframework.context.annotation.Bean;
+import de.vinado.app.playground.security.web.WebSecurityConfigurationSupport;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
-public class Oauth2WebSecurityConfiguration {
+public class Oauth2WebSecurityConfiguration extends WebSecurityConfigurationSupport {
 
-    @Bean
-    public SecurityFilterChain rootFilterChain(HttpSecurity http) throws Exception {
-        http.antMatcher("/**")
-            .authorizeHttpRequests(authorize -> authorize
-                .anyRequest().permitAll())
-            .oauth2Login()
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.oauth2Login()
         ;
-
-        return http.build();
     }
 }
