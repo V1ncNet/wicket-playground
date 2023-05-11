@@ -5,6 +5,7 @@ spring.security.oauth2.client:
       user-name-attribute: preferred_username
   registration:
     keycloak:
+      client-name: Keycloak
       client-id: wicket
       client-secret: etgWLsvbyKRdxFXIyeZpWbor99sKjQ42
       authorization-grant-type: authorization_code
