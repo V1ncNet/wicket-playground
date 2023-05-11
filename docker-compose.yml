@@ -5,3 +5,13 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: development
+
+  keycloak-server:
+    image: quay.io/keycloak/keycloak:21.1
+    ports:
+      - "8180:8080"
+    command: |
+      start-dev
+    environment:
+      KEYCLOAK_ADMIN: landlord
+      KEYCLOAK_ADMIN_PASSWORD: Prop3r7y
