@@ -1,5 +1,5 @@
 services:
-  preview:
+  preview-service:
     image: vinado/preview-service:0.4.1
     ports:
       - "3000:3000"
