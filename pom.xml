@@ -273,6 +273,29 @@
                     </args>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <groups>!de.vinado.app.playground.test.LongRunningTests</groups>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>tests-running-long</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <groups>de.vinado.app.playground.test.LongRunningTests</groups>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
