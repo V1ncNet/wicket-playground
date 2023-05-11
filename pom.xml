@@ -26,6 +26,7 @@
 
         <dependency.closure.version>v20230411</dependency.closure.version>
         <dependency.sass.version>1.58.3</dependency.sass.version>
+        <dependency.testcontainers.version>1.18.1</dependency.testcontainers.version>
         <dependency.wicket.version>9.12.0</dependency.wicket.version>
         <dependency.wicket-webjars.version>3.0.6</dependency.wicket-webjars.version>
         <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
@@ -38,6 +39,14 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${dependency.testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.apache.wicket</groupId>
                 <artifactId>wicket-core</artifactId>
@@ -136,6 +145,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
