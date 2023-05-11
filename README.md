@@ -1,6 +1,7 @@
 # Wicket Playground
 
-This project houses some PoC for integrations of frameworks, protocols and 3rd-party service outside the Apache Wicket ecosystem.
+This project houses some PoC for integrations of frameworks, protocols and 3rd-party service outside the Apache Wicket
+ecosystem.
 
 The application provides the following features:
 
