@@ -1,0 +1,11 @@
+spring.security.oauth2.client:
+  provider:
+    keycloak:
+      issuer-uri: http://localhost:8180/realms/playground
+      user-name-attribute: preferred_username
+  registration:
+    keycloak:
+      client-id: wicket
+      client-secret: etgWLsvbyKRdxFXIyeZpWbor99sKjQ42
+      authorization-grant-type: authorization_code
+      scope: openid

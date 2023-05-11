@@ -36,6 +36,7 @@ public class SecuredConfiguration implements WicketConfigurer {
     }
 
 
+    @Profile("oauth2")
     @Configuration
     static class WebConfiguration {
 
