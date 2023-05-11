@@ -10,8 +10,11 @@ services:
     image: quay.io/keycloak/keycloak:21.1
     ports:
       - "8180:8080"
+    volumes:
+      - ./docker/keycloak/provisioning:/opt/keycloak/data/import
     command: |
       start-dev
+      --import-realm
     environment:
       KEYCLOAK_ADMIN: landlord
       KEYCLOAK_ADMIN_PASSWORD: Prop3r7y
