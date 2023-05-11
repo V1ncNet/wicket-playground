@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
@@ -29,8 +30,13 @@ public class Sidebar extends Border implements IGenericComponent<Stream<Navigati
 
         RepeatingView items = items("items");
         addToBorder(items);
+        addToBorder(login("login"));
 
         getModelObject().forEach(item -> add(item, items));
+    }
+
+    private AbstractLink login(String wicketId) {
+        return new ExternalLink(wicketId, "/login", "Login");
     }
 
     private RepeatingView items(String wicketId) {
