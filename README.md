@@ -13,6 +13,10 @@ The application provides the following features:
 * Sass-compiled static resources
 * Render JavaScript resources to footer
 * Wicket test suites
+* OAuth2 secured Wicket page
+* Profile-driven environments
+* Keycloak smoke test
+* Profile-driven test executions
 
 
 ## Keycloak
