@@ -18,3 +18,25 @@ services:
     environment:
       KEYCLOAK_ADMIN: landlord
       KEYCLOAK_ADMIN_PASSWORD: Prop3r7y
+
+  codimd-server:
+    depends_on:
+      - codimd-database
+    image: hackmdio/hackmd:2.4.2
+    ports:
+      - "8280:3000"
+    environment:
+      CMD_USECDN: "false"
+      CMD_AUTO_VERSION_CHECK: "false"
+      CMD_DB_URL: postgres://postgres:BTton2dQ4o9-8m_s@codimd-database/postgres
+      CMD_DEFAULT_PERMISSION: limited
+      CMD_SESSION_SECRET: XWnPHmfLF7zRPTXVZUPF95_h
+      CMD_ALLOW_FREEURL: "true"
+      CMD_IMAGE_UPLOAD_TYPE: filesystem
+      CMD_HSTS_ENABLE: "false"
+      CMD_CSP_ENABLE: "false"
+
+  codimd-database:
+    image: postgres:11.6-alpine
+    environment:
+      POSTGRES_PASSWORD: BTton2dQ4o9-8m_s
