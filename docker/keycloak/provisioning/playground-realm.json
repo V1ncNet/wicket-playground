@@ -378,9 +378,10 @@
     "username" : "adult",
     "enabled" : true,
     "totp" : false,
-    "emailVerified" : false,
-    "firstName" : "",
-    "lastName" : "",
+    "emailVerified" : true,
+    "firstName" : "John",
+    "lastName" : "Doe",
+    "email" : "adult@example.com",
     "credentials" : [ {
       "id" : "01a7ef97-a072-4260-a87e-6163391c4ec8",
       "type" : "password",
@@ -1055,7 +1056,8 @@
       "consentRequired" : false,
       "config" : {
         "id.token.claim" : "true",
-        "access.token.claim" : "true"
+        "access.token.claim" : "true",
+        "userinfo.token.claim" : "true"
       }
     } ]
   }, {
@@ -1075,6 +1077,7 @@
       "consentRequired" : false,
       "config" : {
         "multivalued" : "true",
+        "userinfo.token.claim" : "true",
         "user.attribute" : "foo",
         "id.token.claim" : "true",
         "access.token.claim" : "true",
