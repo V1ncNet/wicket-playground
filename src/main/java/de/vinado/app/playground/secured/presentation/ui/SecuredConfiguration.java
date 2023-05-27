@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import static de.vinado.app.playground.wicket.bootstrap.icon.Bi.LOCK;
 
 @Order(Ordered.HIGHEST_PRECEDENCE + 100)
-@Profile("wicket")
+@Profile("wicket & oauth2")
 @Configuration
 public class SecuredConfiguration implements WicketConfigurer {
 
