@@ -6,6 +6,8 @@ import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
 import de.vinado.app.playground.wicket.navigation.NavigationItem;
 import de.vinado.app.playground.wicket.navigation.NavigationItemRegistry;
 import lombok.RequiredArgsConstructor;
+import org.apache.wicket.csp.CSPDirective;
+import org.apache.wicket.csp.ContentSecurityPolicySettings;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +30,15 @@ public class NoteConfiguration implements WicketConfigurer {
 
     @Override
     public void init(WebApplication webApplication) {
+        ContentSecurityPolicySettings cspSettings = webApplication.getCspSettings();
+        configure(cspSettings);
+
         mountPages(webApplication);
+    }
+
+    private void configure(ContentSecurityPolicySettings settings) {
+        settings.blocking()
+            .add(CSPDirective.FRAME_SRC, getCodiMdBaseUrl() + "/");
     }
 
     private void mountPages(WebApplication webApplication) {
