@@ -6,50 +6,22 @@ services:
     environment:
       NODE_ENV: development
 
-  keycloak-server:
-    image: quay.io/keycloak/keycloak:21.1
-    ports:
-      - "8180:8080"
-    volumes:
-      - ./docker/keycloak/provisioning:/opt/keycloak/data/import
-    command: |
-      start-dev
-      --import-realm
-    environment:
-      KC_HOSTNAME_STRICT: "false"
-      KEYCLOAK_ADMIN: landlord
-      KEYCLOAK_ADMIN_PASSWORD: Prop3r7y
-
   codimd-server:
     depends_on:
       - codimd-database
-      - keycloak-server
     image: hackmdio/hackmd:2.4.2
     ports:
       - "8280:3000"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     environment:
       CMD_USECDN: "false"
       CMD_AUTO_VERSION_CHECK: "false"
       CMD_DB_URL: postgres://postgres:BTton2dQ4o9-8m_s@codimd-database/postgres
-      CMD_ALLOW_ANONYMOUS: "false"
+      CMD_ALLOW_ANONYMOUS: "true"
       CMD_DEFAULT_PERMISSION: limited
       CMD_SESSION_SECRET: XWnPHmfLF7zRPTXVZUPF95_h
       CMD_ALLOW_FREEURL: "true"
       CMD_IMAGE_UPLOAD_TYPE: filesystem
       CMD_EMAIL: "false"
-      CMD_OAUTH2_PROVIDERNAME: Keycloak
-      CMD_OAUTH2_BASEURL: http://host.docker.internal:8180/realms/playground
-      CMD_OAUTH2_CLIENT_ID: codimd
-      CMD_OAUTH2_CLIENT_SECRET: 0iGI3mWUwoBZAZpzEuGjAj0jJzt6YPSo
-      CMD_OAUTH2_SCOPE: openid
-      CMD_OAUTH2_AUTHORIZATION_URL: http://host.docker.internal:8180/realms/playground/protocol/openid-connect/auth
-      CMD_OAUTH2_TOKEN_URL: http://host.docker.internal:8180/realms/playground/protocol/openid-connect/token
-      CMD_OAUTH2_USER_PROFILE_URL: http://host.docker.internal:8180/realms/playground/protocol/openid-connect/userinfo
-      CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR: preferred_username
-      CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR: name
-      CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR: email
       CMD_HSTS_ENABLE: "false"
       CMD_CSP_ENABLE: "false"
 
