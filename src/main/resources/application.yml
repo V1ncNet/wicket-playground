@@ -1,7 +1,7 @@
 spring:
   main.banner-mode: "off"
   profiles:
-    default: wicket,keycloak
+    default: wicket
     group:
       keycloak: oauth2
 

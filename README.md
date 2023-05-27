@@ -21,6 +21,12 @@ The application provides the following features:
 * Social Login for HackMD's CodiMD with Keycloak
 * Embed CodiMD notes in a Wicket page
 
+To enable authentication start the Sprint Boot application with the
+[_Spring profile_](https://docs.spring.io/spring-framework/reference/core/beans/environment.html#beans-definition-profiles-enable)
+`wicket,keycloak` active. To do so, override the `application.yml` or use the runtime property
+`-Dspring.profiles.active=wicket,keycloak`. Also use the corresponding Docker Compose file in addition to the default
+one. Start the entire stack using `docker compose -f docker-compose.yml -f docker-compose.keycloak.yml up -d`.
+
 
 ## Keycloak
 
