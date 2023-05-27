@@ -28,6 +28,8 @@ import java.net.URL;
 @RequiredArgsConstructor
 public class NoteConfiguration implements WicketConfigurer {
 
+    private static final String PATH = "note";
+
     private final NoteProperties properties;
 
     @Override
@@ -44,7 +46,7 @@ public class NoteConfiguration implements WicketConfigurer {
     }
 
     private void mountPages(WebApplication webApplication) {
-        webApplication.mountPage("note", NotePage.class);
+        webApplication.mountPage(PATH, NotePage.class);
     }
 
     @Override
@@ -72,7 +74,7 @@ public class NoteConfiguration implements WicketConfigurer {
 
         @Bean
         public SecurityFilterChain noteFilterChain(HttpSecurity http) throws Exception {
-            http.antMatcher("/note/**")
+            http.antMatcher("/" + PATH + "/**")
                 .authorizeHttpRequests(authorize -> authorize
                     .anyRequest().authenticated())
                 .oauth2Login()
