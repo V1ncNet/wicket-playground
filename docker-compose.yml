@@ -6,15 +6,27 @@ services:
     environment:
       NODE_ENV: development
 
-  keycloak-server:
-    image: quay.io/keycloak/keycloak:21.1
+  codimd-server:
+    depends_on:
+      - codimd-database
+    image: hackmdio/hackmd:2.4.2
     ports:
-      - "8180:8080"
-    volumes:
-      - ./docker/keycloak/provisioning:/opt/keycloak/data/import
-    command: |
-      start-dev
-      --import-realm
+      - "8280:3000"
     environment:
-      KEYCLOAK_ADMIN: landlord
-      KEYCLOAK_ADMIN_PASSWORD: Prop3r7y
+      CMD_USECDN: "false"
+      CMD_AUTO_VERSION_CHECK: "false"
+      CMD_DB_URL: postgres://postgres:BTton2dQ4o9-8m_s@codimd-database/postgres
+      CMD_ALLOW_ANONYMOUS: "true"
+      CMD_DEFAULT_PERMISSION: limited
+      CMD_SESSION_SECRET: XWnPHmfLF7zRPTXVZUPF95_h
+      CMD_ALLOW_GRAVATAR: "false"
+      CMD_ALLOW_FREEURL: "true"
+      CMD_IMAGE_UPLOAD_TYPE: filesystem
+      CMD_EMAIL: "false"
+      CMD_HSTS_ENABLE: "false"
+      CMD_CSP_ENABLE: "false"
+
+  codimd-database:
+    image: postgres:11.6-alpine
+    environment:
+      POSTGRES_PASSWORD: BTton2dQ4o9-8m_s

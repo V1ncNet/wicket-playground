@@ -18,6 +18,14 @@ The application provides the following features:
 * Profile-driven environments
 * Keycloak smoke test
 * Profile-driven test executions
+* Social Login for HackMD's CodiMD with Keycloak
+* Embed CodiMD notes in a Wicket page
+
+To enable authentication start the Sprint Boot application with the
+[_Spring profile_](https://docs.spring.io/spring-framework/reference/core/beans/environment.html#beans-definition-profiles-enable)
+`wicket,keycloak` active. To do so, override the `application.yml` or use the runtime property
+`-Dspring.profiles.active=wicket,keycloak`. Also use the corresponding Docker Compose file in addition to the default
+one. Start the entire stack using `docker compose -f docker-compose.yml -f docker-compose.keycloak.yml up -d`.
 
 
 ## Keycloak
@@ -46,6 +54,39 @@ First, make sure your development stack is up and running. Perform your necessar
 perform the following command. This will start a new Keycloak instance inside the running container.
 
 ```shell
-docker compose exec keycloak-server \
+docker compose -f docker-compose.yml -f docker-compose.keycloak.yml exec keycloak-server \
   /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm playground --users realm_file
 ```
+
+
+## CodiMD Pads
+
+[CodiMD](https://github.com/hackmdio/codimd) is an open-source, collaborative and self-hosted service for managing notes
+in Markdown syntax.
+
+### Without Authentication
+
+Start the application and navigate to `http://localhost:8080/note` to see an embedded CodiMD pad within a Wicket page.
+
+### With Authentication
+
+Unfortunately, the integration into other services and a Docker environment is finicky and has a few caveats and
+potential deal-breaker.
+
+### 1. Hostname
+
+Like any other OAuth2 client, CodiMD needs to know where to find the OAuth2 authorization server, but neither CodiMD nor
+Keycloak separate their configuration endpoints that is easily compatible with a Docker setup. So both services must
+communicate via the _default gateway_ using the `host.docker.internal` hostname. You may have to add the host to you
+`localhost` IP address `127.0.0.1` in `/etc/hosts`.
+
+If anyone has a way to resolve the workaround, feel free to contribute, write an issue or DM me. I'm so desperate for a
+clean and convenient solution. Btw, running the Docker Compose services in network mode `host` is not an option, because
+it defeats the purpose of Docker IMO and doesn't work on macOS anyway.
+
+### 2. SSO
+
+The Wicket page directly reference a note ID. As long as you are not logged in CodiMD will throw an _Internal Server
+Error_ and logs that the URL is not valid. Because of the [first issue](#1-hostname), SSO cannot work unless
+`host.docker.internal` is used everywhere. To work around the issue, navigate to `http://localhost:8280` and login a
+second time. Get back to `http://localhost:8080/note` afterward and reload if you need to.
