@@ -8,6 +8,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import static de.vinado.function.SerializableThrowingFunction.sneaky;
 
@@ -31,6 +32,20 @@ public class CodiMd extends GenericPanel<Note> {
 
     private Iframe pad(String wicketId) {
         return new Iframe(wicketId, getModel());
+    }
+
+    @Override
+    protected void onConfigure() {
+        super.onConfigure();
+
+        setVisible(hasModelObject());
+    }
+
+    private Boolean hasModelObject() {
+        return Optional.ofNullable(getModel())
+            .map(IModel::isPresent)
+            .map(IModel::getObject)
+            .orElse(false);
     }
 
 

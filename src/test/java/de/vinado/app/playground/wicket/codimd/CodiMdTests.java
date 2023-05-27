@@ -33,6 +33,24 @@ class CodiMdTests extends SpringEnabledWicketTestCase {
     }
 
     @Test
+    void startingWithNullModel_shouldNotRenderComponent() {
+        CodiMd panel = new CodiMd(WICKET_ID, null);
+
+        tester.startComponentInPage(panel);
+
+        tester.assertInvisible(WICKET_ID);
+    }
+
+    @Test
+    void startingWithEmptyModel_shouldNotRenderComponent() {
+        CodiMd panel = new CodiMd(WICKET_ID, Model.of());
+
+        tester.startComponentInPage(panel);
+
+        tester.assertInvisible(WICKET_ID);
+    }
+
+    @Test
     void startingWithRandomNoteId_shouldRenderComponent() {
         CodiMd panel = new CodiMd(WICKET_ID, this::randomNote);
 
