@@ -73,7 +73,7 @@ Start the application and navigate to <http://localhost:8080/note> to see an emb
 Unfortunately, the integration into other services and a Docker environment is finicky and has a few caveats and
 potential deal-breaker.
 
-### 1. Hostname
+#### 1. Hostname
 
 Like any other OAuth2 client, CodiMD needs to know where to find the OAuth2 authorization server, but neither CodiMD nor
 Keycloak separate their configuration endpoints that is easily compatible with a Docker setup. So both services must
@@ -84,7 +84,7 @@ If anyone has a way to resolve the workaround, feel free to contribute, write an
 clean and convenient solution. Btw, running the Docker Compose services in network mode `host` is not an option, because
 it defeats the purpose of Docker IMO and doesn't work on macOS anyway.
 
-### 2. SSO
+#### 2. SSO
 
 The Wicket page directly reference a note ID. As long as you are not logged in CodiMD will throw an _Internal Server
 Error_ and logs that the URL is not valid. Because of the [first issue](#1-hostname), SSO cannot work unless
