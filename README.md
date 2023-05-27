@@ -66,7 +66,7 @@ in Markdown syntax.
 
 ### Without Authentication
 
-Start the application and navigate to `http://localhost:8080/note` to see an embedded CodiMD pad within a Wicket page.
+Start the application and navigate to <http://localhost:8080/note> to see an embedded CodiMD pad within a Wicket page.
 
 ### With Authentication
 
@@ -88,5 +88,5 @@ it defeats the purpose of Docker IMO and doesn't work on macOS anyway.
 
 The Wicket page directly reference a note ID. As long as you are not logged in CodiMD will throw an _Internal Server
 Error_ and logs that the URL is not valid. Because of the [first issue](#1-hostname), SSO cannot work unless
-`host.docker.internal` is used everywhere. To work around the issue, navigate to `http://localhost:8280` and login a
-second time. Get back to `http://localhost:8080/note` afterward and reload if you need to.
+`host.docker.internal` is used everywhere. To work around the issue, navigate to <http://localhost:8280> and login a
+second time. Get back to <http://localhost:8080/note> afterward and reload if you need to.
