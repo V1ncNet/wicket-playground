@@ -18,6 +18,8 @@ The application provides the following features:
 * Profile-driven environments
 * Keycloak smoke test
 * Profile-driven test executions
+* Social Login for HackMD's CodiMD with Keycloak
+* Embed CodiMD notes in a Wicket page
 
 
 ## Keycloak
@@ -49,3 +51,11 @@ perform the following command. This will start a new Keycloak instance inside th
 docker compose -f docker-compose.yml -f docker-compose.keycloak.yml exec keycloak-server \
   /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm playground --users realm_file
 ```
+
+
+## CodiMD Pads
+
+[CodiMD](https://github.com/hackmdio/codimd) is an open-source, collaborative and self-hosted service for managing notes
+in Markdown syntax.
+
+Start the application and navigate to `http://localhost:8080/note` to see an embedded CodiMD pad within a Wicket page.
