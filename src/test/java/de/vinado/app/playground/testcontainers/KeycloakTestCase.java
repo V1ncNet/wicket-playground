@@ -27,7 +27,7 @@ public class KeycloakTestCase {
     @Container
     static final KeycloakContainer keycloak = new KeycloakContainer("quay.io/keycloak/keycloak:21.1")
         .withAdminUsername("landlord")
-        .withAdminPassword("dev")
+        .withAdminPassword("Prop3r7y")
         .withRealmImportFile("/" + REALM_NAME + "-realm.json");
 
     protected static String retrieveAccessToken() throws RestClientException {
