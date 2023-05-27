@@ -1,6 +1,7 @@
 package de.vinado.app.playground.note.presentation.ui;
 
 import de.vinado.app.playground.wicket.bootstrap.icon.Bi;
+import de.vinado.app.playground.wicket.codimd.CodiMdUrlProvider;
 import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
 import de.vinado.app.playground.wicket.navigation.NavigationItem;
 import de.vinado.app.playground.wicket.navigation.NavigationItemRegistry;
@@ -34,5 +35,10 @@ public class NoteConfiguration implements WicketConfigurer {
     @Override
     public void addNavigationItems(NavigationItemRegistry registry) {
         registry.register(NavigationItem.builder(NotePage.class, "Notes").icon(Bi.MARKDOWN).build());
+    }
+
+    @Bean
+    public CodiMdUrlProvider codiMdUrlProvider() {
+        return note -> null;
     }
 }
