@@ -13,6 +13,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URL;
 
 @Order(Ordered.HIGHEST_PRECEDENCE + 200)
 @Profile("wicket")
@@ -39,6 +42,14 @@ public class NoteConfiguration implements WicketConfigurer {
 
     @Bean
     public CodiMdUrlProvider codiMdUrlProvider() {
-        return note -> null;
+        return note -> UriComponentsBuilder.fromHttpUrl(getCodiMdBaseUrl().toString())
+            .path("{noteId}")
+            .build(note.getId())
+            .toURL();
+    }
+
+    private URL getCodiMdBaseUrl() {
+        NoteProperties.Codimd codimd = properties.getCodimd();
+        return codimd.getBaseUrl();
     }
 }
