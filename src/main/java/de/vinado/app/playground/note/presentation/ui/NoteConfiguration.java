@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URL;
@@ -61,5 +63,22 @@ public class NoteConfiguration implements WicketConfigurer {
     private URL getCodiMdBaseUrl() {
         NoteProperties.Codimd codimd = properties.getCodimd();
         return codimd.getBaseUrl();
+    }
+
+
+    @Profile("oauth2")
+    @Configuration
+    static class WebConfiguration {
+
+        @Bean
+        public SecurityFilterChain noteFilterChain(HttpSecurity http) throws Exception {
+            http.antMatcher("/note/**")
+                .authorizeHttpRequests(authorize -> authorize
+                    .anyRequest().authenticated())
+                .oauth2Login()
+            ;
+
+            return http.build();
+        }
     }
 }
