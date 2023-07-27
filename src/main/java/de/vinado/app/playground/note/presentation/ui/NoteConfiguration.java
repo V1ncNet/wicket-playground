@@ -21,6 +21,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URL;
 
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
+
 @Order(Ordered.HIGHEST_PRECEDENCE + 200)
 @Profile("wicket")
 @Configuration
@@ -74,7 +76,7 @@ public class NoteConfiguration implements WicketConfigurer {
 
         @Bean
         public SecurityFilterChain noteFilterChain(HttpSecurity http) throws Exception {
-            http.antMatcher("/" + PATH + "/**")
+            http.securityMatcher(antMatcher("/" + PATH + "/**"))
                 .authorizeHttpRequests(authorize -> authorize
                     .anyRequest().authenticated())
                 .oauth2Login()

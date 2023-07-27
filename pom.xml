@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.12</version>
+        <version>3.1.2</version>
         <relativePath/>
     </parent>
 
@@ -18,7 +18,7 @@
 
     <properties>
         <resource.delimiter>^</resource.delimiter>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
 
         <sass.source.directory>${project.basedir}/src/main/resources/scss</sass.source.directory>
         <sass.target.directory>${project.build.directory}/generated-sources/src/main/resources/css</sass.target.directory>
@@ -26,9 +26,8 @@
 
         <dependency.closure.version>v20230502</dependency.closure.version>
         <dependency.sass.version>1.62.1</dependency.sass.version>
-        <dependency.testcontainers.version>1.18.1</dependency.testcontainers.version>
-        <dependency.wicket.version>9.13.0</dependency.wicket.version>
-        <dependency.wicket-webjars.version>3.0.7</dependency.wicket-webjars.version>
+        <dependency.wicket.version>10.0.0-M1</dependency.wicket.version>
+        <dependency.wicket-webjars.version>4.0.0</dependency.wicket-webjars.version>
         <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
 
         <webjar.bootstrap.version>5.2.3</webjar.bootstrap.version>
@@ -41,14 +40,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers-bom</artifactId>
-                <version>${dependency.testcontainers.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
             <dependency>
                 <groupId>org.apache.wicket</groupId>
                 <artifactId>wicket-core</artifactId>
@@ -137,6 +128,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
@@ -144,6 +140,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-testcontainers</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

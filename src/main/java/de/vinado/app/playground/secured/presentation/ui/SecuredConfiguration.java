@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static de.vinado.app.playground.wicket.bootstrap.icon.Bi.LOCK;
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @Order(Ordered.HIGHEST_PRECEDENCE + 100)
 @Profile("wicket & oauth2")
@@ -42,7 +43,7 @@ public class SecuredConfiguration implements WicketConfigurer {
 
         @Bean
         public SecurityFilterChain securedFilterChain(HttpSecurity http) throws Exception {
-            http.antMatcher("/" + PATH + "/**")
+            http.securityMatcher(antMatcher("/" + PATH + "/**"))
                 .authorizeHttpRequests(authorize -> authorize
                     .anyRequest().authenticated())
                 .oauth2Login()

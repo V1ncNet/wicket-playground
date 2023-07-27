@@ -1,5 +1,6 @@
 package de.vinado.app.playground.wicket;
 
+import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.spring.SpringWebApplicationFactory;
@@ -10,9 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import java.util.EnumSet;
-import javax.servlet.DispatcherType;
 
-import static javax.servlet.DispatcherType.*;
+import static jakarta.servlet.DispatcherType.*;
 import static org.apache.wicket.protocol.http.WicketFilter.*;
 
 @Profile("wicket")
