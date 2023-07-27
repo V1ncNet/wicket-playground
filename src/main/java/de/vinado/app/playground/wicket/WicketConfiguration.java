@@ -2,15 +2,12 @@ package de.vinado.app.playground.wicket;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.wicket.protocol.http.WicketFilter;
-import org.apache.wicket.protocol.ws.javax.JavaxWebSocketFilter;
-import org.apache.wicket.protocol.ws.javax.WicketServerEndpointConfig;
 import org.apache.wicket.spring.SpringWebApplicationFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 import java.util.EnumSet;
 import javax.servlet.DispatcherType;
@@ -27,13 +24,13 @@ public class WicketConfiguration {
     public static final String APP_ROOT = "/*";
 
     private static final String RUNTIME_CONFIGURATION_PARAM = "configuration";
-    private static final EnumSet<DispatcherType> DISPATCHER_TYPES = EnumSet.of(REQUEST, ERROR, FORWARD, ASYNC);
+    private static final EnumSet<DispatcherType> DISPATCHER_TYPES = EnumSet.of(REQUEST, ERROR, FORWARD);
 
     private final WicketProperties properties;
 
     @Bean
     public FilterRegistrationBean<WicketFilter> wicketFilter() {
-        WicketFilter filter = new JavaxWebSocketFilter();
+        WicketFilter filter = new WicketFilter();
         FilterRegistrationBean<WicketFilter> registration = new FilterRegistrationBean<>(filter);
         registration.setName("wicket.playground");
         registration.addInitParameter(APP_FACT_PARAM, SpringWebApplicationFactory.class.getName());
@@ -44,15 +41,5 @@ public class WicketConfiguration {
         registration.setAsyncSupported(true);
         registration.addUrlPatterns(APP_ROOT);
         return registration;
-    }
-
-    @Bean
-    public ServerEndpointExporter serverEndpointExporter() {
-        return new ServerEndpointExporter();
-    }
-
-    @Bean
-    public WicketServerEndpointConfig wicketServerEndpointConfig() {
-        return new WicketServerEndpointConfig();
     }
 }
