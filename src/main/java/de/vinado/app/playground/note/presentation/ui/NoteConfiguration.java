@@ -15,11 +15,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URL;
+
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @Order(Ordered.HIGHEST_PRECEDENCE + 200)
 @Profile("wicket")
@@ -74,10 +77,10 @@ public class NoteConfiguration implements WicketConfigurer {
 
         @Bean
         public SecurityFilterChain noteFilterChain(HttpSecurity http) throws Exception {
-            http.antMatcher("/" + PATH + "/**")
+            http.securityMatcher(antMatcher("/" + PATH + "/**"))
                 .authorizeHttpRequests(authorize -> authorize
                     .anyRequest().authenticated())
-                .oauth2Login()
+                .oauth2Login(Customizer.withDefaults())
             ;
 
             return http.build();

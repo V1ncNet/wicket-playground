@@ -14,8 +14,6 @@ import org.apache.wicket.csp.CSPDirectiveSrcValue;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
 import org.apache.wicket.markup.html.HeaderResponseDecoratorCollection;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.protocol.ws.WebSocketAwareResourceIsolationRequestCycleListener;
-import org.apache.wicket.request.cycle.RequestCycleListenerCollection;
 import org.apache.wicket.request.resource.caching.NoOpResourceCachingStrategy;
 import org.apache.wicket.settings.DebugSettings;
 import org.apache.wicket.settings.MarkupSettings;
@@ -81,9 +79,6 @@ public class WicketApplication extends WebApplication implements ApplicationCont
         HeaderResponseDecoratorCollection headerResponseDecorators = getHeaderResponseDecorators();
         configure(headerResponseDecorators);
 
-        RequestCycleListenerCollection requestCycleListeners = getRequestCycleListeners();
-        configure(requestCycleListeners);
-
         WicketWebjars.install(this, webjarsSettings);
 
         configurers().forEach(configurer -> configurer.init(this));
@@ -130,10 +125,6 @@ public class WicketApplication extends WebApplication implements ApplicationCont
 
     private void configure(HeaderResponseDecoratorCollection decorators) {
         decorators.add(new JavaScriptFilteredIntoFooterHeaderResponseDecorator());
-    }
-
-    private void configure(RequestCycleListenerCollection listeners) {
-        listeners.add(new WebSocketAwareResourceIsolationRequestCycleListener());
     }
 
     public WebjarsSettings getWebjarsSettings() {
