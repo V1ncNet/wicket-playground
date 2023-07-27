@@ -9,7 +9,7 @@ services:
       start-dev
       --import-realm
     environment:
-      KC_HOSTNAME_STRICT: "false"
+      KC_HOSTNAME_STRICT: 'false'
       KEYCLOAK_ADMIN: landlord
       KEYCLOAK_ADMIN_PASSWORD: Prop3r7y
 
@@ -20,7 +20,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
-      CMD_ALLOW_ANONYMOUS: "false"
+      CMD_ALLOW_ANONYMOUS: 'false'
       CMD_OAUTH2_PROVIDERNAME: Keycloak
       CMD_OAUTH2_BASEURL: http://host.docker.internal:8180/realms/playground
       CMD_OAUTH2_CLIENT_ID: codimd
