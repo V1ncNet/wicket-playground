@@ -5,13 +5,19 @@ services:
       - "8180:8080"
     volumes:
       - ./docker/keycloak/provisioning:/opt/keycloak/data/import
+      - ./docker/keycloak/healthcheck.sh:/opt/keycloak/healthcheck.sh
     command: |
       start-dev
       --import-realm
     environment:
       KC_HOSTNAME_STRICT: 'false'
+      KC_HEALTH_ENABLED: 'true'
       KEYCLOAK_ADMIN: landlord
       KEYCLOAK_ADMIN_PASSWORD: Prop3r7y
+    healthcheck:
+      test: ["CMD", "bash", "/opt/keycloak/healthcheck.sh"]
+      interval: 10s
+      start_period: 30s
 
   codimd-server:
     depends_on:
