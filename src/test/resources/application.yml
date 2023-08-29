@@ -1,5 +1,8 @@
 spring:
   main.banner-mode: "off"
+  profiles:
+    group:
+      keycloak: oauth2
 
 app:
   wicket:
@@ -8,3 +11,7 @@ app:
   document:
     preview:
       base-url: http://localhost:3000
+
+  note:
+    codimd:
+      base-url: http://localhost:8280
