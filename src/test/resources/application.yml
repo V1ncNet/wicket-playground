@@ -8,3 +8,5 @@ app:
   document:
     preview:
       base-url: http://localhost:3000
+
+zeebe.client.enabled: false
