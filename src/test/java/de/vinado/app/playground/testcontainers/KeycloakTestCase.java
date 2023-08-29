@@ -25,7 +25,7 @@ public class KeycloakTestCase {
     static final String SCOPE = "openid";
 
     @Container
-    static final KeycloakContainer keycloak = new KeycloakContainer("quay.io/keycloak/keycloak:21.1")
+    static final KeycloakContainer keycloak = new KeycloakContainer("quay.io/keycloak/keycloak:22.0")
         .withAdminUsername("landlord")
         .withAdminPassword("Prop3r7y")
         .withRealmImportFile("/" + REALM_NAME + "-realm.json");

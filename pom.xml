@@ -33,7 +33,7 @@
         <webjar.bootstrap.version>5.2.3</webjar.bootstrap.version>
         <webjar.bootstrap-icons.version>1.10.5</webjar.bootstrap-icons.version>
 
-        <testcontainer.keycloak.version>2.5.0</testcontainer.keycloak.version>
+        <testcontainer.keycloak.version>3.0.0</testcontainer.keycloak.version>
 
         <plugin.sass.version>1.0.3</plugin.sass.version>
     </properties>
