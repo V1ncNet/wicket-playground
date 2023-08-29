@@ -2,8 +2,8 @@ services:
   zeebe:
     image: camunda/zeebe:8.2.12
     ports:
-      - "26500:26500"
-      - "9600:9600"
+      - "8381:26500"
+      - "8380:9600"
     environment:
       ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_CLASSNAME: io.camunda.zeebe.exporter.ElasticsearchExporter
       ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_ARGS_URL: http://elasticsearch:9200
