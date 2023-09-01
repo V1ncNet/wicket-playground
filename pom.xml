@@ -31,6 +31,7 @@
         <dependency.wicket-webjars.version>4.0.0</dependency.wicket-webjars.version>
         <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
 
+        <convergence.protobuf.version>3.22.3</convergence.protobuf.version>
         <convergence.zeebe-client.version>8.2.12</convergence.zeebe-client.version>
 
         <webjar.bootstrap.version>5.2.3</webjar.bootstrap.version>
@@ -72,6 +73,11 @@
                 <groupId>org.webjars</groupId>
                 <artifactId>bootstrap</artifactId>
                 <version>${webjar.bootstrap.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>${convergence.protobuf.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars.npm</groupId>
