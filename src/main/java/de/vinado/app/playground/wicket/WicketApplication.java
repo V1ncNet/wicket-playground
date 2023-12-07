@@ -94,6 +94,7 @@ public class WicketApplication extends WebApplication implements ApplicationCont
     private void configure(ContentSecurityPolicySettings settings) {
         settings.blocking().strict()
             .add(CSPDirective.STYLE_SRC, CSPDirectiveSrcValue.SELF)
+            .add(CSPDirective.IMG_SRC, "data:")
         ;
     }
 
