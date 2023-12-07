@@ -32,6 +32,7 @@ public abstract class PlaygroundPage extends WebPage {
         super.onInitialize();
 
         super.add(html("html"));
+        super.add(title("title"));
         super.add(content = navigation("navigation"));
         super.add(footerBucket("footer-bucket"));
     }
@@ -47,13 +48,6 @@ public abstract class PlaygroundPage extends WebPage {
 
     private Component footerBucket(String wicketId) {
         return new HeaderResponseContainer(wicketId, FILTER_NAME);
-    }
-
-    @Override
-    protected void onBeforeRender() {
-        super.add(title("title"));
-
-        super.onBeforeRender();
     }
 
     private Label title(String wicketId) {
