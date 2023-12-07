@@ -10,7 +10,8 @@ public class WebSecurityConfigurationSupport {
 
     @Bean
     public SecurityFilterChain rootFilterChain(HttpSecurity http) throws Exception {
-        http.securityMatcher(antMatcher("/**"))
+        http
+            .securityMatcher(antMatcher("/**"))
             .authorizeHttpRequests(authorize -> authorize
                 .anyRequest().permitAll())
         ;
