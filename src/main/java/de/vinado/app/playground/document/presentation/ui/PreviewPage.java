@@ -13,7 +13,7 @@ public class PreviewPage extends PlaygroundPage {
     protected void onInitialize() {
         super.onInitialize();
 
-        add(preview("preview"));
+        queue(preview("preview"));
     }
 
     private MediaViewer preview(String wicketId) {

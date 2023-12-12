@@ -15,7 +15,7 @@ public class NotePage extends PlaygroundPage {
     protected void onInitialize() {
         super.onInitialize();
 
-        add(codiMd("codiMd"));
+        queue(codiMd("codiMd"));
     }
 
     private CodiMd codiMd(String wicketId) {
