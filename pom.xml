@@ -24,11 +24,15 @@
         <sass.target.directory>${project.build.directory}/generated-sources/src/main/resources/css</sass.target.directory>
         <webjars.target.directory>${project.build.directory}/webjars</webjars.target.directory>
 
+        <dependency.camunda.version>8.2.4</dependency.camunda.version>
         <dependency.closure.version>v20230502</dependency.closure.version>
         <dependency.sass.version>1.62.1</dependency.sass.version>
         <dependency.wicket.version>10.0.0-M1</dependency.wicket.version>
         <dependency.wicket-webjars.version>4.0.0</dependency.wicket-webjars.version>
         <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
+
+        <convergence.protobuf.version>3.22.3</convergence.protobuf.version>
+        <convergence.zeebe-client.version>8.2.12</convergence.zeebe-client.version>
 
         <webjar.bootstrap.version>5.2.3</webjar.bootstrap.version>
         <webjar.bootstrap-icons.version>1.10.5</webjar.bootstrap-icons.version>
@@ -71,9 +75,29 @@
                 <version>${webjar.bootstrap.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>${convergence.protobuf.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.webjars.npm</groupId>
                 <artifactId>bootstrap-icons</artifactId>
                 <version>${webjar.bootstrap-icons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.camunda</groupId>
+                <artifactId>zeebe-client-java</artifactId>
+                <version>${convergence.zeebe-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.camunda.spring</groupId>
+                <artifactId>spring-boot-starter-camunda</artifactId>
+                <version>${dependency.camunda.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.camunda.spring</groupId>
+                <artifactId>spring-boot-starter-camunda-test</artifactId>
+                <version>${dependency.camunda.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.dasniko</groupId>
@@ -122,6 +146,10 @@
             <artifactId>bootstrap-icons</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.camunda.spring</groupId>
+            <artifactId>spring-boot-starter-camunda</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.github.dasniko</groupId>
             <artifactId>testcontainers-keycloak</artifactId>
             <scope>test</scope>
@@ -136,6 +164,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.camunda.spring</groupId>
+            <artifactId>spring-boot-starter-camunda-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

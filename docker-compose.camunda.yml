@@ -1,0 +1,6 @@
+services:
+  zeebe:
+    image: camunda/zeebe:8.2.12
+    ports:
+      - "8381:26500"
+      - "8380:9600"
