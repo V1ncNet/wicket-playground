@@ -8,6 +8,8 @@ app:
   wicket:
     playground:
       runtime-configuration: DEVELOPMENT
+    bootstrap:
+      runtime-configuration: DEPLOYMENT
 
   document:
     preview:

@@ -9,6 +9,8 @@ app:
   wicket:
     playground:
       runtime-configuration: DEPLOYMENT
+    bootstrap:
+      runtime-configuration: DEPLOYMENT
 
   document:
     preview:
