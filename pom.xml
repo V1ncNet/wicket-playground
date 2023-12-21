@@ -27,7 +27,7 @@
         <dependency.camunda.version>8.2.4</dependency.camunda.version>
         <dependency.closure.version>v20230502</dependency.closure.version>
         <dependency.sass.version>1.62.1</dependency.sass.version>
-        <dependency.wicket.version>10.0.0-M1</dependency.wicket.version>
+        <dependency.wicket.version>10.1.0</dependency.wicket.version>
         <dependency.wicket-webjars.version>4.0.0</dependency.wicket-webjars.version>
         <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
 
@@ -52,6 +52,11 @@
             <dependency>
                 <groupId>org.apache.wicket</groupId>
                 <artifactId>wicket-spring</artifactId>
+                <version>${dependency.wicket.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.wicket</groupId>
+                <artifactId>wicket-tester</artifactId>
                 <version>${dependency.wicket.version}</version>
             </dependency>
             <dependency>
@@ -148,6 +153,11 @@
         <dependency>
             <groupId>io.camunda.spring</groupId>
             <artifactId>spring-boot-starter-camunda</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-tester</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.github.dasniko</groupId>
