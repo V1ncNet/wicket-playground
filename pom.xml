@@ -28,14 +28,14 @@
         <dependency.closure.version>v20230502</dependency.closure.version>
         <dependency.sass.version>1.62.1</dependency.sass.version>
         <dependency.wicket.version>10.0.0-M2</dependency.wicket.version>
-        <dependency.wicket-webjars.version>4.0.0</dependency.wicket-webjars.version>
+        <dependency.wicket-webjars.version>4.0.1</dependency.wicket-webjars.version>
         <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
 
         <convergence.protobuf.version>3.22.3</convergence.protobuf.version>
         <convergence.zeebe-client.version>8.2.12</convergence.zeebe-client.version>
 
-        <webjar.bootstrap.version>5.2.3</webjar.bootstrap.version>
-        <webjar.bootstrap-icons.version>1.10.5</webjar.bootstrap-icons.version>
+        <webjar.bootstrap.version>5.3.2</webjar.bootstrap.version>
+        <webjar.bootstrap-icons.version>1.11.2</webjar.bootstrap-icons.version>
 
         <testcontainer.keycloak.version>3.0.0</testcontainer.keycloak.version>
 
