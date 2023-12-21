@@ -31,7 +31,7 @@ public abstract class PlaygroundPage extends WebPage {
     private final WebMarkupContainer content;
 
     public PlaygroundPage() {
-        this.content = navigation("navigation");
+        this.content = content("content");
     }
 
     @Override
@@ -44,20 +44,20 @@ public abstract class PlaygroundPage extends WebPage {
         add(footerBucket("footer-bucket"));
     }
 
-    private TransparentWebMarkupContainer html(String wicketId) {
+    protected TransparentWebMarkupContainer html(String wicketId) {
         return new HtmlTag(wicketId);
     }
 
-    private Sidebar navigation(String wicketId) {
+    protected WebMarkupContainer content(String wicketId) {
         IModel<Stream<NavigationItem>> model = supplier::get;
         return new Sidebar(wicketId, model);
     }
 
-    private Component footerBucket(String wicketId) {
+    protected Component footerBucket(String wicketId) {
         return new HeaderResponseContainer(wicketId, FILTER_NAME);
     }
 
-    private Label title(String wicketId) {
+    protected Component title(String wicketId) {
         return new Label(wicketId, titleModel());
     }
 

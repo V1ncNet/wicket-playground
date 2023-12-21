@@ -65,6 +65,6 @@ class EmptyPageTests extends SpringEnabledWicketTestCase {
     void renderingPage_shouldRenderNavigation() {
         tester.startPage(EmptyPage.class);
 
-        tester.assertComponent("navigation", Sidebar.class);
+        tester.assertComponent("content", Sidebar.class);
     }
 }

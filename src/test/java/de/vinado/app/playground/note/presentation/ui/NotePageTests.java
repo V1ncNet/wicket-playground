@@ -57,6 +57,6 @@ class NotePageTests extends SpringEnabledWicketTestCase {
     void renderingPage_shouldRenderCodiMdPad() {
         tester.startPage(NotePage.class);
 
-        tester.assertComponent("navigation:navigation_body:codiMd", CodiMd.class);
+        tester.assertComponent("content:content_body:codiMd", CodiMd.class);
     }
 }

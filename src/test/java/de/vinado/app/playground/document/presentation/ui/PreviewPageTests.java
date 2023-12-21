@@ -55,6 +55,6 @@ class PreviewPageTests extends SpringEnabledWicketTestCase {
     void renderingPage_shouldRenderPreview() {
         tester.startPage(PreviewPage.class);
 
-        tester.assertComponent("navigation:navigation_body:preview", MediaViewer.class);
+        tester.assertComponent("content:content_body:preview", MediaViewer.class);
     }
 }
