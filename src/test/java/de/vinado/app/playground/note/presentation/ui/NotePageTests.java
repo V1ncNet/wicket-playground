@@ -2,7 +2,7 @@ package de.vinado.app.playground.note.presentation.ui;
 
 import de.vinado.app.playground.wicket.codimd.CodiMd;
 import de.vinado.app.playground.wicket.codimd.CodiMdUrlProvider;
-import de.vinado.app.playground.wicket.navigation.NavigationItemSupplier;
+import de.vinado.app.playground.wicket.playground.navigation.NavigationItemSupplier;
 import de.vinado.app.playground.wicket.test.SpringEnabledWicketTestCase;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;

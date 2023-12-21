@@ -1,6 +1,6 @@
 package de.vinado.app.playground.document.presentation.ui;
 
-import de.vinado.app.playground.wicket.navigation.NavigationItemSupplier;
+import de.vinado.app.playground.wicket.playground.navigation.NavigationItemSupplier;
 import de.vinado.app.playground.wicket.test.SpringEnabledWicketTestCase;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;

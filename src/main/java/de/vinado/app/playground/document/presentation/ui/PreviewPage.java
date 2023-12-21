@@ -1,6 +1,6 @@
 package de.vinado.app.playground.document.presentation.ui;
 
-import de.vinado.app.playground.wicket.PlaygroundPage;
+import de.vinado.app.playground.wicket.playground.PlaygroundPage;
 import org.apache.wicket.model.IModel;
 
 import java.net.URI;

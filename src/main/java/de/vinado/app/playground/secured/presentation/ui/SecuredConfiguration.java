@@ -1,8 +1,8 @@
 package de.vinado.app.playground.secured.presentation.ui;
 
-import de.vinado.app.playground.wicket.configuration.PlaygroundWicketConfigurer;
-import de.vinado.app.playground.wicket.navigation.NavigationItem;
-import de.vinado.app.playground.wicket.navigation.NavigationItemRegistry;
+import de.vinado.app.playground.wicket.playground.configuration.PlaygroundWicketConfigurer;
+import de.vinado.app.playground.wicket.playground.navigation.NavigationItem;
+import de.vinado.app.playground.wicket.playground.navigation.NavigationItemRegistry;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +13,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static de.vinado.app.playground.wicket.bootstrap.icon.Bi.LOCK;
+import static de.vinado.app.playground.wicket.playground.bootstrap.icon.Bi.LOCK;
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @Order(Ordered.HIGHEST_PRECEDENCE + 100)

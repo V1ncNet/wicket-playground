@@ -1,0 +1,16 @@
+package de.vinado.app.playground.wicket.playground;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.wicket.RuntimeConfigurationType;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import static org.apache.wicket.RuntimeConfigurationType.DEVELOPMENT;
+
+@Getter
+@Setter
+@ConfigurationProperties("app.wicket.playground")
+public class PlaygroundWicketProperties {
+
+    private RuntimeConfigurationType runtimeConfiguration = DEVELOPMENT;
+}

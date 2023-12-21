@@ -1,8 +1,8 @@
 package de.vinado.app.playground.note.presentation.ui;
 
-import de.vinado.app.playground.wicket.PlaygroundPage;
 import de.vinado.app.playground.wicket.codimd.CodiMd;
 import de.vinado.app.playground.wicket.codimd.Note;
+import de.vinado.app.playground.wicket.playground.PlaygroundPage;
 import org.apache.wicket.model.IModel;
 
 import java.util.UUID;

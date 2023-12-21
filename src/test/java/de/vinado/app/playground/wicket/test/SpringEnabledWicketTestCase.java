@@ -1,6 +1,6 @@
 package de.vinado.app.playground.wicket.test;
 
-import de.vinado.app.playground.wicket.PlaygroundWicketApplication;
+import de.vinado.app.playground.wicket.playground.PlaygroundWicketApplication;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTestCase;
 import org.springframework.beans.factory.annotation.Autowired;

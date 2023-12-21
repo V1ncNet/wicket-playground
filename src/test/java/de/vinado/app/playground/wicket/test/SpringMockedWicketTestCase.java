@@ -1,7 +1,7 @@
 package de.vinado.app.playground.wicket.test;
 
 import de.vinado.app.playground.wicket.WicketApplication;
-import de.vinado.app.playground.wicket.configuration.PlaygroundWicketConfigurer;
+import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
 import org.apache.wicket.Page;
 import org.apache.wicket.mock.MockHomePage;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -28,7 +28,7 @@ public abstract class SpringMockedWicketTestCase extends WicketTestCase {
         return webApplication;
     }
 
-    protected List<PlaygroundWicketConfigurer> configurers() {
+    protected List<WicketConfigurer> configurers() {
         return Collections.emptyList();
     }
 }
