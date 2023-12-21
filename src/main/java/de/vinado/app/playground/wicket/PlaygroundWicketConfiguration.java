@@ -22,19 +22,19 @@ import static org.apache.wicket.protocol.http.WicketFilter.*;
 
 @Profile("wicket")
 @Configuration
-@EnableConfigurationProperties(WicketProperties.class)
+@EnableConfigurationProperties(PlaygroundWicketProperties.class)
 @RequiredArgsConstructor
-public class WicketConfiguration {
+public class PlaygroundWicketConfiguration {
 
     public static final String APP_ROOT = "/*";
 
     private static final String RUNTIME_CONFIGURATION_PARAM = "configuration";
     private static final EnumSet<DispatcherType> DISPATCHER_TYPES = EnumSet.of(REQUEST, ERROR, FORWARD);
 
-    private final WicketProperties properties;
+    private final PlaygroundWicketProperties properties;
 
     @Bean
-    public FilterRegistrationBean<WicketFilter> wicketFilter() {
+    public FilterRegistrationBean<WicketFilter> playgroundWicketFilter() {
         WicketFilter filter = new WicketFilter();
         FilterRegistrationBean<WicketFilter> registration = new FilterRegistrationBean<>(filter);
         registration.setName("wicket.playground");
@@ -50,7 +50,7 @@ public class WicketConfiguration {
 
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @Bean
-    public SecurityFilterChain wicketFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain playgroundWicketFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(AbstractHttpConfigurer::disable)
         ;

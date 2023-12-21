@@ -6,7 +6,8 @@ spring:
 
 app:
   wicket:
-    runtime-configuration: DEVELOPMENT
+    playground:
+      runtime-configuration: DEVELOPMENT
 
   document:
     preview:

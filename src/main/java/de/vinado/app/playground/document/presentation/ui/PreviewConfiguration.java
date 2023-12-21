@@ -1,7 +1,7 @@
 package de.vinado.app.playground.document.presentation.ui;
 
 import de.vinado.app.playground.wicket.bootstrap.icon.Bi;
-import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
+import de.vinado.app.playground.wicket.configuration.PlaygroundWicketConfigurer;
 import de.vinado.app.playground.wicket.navigation.NavigationItem;
 import de.vinado.app.playground.wicket.navigation.NavigationItemRegistry;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Configuration
 @EnableConfigurationProperties(PreviewProperties.class)
 @RequiredArgsConstructor
-public class PreviewConfiguration implements WicketConfigurer {
+public class PreviewConfiguration implements PlaygroundWicketConfigurer {
 
     private final PreviewProperties properties;
 

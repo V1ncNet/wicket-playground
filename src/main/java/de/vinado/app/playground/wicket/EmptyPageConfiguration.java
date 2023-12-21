@@ -1,7 +1,7 @@
 package de.vinado.app.playground.wicket;
 
 import de.vinado.app.playground.wicket.bootstrap.icon.Bi;
-import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
+import de.vinado.app.playground.wicket.configuration.PlaygroundWicketConfigurer;
 import de.vinado.app.playground.wicket.navigation.NavigationItem;
 import de.vinado.app.playground.wicket.navigation.NavigationItemRegistry;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -12,7 +12,7 @@ import org.springframework.core.annotation.Order;
 @Order
 @Profile("wicket")
 @Configuration
-public class EmptyPageConfiguration implements WicketConfigurer {
+public class EmptyPageConfiguration implements PlaygroundWicketConfigurer {
 
     @Override
     public void init(WebApplication webApplication) {

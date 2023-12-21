@@ -9,8 +9,8 @@ import static org.apache.wicket.RuntimeConfigurationType.DEVELOPMENT;
 
 @Getter
 @Setter
-@ConfigurationProperties("app.wicket")
-public class WicketProperties {
+@ConfigurationProperties("app.wicket.playground")
+public class PlaygroundWicketProperties {
 
     private RuntimeConfigurationType runtimeConfiguration = DEVELOPMENT;
 }

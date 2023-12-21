@@ -4,7 +4,7 @@ import de.agilecoders.wicket.webjars.WicketWebjars;
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
 import de.vinado.app.playground.document.presentation.ui.PreviewPage;
 import de.vinado.app.playground.wicket.bootstrap.BootstrapResourceAppender;
-import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
+import de.vinado.app.playground.wicket.configuration.PlaygroundWicketConfigurer;
 import org.apache.wicket.Page;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.csp.CSPDirective;
@@ -22,9 +22,9 @@ import java.util.stream.Stream;
 @Component
 public class PlaygroundWicketApplication extends WicketApplication {
 
-    private final List<WicketConfigurer> configurers;
+    private final List<PlaygroundWicketConfigurer> configurers;
 
-    public PlaygroundWicketApplication(@Autowired(required = false) List<WicketConfigurer> configurers) {
+    public PlaygroundWicketApplication(@Autowired(required = false) List<PlaygroundWicketConfigurer> configurers) {
         this.configurers = configurers;
     }
 
@@ -66,7 +66,7 @@ public class PlaygroundWicketApplication extends WicketApplication {
         settings.useCdnResources(false);
     }
 
-    private Stream<WicketConfigurer> configurers() {
+    private Stream<PlaygroundWicketConfigurer> configurers() {
         return Optional.ofNullable(configurers).stream()
             .flatMap(List::stream);
     }

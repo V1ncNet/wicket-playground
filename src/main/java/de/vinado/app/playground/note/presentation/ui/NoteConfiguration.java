@@ -2,7 +2,7 @@ package de.vinado.app.playground.note.presentation.ui;
 
 import de.vinado.app.playground.wicket.bootstrap.icon.Bi;
 import de.vinado.app.playground.wicket.codimd.CodiMdUrlProvider;
-import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
+import de.vinado.app.playground.wicket.configuration.PlaygroundWicketConfigurer;
 import de.vinado.app.playground.wicket.navigation.NavigationItem;
 import de.vinado.app.playground.wicket.navigation.NavigationItemRegistry;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 @Configuration
 @EnableConfigurationProperties(NoteProperties.class)
 @RequiredArgsConstructor
-public class NoteConfiguration implements WicketConfigurer {
+public class NoteConfiguration implements PlaygroundWicketConfigurer {
 
     private static final String PATH = "note";
 

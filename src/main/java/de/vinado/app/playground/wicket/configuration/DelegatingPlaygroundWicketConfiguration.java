@@ -12,12 +12,12 @@ import java.util.List;
 
 @Profile("wicket")
 @Configuration
-public class DelegatingWicketConfiguration extends WicketConfigurationSupport {
+public class DelegatingPlaygroundWicketConfiguration extends PlaygroundWicketConfigurationSupport {
 
-    private final WicketConfigurerComposite configurers = new WicketConfigurerComposite();
+    private final PlaygroundWicketConfigurerComposite configurers = new PlaygroundWicketConfigurerComposite();
 
     @Autowired(required = false)
-    public void setConfigurers(List<WicketConfigurer> configurers) {
+    public void setConfigurers(List<PlaygroundWicketConfigurer> configurers) {
         if (!CollectionUtils.isEmpty(configurers)) {
             this.configurers.addWicketConfigurers(configurers);
         }
@@ -29,11 +29,11 @@ public class DelegatingWicketConfiguration extends WicketConfigurationSupport {
     }
 
 
-    private static class WicketConfigurerComposite implements WicketConfigurer {
+    private static class PlaygroundWicketConfigurerComposite implements PlaygroundWicketConfigurer {
 
-        private final List<WicketConfigurer> delegates = new ArrayList<>();
+        private final List<PlaygroundWicketConfigurer> delegates = new ArrayList<>();
 
-        public void addWicketConfigurers(List<WicketConfigurer> configurers) {
+        public void addWicketConfigurers(List<PlaygroundWicketConfigurer> configurers) {
             delegates.addAll(configurers);
         }
 

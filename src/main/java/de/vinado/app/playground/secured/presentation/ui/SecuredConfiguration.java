@@ -1,6 +1,6 @@
 package de.vinado.app.playground.secured.presentation.ui;
 
-import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
+import de.vinado.app.playground.wicket.configuration.PlaygroundWicketConfigurer;
 import de.vinado.app.playground.wicket.navigation.NavigationItem;
 import de.vinado.app.playground.wicket.navigation.NavigationItemRegistry;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -19,7 +19,7 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 @Order(Ordered.HIGHEST_PRECEDENCE + 100)
 @Profile("wicket & oauth2")
 @Configuration
-public class SecuredConfiguration implements WicketConfigurer {
+public class SecuredConfiguration implements PlaygroundWicketConfigurer {
 
     private static final String PATH = "secured";
 

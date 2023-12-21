@@ -5,7 +5,7 @@ import de.vinado.app.playground.wicket.navigation.NavigationItemRegistry;
 import de.vinado.app.playground.wicket.navigation.NavigationItemSupplier;
 import org.springframework.context.annotation.Bean;
 
-public class WicketConfigurationSupport {
+public class PlaygroundWicketConfigurationSupport {
 
     @Bean
     public NavigationItemSupplier navigationItemSupplier() {
