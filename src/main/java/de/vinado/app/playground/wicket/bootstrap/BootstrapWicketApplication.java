@@ -15,6 +15,8 @@ import org.apache.wicket.Page;
 import org.apache.wicket.csp.CSPDirective;
 import org.apache.wicket.csp.CSPDirectiveSrcValue;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
+import org.apache.wicket.request.resource.caching.NoOpResourceCachingStrategy;
+import org.apache.wicket.settings.ResourceSettings;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -75,6 +77,12 @@ public class BootstrapWicketApplication extends WicketApplication {
             .add(CSPDirective.STYLE_SRC, CSPDirectiveSrcValue.SELF)
             .add(CSPDirective.IMG_SRC, "data:")
         ;
+    }
+
+    @Override
+    protected void configure(ResourceSettings settings) {
+        settings.setResourcePollFrequency(null);
+        settings.setCachingStrategy(new NoOpResourceCachingStrategy());
     }
 
     @Override
