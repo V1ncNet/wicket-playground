@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles("wicket")
+@ActiveProfiles({"wicket", "playground"})
 @SpringBootTest(classes = PlaygroundWicketApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public abstract class SpringEnabledWicketTestCase extends WicketTestCase {
 

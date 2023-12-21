@@ -24,7 +24,7 @@ import static org.apache.wicket.protocol.http.WicketFilter.APP_FACT_PARAM;
 import static org.apache.wicket.protocol.http.WicketFilter.FILTER_MAPPING_PARAM;
 import static org.apache.wicket.protocol.http.WicketFilter.IGNORE_PATHS_PARAM;
 
-@Profile("wicket")
+@Profile("wicket & playground")
 @Configuration
 @EnableConfigurationProperties(PlaygroundWicketProperties.class)
 @RequiredArgsConstructor

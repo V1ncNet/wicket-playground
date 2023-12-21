@@ -10,7 +10,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-@Profile("wicket")
+@Profile("wicket & playground")
 @Configuration
 public class DelegatingPlaygroundWicketConfiguration extends PlaygroundWicketConfigurationSupport {
 

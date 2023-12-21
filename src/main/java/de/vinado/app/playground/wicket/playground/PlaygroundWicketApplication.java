@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Profile("wicket")
+@Profile("wicket & playground")
 @Component
 public class PlaygroundWicketApplication extends WicketApplication {
 

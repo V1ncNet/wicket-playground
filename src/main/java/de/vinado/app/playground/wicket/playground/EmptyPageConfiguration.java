@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 
 @Order
-@Profile("wicket")
+@Profile("wicket & playground")
 @Configuration
 public class EmptyPageConfiguration implements PlaygroundWicketConfigurer {
 
