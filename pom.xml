@@ -37,6 +37,7 @@
 
         <webjar.bootstrap.version>5.3.2</webjar.bootstrap.version>
         <webjar.bootstrap-icons.version>1.11.2</webjar.bootstrap-icons.version>
+        <webjar.fontawesome.version>5.15.4</webjar.fontawesome.version>
 
         <testcontainer.keycloak.version>3.0.0</testcontainer.keycloak.version>
 
@@ -99,6 +100,11 @@
                 <groupId>org.webjars.npm</groupId>
                 <artifactId>bootstrap-icons</artifactId>
                 <version>${webjar.bootstrap-icons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>font-awesome</artifactId>
+                <version>${webjar.fontawesome.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.camunda</groupId>
@@ -168,6 +174,10 @@
         <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>bootstrap-icons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>font-awesome</artifactId>
         </dependency>
         <dependency>
             <groupId>io.camunda.spring</groupId>

@@ -2,6 +2,8 @@ package de.vinado.app.playground.wicket.bootstrap;
 
 import de.agilecoders.wicket.core.Bootstrap;
 import de.agilecoders.wicket.core.settings.BootstrapSettings;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5CssReference;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeSettings;
 import de.agilecoders.wicket.jquery.settings.WicketJquerySelectorsSettings;
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
 import de.vinado.app.playground.wicket.JavaScriptFilteredIntoFooterHeaderResponseDecorator;
@@ -27,6 +29,9 @@ public class BootstrapWicketApplication extends WicketApplication {
 
     @Setter
     private WicketJquerySelectorsSettings jquerySelectorsSettings;
+
+    @Setter
+    private FontAwesomeSettings fontAwesomeSettings;
 
     public BootstrapWicketApplication(List<? extends WicketConfigurer> configurers) {
         super(configurers);
@@ -57,6 +62,11 @@ public class BootstrapWicketApplication extends WicketApplication {
         configure(bootstrapBuilder);
 
         bootstrapBuilder.install(this);
+
+        FontAwesomeSettings fontAwesomeSettings = getFontAwesomeSettings();
+        configure(fontAwesomeSettings);
+
+        FontAwesomeSettings.set(this, fontAwesomeSettings);
     }
 
     @Override
@@ -85,6 +95,10 @@ public class BootstrapWicketApplication extends WicketApplication {
     protected void configure(Bootstrap.Builder builder) {
     }
 
+    protected void configure(FontAwesomeSettings settings) {
+        settings.setCssResourceReference(FontAwesome5CssReference.instance());
+    }
+
     public BootstrapSettings getBootstrapSettings() {
         if (null == bootstrapSettings) {
             bootstrapSettings = new BootstrapSettings();
@@ -97,5 +111,12 @@ public class BootstrapWicketApplication extends WicketApplication {
             jquerySelectorsSettings = new WicketJquerySelectorsSettings();
         }
         return jquerySelectorsSettings;
+    }
+
+    public FontAwesomeSettings getFontAwesomeSettings() {
+        if (null == fontAwesomeSettings) {
+            fontAwesomeSettings = new FontAwesomeSettings();
+        }
+        return fontAwesomeSettings;
     }
 }
