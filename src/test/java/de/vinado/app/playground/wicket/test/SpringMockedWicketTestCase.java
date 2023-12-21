@@ -17,7 +17,7 @@ public abstract class SpringMockedWicketTestCase extends WicketTestCase {
 
     @Override
     protected WebApplication newApplication() {
-        WicketApplication webApplication = new WicketApplication() {
+        WicketApplication webApplication = new WicketApplication(configurers()) {
 
             @Override
             public Class<? extends Page> getHomePage() {

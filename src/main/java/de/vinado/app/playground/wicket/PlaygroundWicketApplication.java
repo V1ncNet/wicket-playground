@@ -4,7 +4,7 @@ import de.agilecoders.wicket.webjars.WicketWebjars;
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
 import de.vinado.app.playground.document.presentation.ui.PreviewPage;
 import de.vinado.app.playground.wicket.bootstrap.BootstrapResourceAppender;
-import de.vinado.app.playground.wicket.configuration.PlaygroundWicketConfigurer;
+import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
 import org.apache.wicket.Page;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.csp.CSPDirective;
@@ -15,17 +15,13 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Profile("wicket")
 @Component
 public class PlaygroundWicketApplication extends WicketApplication {
 
-    private final List<PlaygroundWicketConfigurer> configurers;
-
-    public PlaygroundWicketApplication(@Autowired(required = false) List<PlaygroundWicketConfigurer> configurers) {
-        this.configurers = configurers;
+    public PlaygroundWicketApplication(@Autowired(required = false) List<? extends WicketConfigurer> configurers) {
+        super(configurers);
     }
 
     @Override
@@ -38,8 +34,6 @@ public class PlaygroundWicketApplication extends WicketApplication {
         super.init();
 
         WicketWebjars.install(this, getWebjarsSettings());
-
-        configurers().forEach(configurer -> configurer.init(this));
     }
 
     @Override
@@ -64,10 +58,5 @@ public class PlaygroundWicketApplication extends WicketApplication {
         super.configure(settings);
 
         settings.useCdnResources(false);
-    }
-
-    private Stream<PlaygroundWicketConfigurer> configurers() {
-        return Optional.ofNullable(configurers).stream()
-            .flatMap(List::stream);
     }
 }

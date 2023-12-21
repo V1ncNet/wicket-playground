@@ -1,6 +1,7 @@
 package de.vinado.app.playground.wicket;
 
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
+import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
 import lombok.Setter;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
@@ -16,6 +17,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public abstract class WicketApplication extends WebApplication implements ApplicationContextAware {
 
@@ -24,6 +28,12 @@ public abstract class WicketApplication extends WebApplication implements Applic
 
     @Setter
     private WebjarsSettings webjarsSettings;
+
+    private final List<? extends WicketConfigurer> configurers;
+
+    public WicketApplication(List<? extends WicketConfigurer> configurers) {
+        this.configurers = configurers;
+    }
 
     @Override
     protected void init() {
@@ -52,6 +62,8 @@ public abstract class WicketApplication extends WebApplication implements Applic
 
         HeaderResponseDecoratorCollection headerResponseDecorators = getHeaderResponseDecorators();
         configure(headerResponseDecorators);
+
+        configurers().forEach(configurer -> configurer.init(this));
     }
 
     protected void configure(MarkupSettings settings) {
@@ -98,5 +110,10 @@ public abstract class WicketApplication extends WebApplication implements Applic
             webjarsSettings = new WebjarsSettings();
         }
         return webjarsSettings;
+    }
+
+    private Stream<? extends WicketConfigurer> configurers() {
+        return Optional.ofNullable(configurers).stream()
+            .flatMap(List::stream);
     }
 }
