@@ -28,6 +28,7 @@
         <dependency.closure.version>v20230502</dependency.closure.version>
         <dependency.sass.version>1.62.1</dependency.sass.version>
         <dependency.wicket.version>10.0.0-M2</dependency.wicket.version>
+        <dependency.wicket-bootstrap.version>7.0.1</dependency.wicket-bootstrap.version>
         <dependency.wicket-webjars.version>4.0.1</dependency.wicket-webjars.version>
         <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
 
@@ -68,6 +69,16 @@
                 <groupId>com.google.javascript</groupId>
                 <artifactId>closure-compiler-unshaded</artifactId>
                 <version>${dependency.closure.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.agilecoders.wicket</groupId>
+                <artifactId>wicket-bootstrap-core</artifactId>
+                <version>${dependency.wicket-bootstrap.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.agilecoders.wicket</groupId>
+                <artifactId>wicket-bootstrap-extensions</artifactId>
+                <version>${dependency.wicket-bootstrap.version}</version>
             </dependency>
             <dependency>
                 <groupId>de.agilecoders.wicket.webjars</groupId>
@@ -137,6 +148,14 @@
         <dependency>
             <groupId>com.google.javascript</groupId>
             <artifactId>closure-compiler-unshaded</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.agilecoders.wicket</groupId>
+            <artifactId>wicket-bootstrap-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.agilecoders.wicket</groupId>
+            <artifactId>wicket-bootstrap-extensions</artifactId>
         </dependency>
         <dependency>
             <groupId>de.agilecoders.wicket.webjars</groupId>
