@@ -3,6 +3,7 @@ package de.vinado.app.playground.wicket;
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
 import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
 import lombok.Setter;
+import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
@@ -63,7 +64,13 @@ public abstract class WicketApplication extends WebApplication implements Applic
         HeaderResponseDecoratorCollection headerResponseDecorators = getHeaderResponseDecorators();
         configure(headerResponseDecorators);
 
+        IConverterLocator converterLocator = getConverterLocator();
+        configure(converterLocator);
+
         configurers().forEach(configurer -> configurer.init(this));
+    }
+
+    private void configure(IConverterLocator locator) {
     }
 
     protected void configure(MarkupSettings settings) {
