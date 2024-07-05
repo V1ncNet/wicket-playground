@@ -1,7 +1,6 @@
 package de.vinado.app.playground.wicket;
 
 import jakarta.servlet.DispatcherType;
-import lombok.RequiredArgsConstructor;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.spring.SpringWebApplicationFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -16,6 +15,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.EnumSet;
+
+import lombok.RequiredArgsConstructor;
 
 import static jakarta.servlet.DispatcherType.*;
 import static org.apache.wicket.protocol.http.WicketFilter.*;

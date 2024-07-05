@@ -1,7 +1,6 @@
 package de.vinado.app.playground.document.presentation.ui;
 
 import de.vinado.app.playground.wicket.test.SpringEnabledWicketTestCase;
-import lombok.SneakyThrows;
 import org.apache.wicket.model.Model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +9,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.net.URI;
 import java.net.URL;
 import java.util.UUID;
+
+import lombok.SneakyThrows;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;

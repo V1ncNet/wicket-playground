@@ -1,11 +1,11 @@
 package de.vinado.app.playground.wicket.codimd;
 
+import java.io.Serializable;
+import java.util.UUID;
+
 import lombok.NonNull;
 import lombok.Value;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
-import java.util.UUID;
 
 @Value
 @Accessors(fluent = false)

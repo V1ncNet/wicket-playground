@@ -5,8 +5,6 @@ import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
 import de.vinado.app.playground.document.presentation.ui.PreviewPage;
 import de.vinado.app.playground.wicket.bootstrap.BootstrapResourceAppender;
 import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 import org.apache.wicket.Page;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
@@ -30,6 +28,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Profile("wicket")
 @Component

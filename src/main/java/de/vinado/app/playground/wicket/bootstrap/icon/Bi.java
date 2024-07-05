@@ -2,6 +2,7 @@ package de.vinado.app.playground.wicket.bootstrap.icon;
 
 import de.vinado.app.playground.wicket.image.AbstractIconType;
 import de.vinado.app.playground.wicket.image.IconType;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

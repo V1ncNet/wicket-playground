@@ -4,7 +4,6 @@ import de.vinado.app.playground.wicket.codimd.CodiMd;
 import de.vinado.app.playground.wicket.codimd.CodiMdUrlProvider;
 import de.vinado.app.playground.wicket.navigation.NavigationItemSupplier;
 import de.vinado.app.playground.wicket.test.SpringEnabledWicketTestCase;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -13,6 +12,8 @@ import org.springframework.test.context.ContextConfiguration;
 import java.net.URL;
 import java.util.UUID;
 import java.util.stream.Stream;
+
+import lombok.SneakyThrows;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;

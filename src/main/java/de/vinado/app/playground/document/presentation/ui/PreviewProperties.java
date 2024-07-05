@@ -1,11 +1,12 @@
 package de.vinado.app.playground.document.presentation.ui;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.net.URL;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
 @Setter

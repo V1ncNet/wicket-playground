@@ -3,8 +3,6 @@ package de.vinado.app.playground.wicket;
 import de.vinado.app.playground.wicket.navigation.NavigationItem;
 import de.vinado.app.playground.wicket.navigation.NavigationItemSupplier;
 import de.vinado.app.playground.wicket.navigation.Sidebar;
-import lombok.AccessLevel;
-import lombok.Getter;
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.ComponentTag;
@@ -19,6 +17,9 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import java.util.Locale;
 import java.util.stream.Stream;
+
+import lombok.AccessLevel;
+import lombok.Getter;
 
 import static de.vinado.app.playground.wicket.JavaScriptFilteredIntoFooterHeaderResponseDecorator.FILTER_NAME;
 

@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContext;
 import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public abstract class SpringMockedWicketTestCase extends WicketTestCase {
 

@@ -1,14 +1,15 @@
 package de.vinado.app.playground.wicket.navigation;
 
 import de.vinado.app.playground.wicket.image.IconType;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
-import lombok.experimental.Accessors;
 import org.apache.wicket.Page;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import java.io.Serializable;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.Value;
+import lombok.experimental.Accessors;
 
 @Value
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)

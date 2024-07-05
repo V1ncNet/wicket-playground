@@ -5,7 +5,6 @@ import de.vinado.app.playground.wicket.codimd.CodiMdUrlProvider;
 import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
 import de.vinado.app.playground.wicket.navigation.NavigationItem;
 import de.vinado.app.playground.wicket.navigation.NavigationItemRegistry;
-import lombok.RequiredArgsConstructor;
 import org.apache.wicket.csp.CSPDirective;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -21,6 +20,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URL;
+
+import lombok.RequiredArgsConstructor;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
