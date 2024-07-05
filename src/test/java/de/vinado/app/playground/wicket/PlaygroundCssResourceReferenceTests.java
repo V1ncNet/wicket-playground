@@ -15,7 +15,7 @@ class PlaygroundCssResourceReferenceTests extends SpringEnabledWicketTestCase {
     @BeforeEach
     void setUp() {
         reference = PlaygroundCssResourceReference.asHeaderItem()
-                .getReference();
+            .getReference();
     }
 
     @Test
