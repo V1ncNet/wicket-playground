@@ -39,7 +39,7 @@ public class KeycloakTestCase {
             entity,
             TokenResponse.class);
 
-        return response.getBody().getAccessToken();
+        return response.getBody().accessToken();
     }
 
     private static HttpEntity<MultiValueMap<String, String>> prepareTokenRetrieval() {

@@ -20,7 +20,7 @@ public class Bi extends AbstractIconType {
     private final String name;
 
     @Override
-    protected String getName() {
+    protected String name() {
         return "bi-" + name;
     }
 }

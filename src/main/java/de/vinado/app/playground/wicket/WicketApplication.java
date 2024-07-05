@@ -6,6 +6,7 @@ import de.vinado.app.playground.document.presentation.ui.PreviewPage;
 import de.vinado.app.playground.wicket.bootstrap.BootstrapResourceAppender;
 import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.apache.wicket.Page;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
@@ -35,6 +36,7 @@ import java.util.stream.Stream;
 public class WicketApplication extends WebApplication implements ApplicationContextAware {
 
     @Setter
+    @Accessors(fluent = false)
     private ApplicationContext applicationContext;
 
     @Setter

@@ -4,6 +4,7 @@ import de.vinado.app.playground.wicket.image.IconType;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import lombok.experimental.Accessors;
 import org.apache.wicket.Page;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
 
 @Value
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@Accessors(fluent = false)
 public class NavigationItem implements Serializable {
 
     Class<? extends Page> page;
