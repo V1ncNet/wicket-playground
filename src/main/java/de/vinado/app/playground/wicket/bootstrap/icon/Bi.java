@@ -15,6 +15,9 @@ public class Bi extends AbstractIconType {
     public static final IconType LOCK = new Bi("lock");
     public static final IconType HOUSE = new Bi("house");
     public static final IconType MARKDOWN = new Bi("markdown");
+    public static final IconType CHECK = new Bi("check");
+    public static final IconType X = new Bi("x");
+    public static final IconType UPLOAD = new Bi("upload");
 
     @Getter(AccessLevel.PROTECTED)
     private final String style = "bi";
