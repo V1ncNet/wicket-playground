@@ -1,10 +1,9 @@
 package de.vinado.app.playground.upload.overview.presentation.ui;
 
-import de.vinado.app.playground.upload.adapter.app.UploadClientFactory;
-import de.vinado.app.playground.upload.client.model.Transfer;
-import de.vinado.app.playground.upload.client.model.UploadClient;
-import de.vinado.app.playground.upload.client.model.UploadException;
-import de.vinado.app.playground.upload.client.model.UploadListener;
+import de.vinado.app.playground.upload.adapter.app.UploadHandler;
+import de.vinado.app.playground.upload.adapter.app.UploadHandlerFactory;
+import de.vinado.app.playground.upload.adapter.model.Bundle;
+import de.vinado.app.playground.upload.adapter.model.Request;
 import de.vinado.app.playground.wicket.Holder;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -13,17 +12,17 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.stereotype.Component;
 
-import java.nio.file.Paths;
-import java.util.UUID;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 public class UploadButton extends AjaxLink<UploadableDocuments> {
 
     @SpringBean
-    private Holder<UploadClientFactory> uploadClientFactory;
+    private Holder<UploadHandlerFactory> uploadHandlerFactory;
 
     public UploadButton(String id, IModel<UploadableDocuments> model) {
         super(id, model);
@@ -31,32 +30,21 @@ public class UploadButton extends AjaxLink<UploadableDocuments> {
 
     @Override
     public void onClick(AjaxRequestTarget target) {
-        Transfer transfer = new Transfer();
-        getModelObject().stream()
-            .map(UploadableDocument::getUri)
-            .map(Paths::get)
-            .forEach(transfer::add);
-        UploadClient uploadClient = uploadClientFactory.service().create();
-        uploadClient.dispatch(transfer, new UploadListener() {
-
-            @Override
-            public void onUploadCompleted(@NonNull UUID transferId) {
-                getModelObject().forEach(document -> document.getUploadResult().transferId(transferId));
-                send(getPage(), Broadcast.BREADTH, new UploadCompletedEvent());
-            }
-
-            @Override
-            public void onUploadInterrupted(@NonNull UploadException e) {
-            }
-        });
+        UploadHandler uploadHandler = uploadHandlerFactory.service().create();
+        List<Bundle> bundles = getModelObject().stream()
+            .map(document -> new Bundle(document.getUploadResult(), Collections.singletonList(document.getUri())))
+            .collect(Collectors.toList());
+        Request request = new Request(bundles);
+        uploadHandler.handle(request);
+        send(getPage(), Broadcast.BREADTH, new UploadCompletedEvent());
     }
 
 
     @Component
     @RequiredArgsConstructor
-    static class UploadClientFactoryHolder implements Holder<UploadClientFactory> {
+    static class UploadHandlerFactoryHolder implements Holder<UploadHandlerFactory> {
 
         @Getter
-        private final UploadClientFactory service;
+        private final UploadHandlerFactory service;
     }
 }
