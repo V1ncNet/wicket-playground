@@ -1,5 +1,6 @@
 package de.vinado.app.playground.upload.adapter.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -8,11 +9,13 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.experimental.Accessors;
 
 import static java.util.function.Predicate.not;
 
 @Data
-public class Request {
+@Accessors(fluent = false)
+public class Request implements Serializable {
 
     @NonNull
     @Getter(AccessLevel.NONE)
@@ -32,7 +35,7 @@ public class Request {
         return bundles.stream().filter(predicate);
     }
 
-    public boolean uploaded() {
-        return bundles.stream().allMatch(Bundle::completed);
+    public boolean isCompleted() {
+        return bundles.stream().allMatch(Bundle::isCompleted);
     }
 }

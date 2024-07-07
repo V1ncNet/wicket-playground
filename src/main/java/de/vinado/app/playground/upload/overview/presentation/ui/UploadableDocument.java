@@ -28,6 +28,6 @@ public class UploadableDocument implements Serializable {
     }
 
     public boolean isUploaded() {
-        return null != uploadResult.transferId();
+        return null != uploadResult.getTransferId();
     }
 }

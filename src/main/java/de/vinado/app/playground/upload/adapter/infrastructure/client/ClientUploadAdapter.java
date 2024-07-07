@@ -34,7 +34,7 @@ public class ClientUploadAdapter implements UploadAdapter {
 
     private Transfer createTransfer(Bundle bundle) {
         Transfer transfer = new Transfer();
-        populate(transfer, bundle.fileUris());
+        populate(transfer, bundle.getFileUris());
         return transfer;
     }
 
@@ -49,8 +49,8 @@ public class ClientUploadAdapter implements UploadAdapter {
 
         @Override
         public void onUploadCompleted(@NonNull UUID id) {
-            UploadResult result = bundle.result();
-            result.transferId(id);
+            UploadResult result = bundle.getResult();
+            result.setTransferId(id);
             bundle.markCompleted();
         }
 
