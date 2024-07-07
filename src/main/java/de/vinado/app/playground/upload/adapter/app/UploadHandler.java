@@ -49,6 +49,8 @@ public class UploadHandler {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new RuntimeException("Upload was interrupted", e);
+        } finally {
+            executorService.shutdownNow();
         }
     }
 
