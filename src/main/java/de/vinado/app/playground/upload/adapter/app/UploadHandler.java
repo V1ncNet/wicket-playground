@@ -69,11 +69,9 @@ public class UploadHandler {
 
         private void upload(Bundle bundle) {
             int attempts = 0;
-            boolean success = false;
 
-            while (attempts < maxRetries && !success) {
+            while (attempts < maxRetries && !bundle.completed()) {
                 initiator.uploadAdapter.upload(bundle);
-                success = !bundle.failed();
                 attempts++;
             }
         }

@@ -23,6 +23,9 @@ public class Bundle {
     @Setter(AccessLevel.NONE)
     private String errorMessage;
 
+    @Setter(AccessLevel.NONE)
+    private boolean completed;
+
     public Optional<String> errorMessage() {
         return Optional.ofNullable(errorMessage);
     }
@@ -33,5 +36,9 @@ public class Bundle {
 
     public boolean failed() {
         return null != errorMessage;
+    }
+
+    public boolean markCompleted() {
+        return completed = true;
     }
 }

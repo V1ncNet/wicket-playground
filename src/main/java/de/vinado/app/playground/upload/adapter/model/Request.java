@@ -33,7 +33,6 @@ public class Request {
     }
 
     public boolean uploaded() {
-        // FIXME: This is not correct
-        return bundles.stream().allMatch(not(Bundle::failed));
+        return bundles.stream().allMatch(Bundle::completed);
     }
 }

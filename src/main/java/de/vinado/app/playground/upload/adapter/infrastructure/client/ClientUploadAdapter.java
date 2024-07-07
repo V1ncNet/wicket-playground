@@ -51,6 +51,7 @@ public class ClientUploadAdapter implements UploadAdapter {
         public void onUploadCompleted(@NonNull UUID id) {
             UploadResult result = bundle.result();
             result.transferId(id);
+            bundle.markCompleted();
         }
 
         @Override
