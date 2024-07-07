@@ -26,8 +26,4 @@ public class UploadableDocument implements Serializable {
             .build().toUri();
         return new UploadableDocument(uri);
     }
-
-    public boolean isUploaded() {
-        return null != uploadResult.getTransferId();
-    }
 }

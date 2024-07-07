@@ -1,5 +1,6 @@
 package de.vinado.app.playground.upload.overview.presentation.ui;
 
+import de.vinado.app.playground.upload.overview.model.UploadResult.State;
 import de.vinado.app.playground.wicket.bootstrap.icon.Bi;
 import de.vinado.app.playground.wicket.image.Icon;
 import de.vinado.app.playground.wicket.image.IconType;
@@ -72,7 +73,15 @@ public class UploadOverview extends GenericPanel<Stream<UploadableDocument>> {
         }
 
         private IModel<IconType> statusModel(Item<UploadableDocument> item) {
-            return item.getModel().map(document -> document.isUploaded() ? Bi.CHECK : Bi.X);
+            return item.getModel().map(document -> {
+                State state = document.getUploadResult().getState();
+                return switch (state) {
+                    case INITIAL -> Bi.X;
+                    case SCHEDULED -> Bi.CLOCK;
+                    case UPLOADING -> Bi.UPLOAD;
+                    case UPLOADED -> Bi.CHECK;
+                };
+            });
         }
 
         private Component filename(String wicketId, Item<UploadableDocument> item) {

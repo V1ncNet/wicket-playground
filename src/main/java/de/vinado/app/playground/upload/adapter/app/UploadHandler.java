@@ -3,6 +3,7 @@ package de.vinado.app.playground.upload.adapter.app;
 import de.vinado.app.playground.upload.adapter.model.Bundle;
 import de.vinado.app.playground.upload.adapter.model.Request;
 import de.vinado.app.playground.upload.adapter.model.UploadAdapter;
+import de.vinado.app.playground.upload.overview.model.UploadResult.State;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -29,6 +30,7 @@ public class UploadHandler {
 
     public void handle(@NonNull Request request) {
         List<Bundle> bundles = request.listPending();
+        bundles.forEach(bundle -> bundle.setState(State.SCHEDULED));
         int bundleSize = bundles.size();
         int latchSize = properties.getLatchSize();
         int totalGroups = (int) Math.ceil((double) bundleSize / latchSize);
@@ -71,6 +73,7 @@ public class UploadHandler {
             int attempts = 0;
 
             while (attempts < maxRetries && !bundle.isCompleted()) {
+                bundle.setState(State.UPLOADING);
                 initiator.uploadAdapter.upload(bundle);
                 attempts++;
             }

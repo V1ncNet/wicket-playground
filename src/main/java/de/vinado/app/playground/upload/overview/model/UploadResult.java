@@ -11,4 +11,15 @@ import lombok.experimental.Accessors;
 public class UploadResult implements Serializable {
 
     private UUID transferId;
+
+    private State state = State.INITIAL;
+
+
+    public enum State {
+
+        INITIAL,
+        SCHEDULED,
+        UPLOADING,
+        UPLOADED,
+    }
 }

@@ -18,6 +18,7 @@ public class Bi extends AbstractIconType {
     public static final IconType CHECK = new Bi("check");
     public static final IconType X = new Bi("x");
     public static final IconType UPLOAD = new Bi("upload");
+    public static final IconType CLOCK = new Bi("clock");
 
     @Getter(AccessLevel.PROTECTED)
     private final String style = "bi";
