@@ -1,11 +1,13 @@
-package de.vinado.app.playground.upload.adapter.app;
+package de.vinado.app.playground.upload.adapter.support;
 
+import de.vinado.app.playground.upload.adapter.app.UploadHandlerProperties;
 import de.vinado.app.playground.upload.adapter.model.Bundle;
 import de.vinado.app.playground.upload.adapter.model.Request;
 import de.vinado.app.playground.upload.adapter.model.UploadAdapter;
 import de.vinado.app.playground.upload.overview.model.UploadResult.State;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -15,13 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
-public class UploadHandler {
+public class BlockingUploadHandler {
 
     private final UploadAdapter uploadAdapter;
     private final UploadHandlerProperties properties;
     private final ExecutorService executorService;
 
-    public UploadHandler(UploadAdapter uploadAdapter, UploadHandlerProperties properties) {
+    public BlockingUploadHandler(UploadAdapter uploadAdapter, UploadHandlerProperties properties) {
         this.uploadAdapter = uploadAdapter;
         this.properties = properties;
         this.executorService = Executors.newFixedThreadPool(properties.getConcurrentUploads());
@@ -32,24 +34,34 @@ public class UploadHandler {
         bundles.forEach(bundle -> bundle.setState(State.SCHEDULED));
         int bundleSize = bundles.size();
         int latchSize = properties.getLatchSize();
+        int totalGroups = (int) Math.ceil((double) bundleSize / latchSize);
 
+        CountDownLatch latch = new CountDownLatch(totalGroups);
         for (int i = 0; i < bundleSize; i += latchSize) {
             int end = Math.min(bundleSize, i + latchSize);
             List<Bundle> batch = bundles.subList(i, end);
             int maxRetries = properties.getMaxRetries();
-            UploadTask task = new UploadTask(this, batch, maxRetries);
+            UploadTask task = new UploadTask(this, batch, latch, maxRetries);
             executorService.submit(task);
         }
 
-        executorService.shutdown();
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Upload was interrupted", e);
+        } finally {
+            executorService.shutdownNow();
+        }
     }
 
 
     @RequiredArgsConstructor
     private static class UploadTask implements Runnable {
 
-        private final UploadHandler initiator;
+        private final BlockingUploadHandler initiator;
         private final List<Bundle> bundles;
+        private final CountDownLatch latch;
         private final int maxRetries;
 
         @Override
@@ -57,6 +69,7 @@ public class UploadHandler {
             for (Bundle bundle : bundles) {
                 upload(bundle);
             }
+            latch.countDown();
         }
 
         private void upload(Bundle bundle) {
