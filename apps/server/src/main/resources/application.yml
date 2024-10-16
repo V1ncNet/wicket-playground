@@ -1,0 +1,19 @@
+server:
+  error:
+    include-message: always
+
+spring:
+  application.name: playground
+
+  main:
+    banner-mode: off
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/local
+
+management:
+  server:
+    port: 8081

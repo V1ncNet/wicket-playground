@@ -1,0 +1,47 @@
+volumes:
+  keycloak_database_data:
+
+networks:
+  keycloak_backend:
+
+services:
+  keycloak-database:
+    image: postgres:16.4-alpine
+    volumes:
+      - keycloak_database_data:/var/lib/postgresql/data
+    networks:
+      - keycloak_backend
+    environment:
+      POSTGRES_PASSWORD: fb93b60f8a9eebf7
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -q -U postgres'" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  keycloak:
+    image: keycloak/keycloak:26.0.0
+    depends_on:
+      keycloak-database:
+        condition: service_healthy
+    command: start-dev --import-realm
+    volumes:
+      - ./docker/keycloak/provisioning:/opt/keycloak/data/import
+    networks:
+      - keycloak_backend
+      - default
+    ports:
+      - "8180:8080"
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: secret
+      KC_DB: postgres
+      KC_DB_URL_HOST: keycloak-database
+      KC_DB_URL_PORT: 5432
+      KC_DB_URL_DATABASE: postgres
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: fb93b60f8a9eebf7
+      KC_HEALTH_ENABLED: 'true'
+      KC_HOSTNAME: http://localhost:8180
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: 'true'
+      KC_FEATURES: persistent-user-sessions
