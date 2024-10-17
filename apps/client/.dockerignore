@@ -1,0 +1,9 @@
+.next/
+node_modules/
+
+.dockerignore
+.editorconfig
+.env*.local
+.gitignore
+Dockerfile
+next-env.d.ts

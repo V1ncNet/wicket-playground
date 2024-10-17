@@ -1,0 +1,9 @@
+.idea/
+**/*.iml
+
+src/test/
+target/
+
+.dockerignore
+.gitignore
+Dockerfile
