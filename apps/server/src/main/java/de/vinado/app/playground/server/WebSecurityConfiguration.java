@@ -17,7 +17,7 @@ class WebSecurityConfiguration {
         return http
             .securityMatcher("/api/**")
             .authorizeHttpRequests(requests -> requests
-                .anyRequest().permitAll())
+                .anyRequest().authenticated())
             .oauth2ResourceServer(server -> server
                 .jwt(Customizer.withDefaults()))
             .build();
