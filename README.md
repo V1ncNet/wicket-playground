@@ -4,7 +4,7 @@
 
 ```shell
 $ docker compose exec keycloak \
- /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm local --users realm_file
+ /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm local --users same_file
 ```
 
 ```shell
