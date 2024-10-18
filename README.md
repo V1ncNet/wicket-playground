@@ -3,8 +3,11 @@
 ## Snippets
 
 ```shell
-$ docker compose exec keycloak \
- /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm local --users same_file
+$ docker compose exec -it keycloak sh -c \
+  "cp -Rp /opt/keycloak/data/h2 /tmp; \
+    /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm local --users same_file \
+    --db dev-file --db-url 'jdbc:h2:file:/tmp/h2/keycloakdb;NON_KEYWORDS=VALUE'; \
+  "
 ```
 
 ```shell
