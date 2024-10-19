@@ -20,7 +20,7 @@ export const { auth, handlers } = NextAuth({
         return token;
       }
 
-      return refresh(token);
+      return await refreshAccessToken(token);
     },
     session: async ({ session, token }: { session: Session; token?: JWT; }) => {
       if (token?.error === "RefreshAccessTokenError") {
@@ -35,7 +35,7 @@ export const { auth, handlers } = NextAuth({
   },
 });
 
-async function refresh(token: JWT) {
+async function refreshAccessToken(token: JWT) {
   try {
     const url = `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/token`;
     const formData = new URLSearchParams({
