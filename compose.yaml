@@ -1,4 +1,28 @@
 services:
+  client:
+    build:
+      context: apps/client/
+    ports:
+      - "3000:3000"
+    environment:
+      PLAYGROUND_BACKEND_BASE_URL: http://server:8080
+      AUTH_SECRET: ZaPcWowWOIoAGX7uaeFYkI0a9hiYJcVXAk7QLTEoU1Y=
+      AUTH_TRUST_HOST: 'true'
+      AUTH_URL: http://localhost:3000
+      AUTH_KEYCLOAK_ID: nextjs
+      AUTH_KEYCLOAK_SECRET: AvlS5uX5CkCaZTXiyyOl19C7v0JqYzuZ
+      AUTH_KEYCLOAK_ISSUER: http://localhost:8180/realms/local
+      AUTH_KEYCLOAK_BACKCHANNLE_URL: http://keycloak:8080/realms/local
+
+  server:
+    build:
+      context: apps/server/
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://localhost:8180/realms/local
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak:8080/realms/local/protocol/openid-connect/certs
+
   keycloak:
     image: keycloak/keycloak:26.0.1
     command: start-dev --import-realm
@@ -9,3 +33,4 @@ services:
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: secret
+      KC_HOSTNAME: http://localhost:8180

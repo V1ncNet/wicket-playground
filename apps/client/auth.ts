@@ -2,8 +2,18 @@ import NextAuth, { Account, Session } from "next-auth";
 import Keycloak from "@auth/core/providers/keycloak";
 import { JWT } from "next-auth/jwt";
 
+const backchannelUrl = process.env.AUTH_KEYCLOAK_BACKCHANNLE_URL ?? process.env.AUTH_KEYCLOAK_ISSUER!;
+
 export const { auth, handlers } = NextAuth({
-  providers: [Keycloak],
+  providers: [
+    Keycloak({
+      wellKnown: `${backchannelUrl}/.well-known/openid-connect`,
+      authorization: `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/auth`,
+      token: `${backchannelUrl}/protocol/openid-connect/token`,
+      userinfo: `${backchannelUrl}/protocol/openid-connect/userinfo`,
+      jwks_endpoint: `${backchannelUrl}/protocol/openid-connect/certs`,
+    }),
+  ],
   callbacks: {
     authorized: async ({ auth }) => {
       return !!auth?.user;
@@ -37,7 +47,7 @@ export const { auth, handlers } = NextAuth({
 
 async function refreshAccessToken(token: JWT) {
   try {
-    const url = `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/token`;
+    const url = `${backchannelUrl}/protocol/openid-connect/token`;
     const formData = new URLSearchParams({
       client_id: process.env.AUTH_KEYCLOAK_ID!,
       client_secret: process.env.AUTH_KEYCLOAK_SECRET!,
