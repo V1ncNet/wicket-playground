@@ -19,3 +19,11 @@ $ curl -X POST 'http://localhost:8180/realms/local/protocol/openid-connect/token
  --data-urlencode 'client_secret=SKbyJ5gfwx6l0f9KNqqYolWXzEwPYu09' \
  --data-urlencode 'grant_type=password' | jq
 ```
+
+
+## Users
+
+| Username | Password/Secret | Description            | Realm  | URL                                         |
+|----------|-----------------|------------------------|--------|---------------------------------------------|
+| `user`   | `secret`        | Default user           | local  | http://localhost:8180/admin/local/console/  |
+| `admin`  | `secret`        | Keycloak administrator | master | http://localhost:8180/admin/master/console/ |
