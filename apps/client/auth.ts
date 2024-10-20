@@ -14,6 +14,9 @@ export const { auth, handlers } = NextAuth({
       jwks_endpoint: `${backchannelUrl}/protocol/openid-connect/certs`,
     }),
   ],
+  pages: {
+    signIn: "/signin",
+  },
   callbacks: {
     authorized: async ({ auth }) => {
       return !!auth?.user;
