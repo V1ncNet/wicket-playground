@@ -5,6 +5,7 @@ import { JWT } from "next-auth/jwt";
 const backchannelUrl = process.env.AUTH_KEYCLOAK_BACKCHANNLE_URL ?? process.env.AUTH_KEYCLOAK_ISSUER!;
 
 export const { auth, handlers } = NextAuth({
+  debug: process.env.NODE_ENV !== "production",
   providers: [
     Keycloak({
       wellKnown: `${backchannelUrl}/.well-known/openid-connect`,
