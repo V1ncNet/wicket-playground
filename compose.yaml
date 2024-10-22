@@ -33,4 +33,4 @@ services:
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: secret
-      KC_HOSTNAME: http://localhost:8180
+      KC_HOSTNAME_STRICT: 'false'
