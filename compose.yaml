@@ -1,5 +1,7 @@
 services:
   client:
+    profiles:
+      - client
     build:
       context: apps/client/
     ports:
