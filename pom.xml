@@ -27,7 +27,7 @@
         <dependency.camunda.version>8.2.4</dependency.camunda.version>
         <dependency.closure.version>v20230502</dependency.closure.version>
         <dependency.sass.version>1.62.1</dependency.sass.version>
-        <dependency.wicket.version>10.1.0</dependency.wicket.version>
+        <dependency.wicket.version>10.4.0</dependency.wicket.version>
         <dependency.wicket-webjars.version>4.0.4</dependency.wicket-webjars.version>
         <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
 
