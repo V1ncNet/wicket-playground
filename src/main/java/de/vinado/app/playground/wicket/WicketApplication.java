@@ -2,7 +2,7 @@ package de.vinado.app.playground.wicket;
 
 import de.agilecoders.wicket.webjars.WicketWebjars;
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
-import de.vinado.app.playground.document.presentation.ui.PreviewPage;
+import de.vinado.app.playground.bootstrap.presentation.ui.BootstrapPage;
 import de.vinado.app.playground.wicket.bootstrap.BootstrapResourceAppender;
 import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
 import org.apache.wicket.Page;
@@ -52,7 +52,7 @@ public class WicketApplication extends WebApplication implements ApplicationCont
 
     @Override
     public Class<? extends Page> getHomePage() {
-        return PreviewPage.class;
+        return BootstrapPage.class;
     }
 
     @Override
