@@ -28,7 +28,7 @@
         <dependency.closure.version>v20230502</dependency.closure.version>
         <dependency.sass.version>1.62.1</dependency.sass.version>
         <dependency.wicket.version>10.4.0</dependency.wicket.version>
-        <dependency.wicket-webjars.version>4.0.4</dependency.wicket-webjars.version>
+        <dependency.wicket-webjars.version>4.0.6</dependency.wicket-webjars.version>
         <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
 
         <convergence.protobuf.version>3.22.3</convergence.protobuf.version>
