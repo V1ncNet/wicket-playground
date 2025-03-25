@@ -34,7 +34,7 @@
         <convergence.protobuf.version>3.22.3</convergence.protobuf.version>
         <convergence.zeebe-client.version>8.2.12</convergence.zeebe-client.version>
 
-        <webjar.bootstrap.version>5.2.3</webjar.bootstrap.version>
+        <webjar.bootstrap.version>5.3.3</webjar.bootstrap.version>
         <webjar.bootstrap-icons.version>1.10.5</webjar.bootstrap-icons.version>
 
         <testcontainer.keycloak.version>3.0.0</testcontainer.keycloak.version>
