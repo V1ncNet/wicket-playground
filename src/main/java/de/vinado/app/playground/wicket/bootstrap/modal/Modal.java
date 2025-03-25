@@ -8,6 +8,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxCallListener;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -15,6 +16,7 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.TransparentWebMarkupContainer;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -28,6 +30,7 @@ import org.danekja.java.util.function.serializable.SerializableUnaryOperator;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public class Modal extends Panel {
 
@@ -195,6 +198,20 @@ public class Modal extends Panel {
         });
     }
 
+    public Modal addSubmitAction() {
+        return addSubmitAction(SerializableUnaryOperator.identity());
+    }
+
+    public Modal addSubmitAction(SerializableUnaryOperator<SubmitAction> customizer) {
+        Form<?> form = findForm().orElseThrow(() -> new IllegalStateException("Form cannot be found in the hierarchy"));
+        return addAction(id -> {
+            ResourceModel label = new ResourceModel("submit", "Submit");
+            SubmitAction action = new SubmitAction(id, form, label);
+            customizer.apply(action);
+            return action;
+        });
+    }
+
     public Modal addAction(SerializableFunction<String, AbstractLink> constructor) {
         AbstractLink button = constructor.apply("action");
         return addAction(button);
@@ -219,6 +236,14 @@ public class Modal extends Panel {
 
     private String createActionScript(String markupId, String action) {
         return "bootstrap.Modal.getInstance(document.getElementById('" + markupId + "'))." + action + "();";
+    }
+
+    @SuppressWarnings("rawtypes")
+    private Optional<Form> findForm() {
+        return body.streamChildren()
+            .filter(Form.class::isInstance)
+            .map(Form.class::cast)
+            .findFirst();
     }
 
 
@@ -281,6 +306,42 @@ public class Modal extends Panel {
         }
 
         public CloseAction label(IModel<String> label) {
+            setDefaultModel(label);
+            return this;
+        }
+
+        // TODO: Close button size
+
+        // TODO: Close button color
+    }
+
+    public class SubmitAction extends AjaxSubmitLink {
+
+        private final IModel<String> label;
+
+        public SubmitAction(String id, Form<?> form, IModel<String> label) {
+            super(id, form);
+
+            this.label = label;
+        }
+
+        @Override
+        protected void onInitialize() {
+            super.onInitialize();
+
+            add(AttributeModifier.replace("type", "submit"));
+            add(AttributeModifier.replace("form", getForm().getMarkupId(true)));
+            add(AttributeModifier.append("class", "btn btn-primary"));
+
+            setBody(label);
+        }
+
+        @Override
+        protected void onAfterSubmit(AjaxRequestTarget target) {
+            appendCloseDialogJavaScript(target);
+        }
+
+        public SubmitAction label(IModel<String> label) {
             setDefaultModel(label);
             return this;
         }
