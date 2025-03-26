@@ -74,24 +74,12 @@ public class ModalForm extends GenericPanel<ModalForm.Bean> {
 
             @Override
             protected void onValid() {
-                add(AttributeModifier.replace("class", "form-control"));
-                RequestCycle.get().find(AjaxRequestTarget.class)
-                    .ifPresent(target -> target.add(messageTextFieldFeedback));
+                handleValid(this, messageTextFieldFeedback);
             }
 
             @Override
             protected void onInvalid() {
-                FeedbackMessages messages = getFeedbackMessages();
-                if (messages.hasMessage(message -> Objects.equals(this, message.getReporter())
-                    && FeedbackMessage.ERROR == message.getLevel())) {
-                    add(AttributeModifier.replace("class", "form-control is-invalid"));
-                } else {
-                    add(AttributeModifier.replace("class", "form-control is-valid"));
-                }
-
-                add(AttributeModifier.replace("aria-describedby", messageTextFieldFeedback.getMarkupId()));
-                RequestCycle.get().find(AjaxRequestTarget.class)
-                    .ifPresent(target -> target.add(messageTextFieldFeedback));
+                handleInvalid(this, messageTextFieldFeedback);
             }
         };
         textField.setLabel(label);
@@ -118,24 +106,12 @@ public class ModalForm extends GenericPanel<ModalForm.Bean> {
 
             @Override
             protected void onValid() {
-                add(AttributeModifier.replace("class", "form-control"));
-                RequestCycle.get().find(AjaxRequestTarget.class)
-                    .ifPresent(target -> target.add(amountNumberFieldFeedback));
+                handleValid(this, amountNumberFieldFeedback);
             }
 
             @Override
             protected void onInvalid() {
-                FeedbackMessages messages = getFeedbackMessages();
-                if (messages.hasMessage(message -> Objects.equals(this, message.getReporter())
-                    && FeedbackMessage.ERROR == message.getLevel())) {
-                    add(AttributeModifier.replace("class", "form-control is-invalid"));
-                } else {
-                    add(AttributeModifier.replace("class", "form-control is-valid"));
-                }
-
-                add(AttributeModifier.replace("aria-describedby", amountNumberFieldFeedback.getMarkupId()));
-                RequestCycle.get().find(AjaxRequestTarget.class)
-                    .ifPresent(target -> target.add(amountNumberFieldFeedback));
+                handleInvalid(this, amountNumberFieldFeedback);
             }
         };
         numberField.setType(Integer.class);
@@ -154,6 +130,28 @@ public class ModalForm extends GenericPanel<ModalForm.Bean> {
 
     protected WebMarkupContainer amountNumberFieldFeedback(String wicketId) {
         return new Feedback(wicketId, amountNumberField);
+    }
+
+    private void handleValid(FormComponent<?> formComponent, WebMarkupContainer feedback) {
+        formComponent.add(AttributeModifier.replace("class", "form-control"));
+        updateFeedback(formComponent, feedback);
+    }
+
+    private void handleInvalid(FormComponent<?> formComponent, WebMarkupContainer feedback) {
+        FeedbackMessages messages = formComponent.getFeedbackMessages();
+        if (messages.hasMessage(message -> Objects.equals(formComponent, message.getReporter())
+            && FeedbackMessage.ERROR == message.getLevel())) {
+            formComponent.add(AttributeModifier.replace("class", "form-control is-invalid"));
+        } else {
+            formComponent.add(AttributeModifier.replace("class", "form-control is-valid"));
+        }
+
+        updateFeedback(formComponent, feedback);
+    }
+
+    private void updateFeedback(FormComponent<?> formComponent, WebMarkupContainer feedback) {
+        formComponent.add(AttributeModifier.replace("aria-describedby", feedback.getMarkupId()));
+        RequestCycle.get().find(AjaxRequestTarget.class).ifPresent(target -> target.add(feedback));
     }
 
 
