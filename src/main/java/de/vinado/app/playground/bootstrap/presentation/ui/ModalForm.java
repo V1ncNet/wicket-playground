@@ -9,11 +9,13 @@ import org.apache.wicket.feedback.FeedbackMessages;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
 import java.io.Serializable;
@@ -29,6 +31,8 @@ public class ModalForm extends GenericPanel<ModalForm.Bean> {
 
     private FormComponent<String> messageTextField;
     private WebMarkupContainer messageTextFieldFeedback;
+    private FormComponent<Integer> amountNumberField;
+    private WebMarkupContainer amountNumberFieldFeedback;
 
     public ModalForm(String id, IModel<Bean> model) {
         super(id, model);
@@ -44,6 +48,9 @@ public class ModalForm extends GenericPanel<ModalForm.Bean> {
         queue(messageTextField = messageTextField("message"));
         queue(messageTextFieldLabel("messageLabel"));
         queue(messageTextFieldFeedback = messageTextFieldFeedback("messageFeedback"));
+        queue(amountNumberField = amountNumberField("amount"));
+        queue(amountNumberFieldLabel("amountLabel"));
+        queue(amountNumberFieldFeedback = amountNumberFieldFeedback("amountFeedback"));
     }
 
     protected Form<Bean> form(String wicketId) {
@@ -105,10 +112,56 @@ public class ModalForm extends GenericPanel<ModalForm.Bean> {
         return new Feedback(wicketId, messageTextField);
     }
 
+    protected FormComponent<Integer> amountNumberField(String wicketId) {
+        IModel<String> label = amountNumberFieldLabelModel();
+        NumberTextField<Integer> numberField = new NumberTextField<>(wicketId) {
+
+            @Override
+            protected void onValid() {
+                add(AttributeModifier.replace("class", "form-control"));
+                RequestCycle.get().find(AjaxRequestTarget.class)
+                    .ifPresent(target -> target.add(amountNumberFieldFeedback));
+            }
+
+            @Override
+            protected void onInvalid() {
+                FeedbackMessages messages = getFeedbackMessages();
+                if (messages.hasMessage(message -> Objects.equals(this, message.getReporter())
+                    && FeedbackMessage.ERROR == message.getLevel())) {
+                    add(AttributeModifier.replace("class", "form-control is-invalid"));
+                } else {
+                    add(AttributeModifier.replace("class", "form-control is-valid"));
+                }
+
+                add(AttributeModifier.replace("aria-describedby", amountNumberFieldFeedback.getMarkupId()));
+                RequestCycle.get().find(AjaxRequestTarget.class)
+                    .ifPresent(target -> target.add(amountNumberFieldFeedback));
+            }
+        };
+        numberField.setType(Integer.class);
+        numberField.setLabel(label);
+        numberField.add(RangeValidator.range(0, Integer.MAX_VALUE));
+        return numberField;
+    }
+
+    protected IModel<String> amountNumberFieldLabelModel() {
+        return new ResourceModel("amount", "Amount");
+    }
+
+    protected WebMarkupContainer amountNumberFieldLabel(String wicketId) {
+        return new FormLabel(wicketId, amountNumberField);
+    }
+
+    protected WebMarkupContainer amountNumberFieldFeedback(String wicketId) {
+        return new Feedback(wicketId, amountNumberField);
+    }
+
 
     @Data
     public static class Bean implements Serializable {
 
         private String message;
+
+        private Integer amount = 0;
     }
 }
