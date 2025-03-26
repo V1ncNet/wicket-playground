@@ -11,12 +11,15 @@ public class FormLabel extends WebMarkupContainer {
 
     private final FormComponent<?> formComponent;
 
+    private FormComponent<?> reference;
+
     public FormLabel(String id, FormComponent<?> formComponent) {
         super(id);
 
         assertLabel(formComponent, "Provided form component does not have a label set.");
 
         this.formComponent = formComponent;
+        this.reference = formComponent;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class FormLabel extends WebMarkupContainer {
 
         checkComponentTag(tag, "label");
 
-        tag.put("for", formComponent.getMarkupId());
+        tag.put("for", reference.getMarkupId());
     }
 
     @Override
@@ -47,6 +50,11 @@ public class FormLabel extends WebMarkupContainer {
         }
 
         replaceComponentTagBody(markupStream, openTag, label);
+    }
+
+    public FormLabel references(FormComponent<?> formComponent) {
+        this.reference = formComponent;
+        return this;
     }
 
     private static void assertLabel(LabeledWebMarkupContainer provider, String message) {

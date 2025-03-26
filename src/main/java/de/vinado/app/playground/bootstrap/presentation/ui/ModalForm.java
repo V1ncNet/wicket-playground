@@ -1,12 +1,8 @@
 package de.vinado.app.playground.bootstrap.presentation.ui;
 
-import de.vinado.app.playground.wicket.bootstrap.form.Feedback;
-import de.vinado.app.playground.wicket.bootstrap.form.FormLabel;
-import org.apache.wicket.AttributeModifier;
+import de.vinado.app.playground.wicket.bootstrap.form.FormControl;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.feedback.FeedbackMessage;
-import org.apache.wicket.feedback.FeedbackMessages;
-import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.NumberTextField;
@@ -19,7 +15,6 @@ import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 public class ModalForm extends GenericPanel<ModalForm.Bean> {
 
     private final Form<Bean> form;
-
-    private FormComponent<String> messageTextField;
-    private WebMarkupContainer messageTextFieldFeedback;
-    private FormComponent<Integer> amountNumberField;
-    private WebMarkupContainer amountNumberFieldFeedback;
 
     public ModalForm(String id, IModel<Bean> model) {
         super(id, model);
@@ -45,12 +35,8 @@ public class ModalForm extends GenericPanel<ModalForm.Bean> {
         super.onInitialize();
 
         queue(form);
-        queue(messageTextField = messageTextField("message"));
-        queue(messageTextFieldLabel("messageLabel"));
-        queue(messageTextFieldFeedback = messageTextFieldFeedback("messageFeedback"));
-        queue(amountNumberField = amountNumberField("amount"));
-        queue(amountNumberFieldLabel("amountLabel"));
-        queue(amountNumberFieldFeedback = amountNumberFieldFeedback("amountFeedback"));
+        queue(messageInput("message"));
+        queue(amountInput("amount"));
     }
 
     protected Form<Bean> form(String wicketId) {
@@ -68,18 +54,13 @@ public class ModalForm extends GenericPanel<ModalForm.Bean> {
         };
     }
 
-    protected FormComponent<String> messageTextField(String wicketId) {
+    protected FormControl<String> messageInput(String wicketId) {
         IModel<String> label = messageTextFieldLabelModel();
-        TextField<String> textField = new TextField<>(wicketId) {
+        FormControl<String> textField = new FormControl<>(wicketId) {
 
             @Override
-            protected void onValid() {
-                handleValid(this, messageTextFieldFeedback);
-            }
-
-            @Override
-            protected void onInvalid() {
-                handleInvalid(this, messageTextFieldFeedback);
+            protected FormComponent<String> control(String wicketId) {
+                return new TextField<>(wicketId);
             }
         };
         textField.setLabel(label);
@@ -92,29 +73,23 @@ public class ModalForm extends GenericPanel<ModalForm.Bean> {
         return new ResourceModel("message", "Message");
     }
 
-    protected WebMarkupContainer messageTextFieldLabel(String wicketId) {
-        return new FormLabel(wicketId, messageTextField);
-    }
-
-    protected WebMarkupContainer messageTextFieldFeedback(String wicketId) {
-        return new Feedback(wicketId, messageTextField);
-    }
-
-    protected FormComponent<Integer> amountNumberField(String wicketId) {
+    protected FormComponent<Integer> amountInput(String wicketId) {
         IModel<String> label = amountNumberFieldLabelModel();
-        NumberTextField<Integer> numberField = new NumberTextField<>(wicketId) {
+        FormControl<Integer> numberField = new FormControl<>(wicketId) {
 
             @Override
-            protected void onValid() {
-                handleValid(this, amountNumberFieldFeedback);
-            }
+            protected FormComponent<Integer> control(String wicketId) {
+                return new NumberTextField<>(wicketId, Integer.class) {
 
-            @Override
-            protected void onInvalid() {
-                handleInvalid(this, amountNumberFieldFeedback);
+                    @Override
+                    protected void onComponentTag(ComponentTag tag) {
+                        tag.put("type", "number");
+
+                        super.onComponentTag(tag);
+                    }
+                };
             }
         };
-        numberField.setType(Integer.class);
         numberField.setLabel(label);
         numberField.add(RangeValidator.range(0, Integer.MAX_VALUE));
         return numberField;
@@ -122,36 +97,6 @@ public class ModalForm extends GenericPanel<ModalForm.Bean> {
 
     protected IModel<String> amountNumberFieldLabelModel() {
         return new ResourceModel("amount", "Amount");
-    }
-
-    protected WebMarkupContainer amountNumberFieldLabel(String wicketId) {
-        return new FormLabel(wicketId, amountNumberField);
-    }
-
-    protected WebMarkupContainer amountNumberFieldFeedback(String wicketId) {
-        return new Feedback(wicketId, amountNumberField);
-    }
-
-    private void handleValid(FormComponent<?> formComponent, WebMarkupContainer feedback) {
-        formComponent.add(AttributeModifier.replace("class", "form-control"));
-        updateFeedback(formComponent, feedback);
-    }
-
-    private void handleInvalid(FormComponent<?> formComponent, WebMarkupContainer feedback) {
-        FeedbackMessages messages = formComponent.getFeedbackMessages();
-        if (messages.hasMessage(message -> Objects.equals(formComponent, message.getReporter())
-            && FeedbackMessage.ERROR == message.getLevel())) {
-            formComponent.add(AttributeModifier.replace("class", "form-control is-invalid"));
-        } else {
-            formComponent.add(AttributeModifier.replace("class", "form-control is-valid"));
-        }
-
-        updateFeedback(formComponent, feedback);
-    }
-
-    private void updateFeedback(FormComponent<?> formComponent, WebMarkupContainer feedback) {
-        formComponent.add(AttributeModifier.replace("aria-describedby", feedback.getMarkupId()));
-        RequestCycle.get().find(AjaxRequestTarget.class).ifPresent(target -> target.add(feedback));
     }
 
 
