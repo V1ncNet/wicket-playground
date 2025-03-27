@@ -59,18 +59,12 @@ public class Modal extends Panel {
 
         title.setOutputMarkupId(true);
 
-        // TODO: Move dialog attributes
         add(AttributeModifier.append("class", "modal fade"));
         add(AttributeModifier.append("tabindex", "-1"));
         add(AttributeModifier.append("aria-labelledby", title.getMarkupId()));
-        add(AttributeModifier.append("aria-hidden", "true"));
 
         header.add(title);
-
-        Component closeButton;
-        header.add(closeButton = closeButton("closeButton"));
-        closeButton.add(AttributeModifier.append("class", "nobusy"));
-
+        header.add(closeButton("closeButton"));
         footer.add(actions("actions"));
 
         WebMarkupContainer dialog;
@@ -78,13 +72,6 @@ public class Modal extends Panel {
         dialog.add(header, body, footer);
 
         add(new ModalCloseBehavior());
-    }
-
-    @Override
-    protected void onComponentTag(ComponentTag tag) {
-        super.onComponentTag(tag);
-
-        // TODO: Move dialog attributes
     }
 
     @Override
