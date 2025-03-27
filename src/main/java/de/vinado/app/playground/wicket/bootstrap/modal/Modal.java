@@ -7,6 +7,7 @@ import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxCallListener;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes.EventPropagation;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
@@ -368,7 +369,7 @@ public class Modal extends Panel {
         protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
             super.updateAjaxAttributes(attributes);
 
-            attributes.setEventPropagation(AjaxRequestAttributes.EventPropagation.BUBBLE);
+            attributes.setEventPropagation(EventPropagation.BUBBLE);
         }
 
         private void handleCloseEvent(AjaxRequestTarget target) {
