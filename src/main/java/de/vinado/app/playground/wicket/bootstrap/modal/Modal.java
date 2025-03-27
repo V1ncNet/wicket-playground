@@ -169,6 +169,10 @@ public class Modal extends Panel {
         return this;
     }
 
+    public void clearActions() {
+        actions.clear();
+    }
+
     public Modal addCloseAction() {
         return addCloseAction(SerializableUnaryOperator.identity());
     }
@@ -214,11 +218,11 @@ public class Modal extends Panel {
         return this;
     }
 
-    private void appendShowDialogJavaScript(IPartialPageRequestHandler target) {
+    protected void appendShowDialogJavaScript(IPartialPageRequestHandler target) {
         target.appendJavaScript(createActionScript(getMarkupId(true), "show"));
     }
 
-    private void appendCloseDialogJavaScript(IPartialPageRequestHandler target) {
+    protected void appendCloseDialogJavaScript(IPartialPageRequestHandler target) {
         target.prependJavaScript(createActionScript(getMarkupId(true), "hide"));
     }
 
@@ -369,7 +373,7 @@ public class Modal extends Panel {
         }
 
         private void resetComponents() {
-            actions.clear();
+            clearActions();
         }
 
         private void hideDialog(IPartialPageRequestHandler target) {
