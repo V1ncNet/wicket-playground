@@ -95,12 +95,12 @@ public class Modal extends Panel {
         response.render(OnDomReadyHeaderItem.forScript(initializationScript));
     }
 
-    protected Component title(String wicketId) {
-        return new Label(wicketId, Model.of());
-    }
-
     protected WebMarkupContainer dialog(String wicketId) {
         return new ModalDialog(wicketId);
+    }
+
+    protected Component title(String wicketId) {
+        return new Label(wicketId, Model.of());
     }
 
     protected WebMarkupContainer header(String wicketId) {
@@ -121,10 +121,6 @@ public class Modal extends Panel {
 
     protected ListView<Component> actions(String wicketId) {
         return new Actions(wicketId, actions);
-    }
-
-    protected IModel<String> closeButtonLabel() {
-        return new ResourceModel("close", "Close");
     }
 
     public Modal hideHeader(boolean hide) {
@@ -179,11 +175,15 @@ public class Modal extends Panel {
 
     public Modal addCloseAction(SerializableUnaryOperator<CloseAction> customizer) {
         return addAction(id -> {
-            ResourceModel label = new ResourceModel("close", "Close");
+            IModel<String> label = closeActionLabel();
             CloseAction action = new CloseAction(id, label);
             customizer.apply(action);
             return action;
         });
+    }
+
+    protected IModel<String> closeActionLabel() {
+        return new ResourceModel("close", "Close");
     }
 
     public Modal addSubmitAction() {
@@ -193,11 +193,15 @@ public class Modal extends Panel {
     public Modal addSubmitAction(SerializableUnaryOperator<SubmitAction> customizer) {
         Form<?> form = findForm().orElseThrow(() -> new IllegalStateException("Form cannot be found in the hierarchy"));
         return addAction(id -> {
-            ResourceModel label = new ResourceModel("submit", "Submit");
+            ResourceModel label = submitActionLabel();
             SubmitAction action = new SubmitAction(id, form, label);
             customizer.apply(action);
             return action;
         });
+    }
+
+    protected ResourceModel submitActionLabel() {
+        return new ResourceModel("submit", "Submit");
     }
 
     public Modal addAction(SerializableFunction<String, AbstractLink> constructor) {
