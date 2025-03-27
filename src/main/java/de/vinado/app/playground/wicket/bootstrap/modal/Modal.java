@@ -190,6 +190,23 @@ public class Modal extends Panel {
         return new ResourceModel("close", "Close");
     }
 
+    public Modal addCancelAction() {
+        return addCancelAction(SerializableUnaryOperator.identity());
+    }
+
+    public Modal addCancelAction(SerializableUnaryOperator<CloseAction> customizer) {
+        return addCloseAction(action -> {
+            CloseAction label = action
+                .label(cancelActionLabel());
+            customizer.apply(label);
+            return label;
+        });
+    }
+
+    protected IModel<String> cancelActionLabel() {
+        return new ResourceModel("cancel", "Cancel");
+    }
+
     public Modal addSubmitAction() {
         return addSubmitAction(SerializableUnaryOperator.identity());
     }

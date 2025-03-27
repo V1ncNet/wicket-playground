@@ -30,7 +30,7 @@ public class BootstrapPage extends PlaygroundPage {
                 modal
                     .title(Model.of("Bootstrap Modal"))
                     .content(id -> new ModalForm(id, model))
-                    .addCloseAction()
+                    .addCancelAction()
                     .addSubmitAction()
                     .show(target);
             }
