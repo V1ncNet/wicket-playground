@@ -7,6 +7,10 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.ResourceModel;
+
+import static de.vinado.app.playground.wicket.bootstrap.modal.Modal.CloseAction;
+import static de.vinado.app.playground.wicket.bootstrap.modal.Modal.SubmitAction;
 
 public class BootstrapPage extends PlaygroundPage {
 
@@ -30,8 +34,8 @@ public class BootstrapPage extends PlaygroundPage {
                 modal
                     .title(Model.of("Bootstrap Modal"))
                     .content(id -> new ModalForm(id, model))
-                    .addCancelAction()
-                    .addSubmitAction()
+                    .addAction(id -> new CloseAction(id, new ResourceModel("cancel", "Cancel")))
+                    .addAction(id -> new SubmitAction(id, new ResourceModel("submit", "Submit")))
                     .show(target);
             }
         });

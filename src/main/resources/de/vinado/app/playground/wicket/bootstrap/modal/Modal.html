@@ -9,7 +9,6 @@
                 <button
                     type="button"
                     class="btn-close"
-                    data-bs-dismiss="modal"
                     aria-label="Close"
                     wicket:message="aria-label:close"
                     wicket:id="closeButton"
@@ -20,7 +19,11 @@
             </div>
             <div class="modal-footer" wicket:id="footer">
                 <wicket:container wicket:id="actions">
-                    <button wicket:id="action"></button>
+                    <wicket:container wicket:id="action">
+                        <button wicket:id="button">
+                            <wicket:container wicket:id="label"></wicket:container>
+                        </button>
+                    </wicket:container>
                 </wicket:container>
             </div>
         </div>

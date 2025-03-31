@@ -10,7 +10,7 @@ import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes.EventPropagation;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
-import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
@@ -24,22 +24,28 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.util.string.Strings;
 import org.danekja.java.util.function.serializable.SerializableFunction;
-import org.danekja.java.util.function.serializable.SerializableUnaryOperator;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+
 public class Modal extends Panel {
+
+    public static final String CONTENT_WICKET_ID = "content";
+    public static final String ACTION_WICKET_ID = "action";
 
     private final Component title;
     private final WebMarkupContainer header;
     private final WebMarkupContainer body;
     private final WebMarkupContainer footer;
     private final List<Component> actions = new LinkedList<>();
+
+    private Size size = Size.DEFAULT;
 
     public Modal(String id) {
         super(id);
@@ -59,10 +65,6 @@ public class Modal extends Panel {
 
         title.setOutputMarkupId(true);
 
-        add(AttributeModifier.append("class", "modal fade"));
-        add(AttributeModifier.append("tabindex", "-1"));
-        add(AttributeModifier.append("aria-labelledby", title.getMarkupId()));
-
         header.add(title);
         header.add(closeButton("closeButton"));
         footer.add(actions("actions"));
@@ -72,6 +74,15 @@ public class Modal extends Panel {
         dialog.add(header, body, footer);
 
         add(new ModalCloseBehavior());
+    }
+
+    @Override
+    protected void onComponentTag(ComponentTag tag) {
+        super.onComponentTag(tag);
+
+        tag.put("class", "modal fade");
+        tag.put("tabindex", "-1");
+        tag.put("aria-labelledby", title.getMarkupId());
     }
 
     @Override
@@ -96,7 +107,7 @@ public class Modal extends Panel {
     }
 
     protected WebMarkupContainer dialog(String wicketId) {
-        return new ModalDialog(wicketId);
+        return new Dialog(wicketId);
     }
 
     protected Component title(String wicketId) {
@@ -116,11 +127,17 @@ public class Modal extends Panel {
     }
 
     protected Component closeButton(String wicketId) {
-        return new WebMarkupContainer(wicketId);
+        return new CloseButton(wicketId);
     }
 
     protected ListView<Component> actions(String wicketId) {
-        return new Actions(wicketId, actions);
+        return new ListView<>(wicketId, actions) {
+
+            @Override
+            protected void populateItem(ListItem<Component> item) {
+                item.add(item.getModelObject());
+            }
+        };
     }
 
     public Modal hideHeader(boolean hide) {
@@ -128,7 +145,10 @@ public class Modal extends Panel {
         return this;
     }
 
-    // TODO: Modal dialog size
+    public Modal size(Size size) {
+        this.size = size;
+        return this;
+    }
 
     public Modal title(IModel<?> title) {
         this.title.setDefaultModel(title);
@@ -136,17 +156,21 @@ public class Modal extends Panel {
     }
 
     public <T extends Component> Modal content(SerializableFunction<String, T> constructor) {
-        Component component = constructor.apply("content");
+        Component component = constructor.apply(CONTENT_WICKET_ID);
         return content(component);
     }
 
-    private Modal content(Component component) {
+    public Modal content(Component component) {
+        if (!CONTENT_WICKET_ID.equals(component.getId())) {
+            throw new IllegalArgumentException("Invalid content Wicket ID. Must be '" + CONTENT_WICKET_ID + "'.");
+        }
+
         component.setRenderBodyOnly(true);
         body.addOrReplace(component);
         return this;
     }
 
-    public Modal show(IPartialPageRequestHandler target) {
+    public Modal show(AjaxRequestTarget target) {
         assertContent();
         showModal(target);
         appendShowDialogJavaScript(target);
@@ -154,161 +178,232 @@ public class Modal extends Panel {
     }
 
     private void assertContent() {
-        if (null == body.get("content")) {
+        if (null == body.get(CONTENT_WICKET_ID)) {
             throw new WicketRuntimeException("Missing modal content. Use modal.content(...).show(...)");
         }
     }
 
-    private void showModal(IPartialPageRequestHandler target) {
+    private void showModal(AjaxRequestTarget target) {
         setVisible(true);
         target.add(this);
     }
 
-    public Modal close(IPartialPageRequestHandler target) {
-        appendCloseDialogJavaScript(target);
+    public Modal hide(AjaxRequestTarget target) {
+        appendHideDialogJavaScript(target);
         return this;
     }
 
-    public void clearActions() {
-        actions.clear();
-    }
-
-    public Modal addCloseAction() {
-        return addCloseAction(SerializableUnaryOperator.identity());
-    }
-
-    public Modal addCloseAction(SerializableUnaryOperator<CloseAction> customizer) {
-        return addAction(id -> {
-            IModel<String> label = closeActionLabel();
-            CloseAction action = new CloseAction(id, label);
-            customizer.apply(action);
-            return action;
-        });
-    }
-
-    protected IModel<String> closeActionLabel() {
-        return new ResourceModel("close", "Close");
-    }
-
-    public Modal addCancelAction() {
-        return addCancelAction(SerializableUnaryOperator.identity());
-    }
-
-    public Modal addCancelAction(SerializableUnaryOperator<CloseAction> customizer) {
-        return addCloseAction(action -> {
-            CloseAction label = action
-                .label(cancelActionLabel());
-            customizer.apply(label);
-            return label;
-        });
-    }
-
-    protected IModel<String> cancelActionLabel() {
-        return new ResourceModel("cancel", "Cancel");
-    }
-
-    public Modal addSubmitAction() {
-        return addSubmitAction(SerializableUnaryOperator.identity());
-    }
-
-    public Modal addSubmitAction(SerializableUnaryOperator<SubmitAction> customizer) {
-        Form<?> form = findForm().orElseThrow(() -> new IllegalStateException("Form cannot be found in the hierarchy"));
-        return addAction(id -> {
-            ResourceModel label = submitActionLabel();
-            SubmitAction action = new SubmitAction(id, form, label);
-            customizer.apply(action);
-            return action;
-        });
-    }
-
-    protected ResourceModel submitActionLabel() {
-        return new ResourceModel("submit", "Submit");
-    }
-
-    public Modal addAction(SerializableFunction<String, AbstractLink> constructor) {
-        AbstractLink button = constructor.apply("action");
+    public Modal addAction(SerializableFunction<String, Action> constructor) {
+        Action button = constructor.apply(ACTION_WICKET_ID);
         return addAction(button);
     }
 
-    private Modal addAction(AbstractLink action) {
+    public Modal addAction(Action action) {
+        if (!ACTION_WICKET_ID.equals(action.getId())) {
+            throw new IllegalArgumentException("Invalid action Wicket ID. Must be '" + ACTION_WICKET_ID + "'.");
+        }
+
         actions.add(action);
         return this;
     }
 
-    protected void appendShowDialogJavaScript(IPartialPageRequestHandler target) {
+    public Modal clearActions() {
+        actions.clear();
+        return this;
+    }
+
+    protected void appendShowDialogJavaScript(AjaxRequestTarget target) {
         target.appendJavaScript(createActionScript(getMarkupId(true), "show"));
     }
 
-    protected void appendCloseDialogJavaScript(IPartialPageRequestHandler target) {
+    protected void appendHideDialogJavaScript(AjaxRequestTarget target) {
         target.prependJavaScript(createActionScript(getMarkupId(true), "hide"));
     }
 
-    private String createInitializationScript(String markupId) {
+    protected static String createInitializationScript(String markupId) {
         return "new bootstrap.Modal(document.getElementById('" + markupId + "'));";
     }
 
-    private String createActionScript(String markupId, String action) {
+    protected static String createActionScript(String markupId, String action) {
         return "bootstrap.Modal.getInstance(document.getElementById('" + markupId + "'))." + action + "();";
     }
 
-    @SuppressWarnings("rawtypes")
-    private Optional<Form> findForm() {
-        return body.streamChildren()
-            .filter(Form.class::isInstance)
-            .map(Form.class::cast)
-            .findFirst();
+
+    @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+    public enum Size {
+
+        SMALL("modal-sm"),
+        DEFAULT(""),
+        LARGE("modal-lg"),
+        EXTRA_LARGE("modal-xl"),
+        ;
+
+        private final String cssClassName;
     }
 
 
-    private static class ModalDialog extends TransparentWebMarkupContainer {
+    public static abstract class Action extends TransparentWebMarkupContainer {
 
-        public ModalDialog(String id) {
+        private final IModel<String> label;
+        private final Color color;
+
+        public Action(String id, IModel<String> label) {
+            this(id, label, Color.SECONDARY);
+        }
+
+        public Action(String id, IModel<String> label, Color color) {
             super(id);
-        }
 
-        @Override
-        protected void onComponentTag(ComponentTag tag) {
-            super.onComponentTag(tag);
-
-            // TODO: Dialog sizes
-        }
-    }
-
-    private static class Actions extends ListView<Component> {
-
-        public Actions(String id, List<Component> actions) {
-            super(id, actions);
-        }
-
-        @Override
-        protected void populateItem(ListItem<Component> item) {
-            item.add(item.getModelObject());
-        }
-    }
-
-
-    public class CloseAction extends AjaxLink<String> {
-
-        public CloseAction(String id, IModel<String> label) {
-            super(id, label);
+            this.label = label;
+            this.color = color;
         }
 
         @Override
         protected void onInitialize() {
             super.onInitialize();
 
-            setBody(getDefaultModel());
+            add(button()
+                .add(label())
+                .add(color()));
+        }
 
-            add(AttributeModifier.replace("type", "button"));
-            add(AttributeModifier.replace("data-bs-dismiss", "modal"));
-            add(AttributeModifier.append("class", "btn btn-secondary"));
+        private AbstractLink button() {
+            AbstractLink button = button("button");
+            configure(button);
+            return button;
+        }
+
+        protected abstract AbstractLink button(String wicketId);
+
+        protected void configure(AbstractLink link) {
+            link.add(new AttributeModifier("type", "button"));
+        }
+
+        private Behavior color() {
+            return new AttributeModifier("class", "btn " + color.cssClassName);
+        }
+
+        private Label label() {
+            return new Label("label", label);
+        }
+
+
+        @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+        public enum Color {
+
+            PRIMARY("btn-primary"),
+            SECONDARY("btn-secondary"),
+            SUCCESS("btn-success"),
+            DANGER("btn-danger"),
+            WARNING("btn-warning"),
+            INFO("btn-info"),
+            LIGHT("btn-light"),
+            DARK("btn-dark"),
+            LINK("btn-link"),
+            ;
+
+            private final String cssClassName;
+        }
+    }
+
+    public static abstract class AjaxAction extends Action {
+
+        public AjaxAction(String id, IModel<String> label) {
+            super(id, label, Color.SECONDARY);
+        }
+
+        public AjaxAction(String id, IModel<String> label, Color color) {
+            super(id, label, color);
+        }
+
+        @Override
+        protected AbstractLink button(String wicketId) {
+            return new AjaxLink<Void>(wicketId) {
+
+                @Override
+                public void onClick(AjaxRequestTarget target) {
+                    AjaxAction.this.onClick(target);
+                }
+            };
+        }
+
+        protected abstract void onClick(AjaxRequestTarget target);
+    }
+
+
+    public static class CloseAction extends Action {
+
+        public CloseAction(String id, IModel<String> label) {
+            this(id, label, Color.SECONDARY);
+        }
+
+        public CloseAction(String id, IModel<String> label, Color color) {
+            super(id, label, color);
+        }
+
+        @Override
+        protected AbstractLink button(String wicketId) {
+            return new CloseButton(wicketId);
+        }
+    }
+
+    public static class SubmitAction extends Action {
+
+        public SubmitAction(String id, IModel<String> label) {
+            this(id, label, Color.PRIMARY);
+        }
+
+        public SubmitAction(String id, IModel<String> label, Color color) {
+            super(id, label, color);
+        }
+
+        @Override
+        protected AbstractLink button(String wicketId) {
+            Form<?> form = form().orElse(null);
+            return new AjaxSubmitLink(wicketId, form) {
+
+                @Override
+                protected void onSubmit(AjaxRequestTarget target) {
+                    SubmitAction.this.onSubmit(target);
+                }
+            };
+        }
+
+        @Override
+        protected void configure(AbstractLink link) {
+            super.configure(link);
+
+            link.add(new AttributeModifier("type", "submit"));
+            form().ifPresent(form -> link.add(new AttributeModifier("form", form.getMarkupId(true))));
+        }
+
+        @SuppressWarnings("rawtypes")
+        private Optional<Form> form() {
+            Modal modal = findParent(Modal.class);
+            return modal.streamChildren()
+                .filter(Form.class::isInstance)
+                .map(Form.class::cast)
+                .findFirst();
+        }
+
+        protected void onSubmit(AjaxRequestTarget target) {
+            Modal modal = findParent(Modal.class);
+            modal.appendHideDialogJavaScript(target);
+        }
+    }
+
+    private static class CloseButton extends AjaxLink<Void> {
+
+        public CloseButton(String id) {
+            super(id);
         }
 
         @Override
         protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
             super.updateAjaxAttributes(attributes);
 
-            String modalMarkupId = Modal.this.getMarkupId();
+            Modal modal = findParent(Modal.class);
+            String modalMarkupId = modal.getMarkupId();
             AjaxCallListener listener = new AjaxCallListener();
             listener.onBeforeSend(createActionScript(modalMarkupId, "hide"));
             attributes.getAjaxCallListeners().add(listener);
@@ -317,51 +412,21 @@ public class Modal extends Panel {
         @Override
         public void onClick(AjaxRequestTarget target) {
         }
-
-        public CloseAction label(IModel<String> label) {
-            setDefaultModel(label);
-            return this;
-        }
-
-        // TODO: Close button size
-
-        // TODO: Close button color
     }
 
-    public class SubmitAction extends AjaxSubmitLink {
 
-        private final IModel<String> label;
+    private class Dialog extends TransparentWebMarkupContainer {
 
-        public SubmitAction(String id, Form<?> form, IModel<String> label) {
-            super(id, form);
-
-            this.label = label;
+        public Dialog(String id) {
+            super(id);
         }
 
         @Override
-        protected void onInitialize() {
-            super.onInitialize();
+        protected void onComponentTag(ComponentTag tag) {
+            super.onComponentTag(tag);
 
-            add(AttributeModifier.replace("type", "submit"));
-            add(AttributeModifier.replace("form", getForm().getMarkupId(true)));
-            add(AttributeModifier.append("class", "btn btn-primary"));
-
-            setBody(label);
+            tag.put("class", "modal-dialog " + size.cssClassName);
         }
-
-        @Override
-        protected void onAfterSubmit(AjaxRequestTarget target) {
-            appendCloseDialogJavaScript(target);
-        }
-
-        public SubmitAction label(IModel<String> label) {
-            setDefaultModel(label);
-            return this;
-        }
-
-        // TODO: Close button size
-
-        // TODO: Close button color
     }
 
     private class ModalCloseBehavior extends AjaxEventBehavior {
@@ -393,9 +458,10 @@ public class Modal extends Panel {
             clearActions();
         }
 
-        private void hideDialog(IPartialPageRequestHandler target) {
-            Modal.this.setVisible(false);
-            target.add(Modal.this);
+        private void hideDialog(AjaxRequestTarget target) {
+            Modal modal = Modal.this;
+            modal.setVisible(false);
+            target.add(modal);
         }
     }
 }
