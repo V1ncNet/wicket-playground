@@ -10,6 +10,8 @@ import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
+import org.apache.wicket.authroles.authorization.strategies.role.Roles;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AnnotationsRoleAuthorizationStrategy;
 import org.apache.wicket.core.request.handler.PageProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.csp.CSPDirective;
@@ -26,6 +28,7 @@ import org.apache.wicket.settings.DebugSettings;
 import org.apache.wicket.settings.DebugSettings.ClassOutputStrategy;
 import org.apache.wicket.settings.MarkupSettings;
 import org.apache.wicket.settings.ResourceSettings;
+import org.apache.wicket.settings.SecuritySettings;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -104,6 +107,9 @@ public class WicketApplication extends AuthenticatedWebApplication implements Ap
         RequestCycleListenerCollection requestCycleListeners = getRequestCycleListeners();
         configure(requestCycleListeners);
 
+        SecuritySettings securitySettings = getSecuritySettings();
+        configure(securitySettings);
+
         WicketWebjars.install(this, webjarsSettings);
 
         configurers().forEach(configurer -> configurer.init(this));
@@ -157,6 +163,16 @@ public class WicketApplication extends AuthenticatedWebApplication implements Ap
 
     private void configure(RequestCycleListenerCollection listeners) {
         listeners.add(new ExceptionHandler());
+    }
+
+    private void configure(SecuritySettings settings) {
+        settings.setAuthorizationStrategy(new AnnotationsRoleAuthorizationStrategy(this::authorized));
+    }
+
+    private boolean authorized(Roles requiredRoles) {
+        AbstractAuthenticatedWebSession session = AbstractAuthenticatedWebSession.get();
+        Roles grantedRoles = session.getRoles();
+        return grantedRoles.hasAnyRole(requiredRoles);
     }
 
     public WebjarsSettings getWebjarsSettings() {
