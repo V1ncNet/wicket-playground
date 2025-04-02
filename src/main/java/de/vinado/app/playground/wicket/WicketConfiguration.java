@@ -43,7 +43,6 @@ public class WicketConfiguration {
         registration.addInitParameter(FILTER_MAPPING_PARAM, APP_ROOT);
         registration.addInitParameter(RUNTIME_CONFIGURATION_PARAM, properties.getRuntimeConfiguration().name());
         registration.setDispatcherTypes(DISPATCHER_TYPES);
-        registration.setAsyncSupported(true);
         registration.addUrlPatterns(APP_ROOT);
         return registration;
     }
