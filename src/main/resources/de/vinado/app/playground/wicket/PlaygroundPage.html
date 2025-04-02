@@ -1,15 +1,10 @@
 <!doctype html>
 <html lang="en" xmlns:wicket="http://wicket.apache.org" wicket:id="html">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <wicket:header-items/>
-    <title wicket:id="title">Wicket Playground</title>
-</head>
 <body>
-<div wicket:id="navigation">
-    <wicket:child></wicket:child>
-</div>
-<wicket:container wicket:id="footer-bucket"></wicket:container>
+<wicket:extend>
+    <div wicket:id="navigation">
+        <wicket:child></wicket:child>
+    </div>
+</wicket:extend>
 </body>
 </html>
