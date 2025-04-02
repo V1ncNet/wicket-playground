@@ -8,13 +8,15 @@ import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
 import org.apache.wicket.Page;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
+import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
+import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.core.request.handler.PageProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.csp.CSPDirective;
 import org.apache.wicket.csp.CSPDirectiveSrcValue;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
 import org.apache.wicket.markup.html.HeaderResponseDecoratorCollection;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -41,7 +43,7 @@ import lombok.experimental.Accessors;
 
 @Profile("wicket")
 @Component
-public class WicketApplication extends WebApplication implements ApplicationContextAware {
+public class WicketApplication extends AuthenticatedWebApplication implements ApplicationContextAware {
 
     @Setter
     @Accessors(fluent = false)
@@ -59,6 +61,16 @@ public class WicketApplication extends WebApplication implements ApplicationCont
     @Override
     public Class<? extends Page> getHomePage() {
         return PreviewPage.class;
+    }
+
+    @Override
+    protected Class<? extends AbstractAuthenticatedWebSession> getWebSessionClass() {
+        return WicketSession.class;
+    }
+
+    @Override
+    protected Class<? extends WebPage> getSignInPageClass() {
+        return null;
     }
 
     @Override
