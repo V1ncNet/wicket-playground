@@ -25,7 +25,7 @@ To enable authentication start the Sprint Boot application with the
 [_Spring profile_](https://docs.spring.io/spring-framework/reference/core/beans/environment.html#beans-definition-profiles-enable)
 `wicket,keycloak` active. To do so, override the `application.yml` or use the runtime property
 `-Dspring.profiles.active=wicket,keycloak`. Also use the corresponding Docker Compose file in addition to the default
-one. Start the entire stack using `docker compose -f docker-compose.yml -f docker-compose.keycloak.yml up -d`.
+one. Start the entire stack using `docker compose -f compose.yaml -f compose.keycloak.yaml up -d`.
 
 
 ## Keycloak
@@ -43,7 +43,7 @@ Keycloak is preconfigured with a variety of users that are more or less useful. 
 | <mark>`adult`</mark> | <mark>`B4nk`</mark> | Realm superuser        | local  | http://localhost:8180/admin/local/console/  |
 | `landlord`[^1]       | `Prop3r7y`[^1]      | Keycloak administrator | master | http://localhost:8180/admin/master/console/ |
 
-[^1]: Corresponds to the values of `KEYCLOAK_ADMIN` and `KEYCLOAK_ADMIN_PASSWORD`, set for Composes' _keycloak-server_.
+[^1]: Corresponds to the values of `KEYCLOAK_ADMIN` and `KEYCLOAK_ADMIN_PASSWORD`, set for Composes' _keycloak_.
 
 ### Configuration Export
 
@@ -54,6 +54,7 @@ First, make sure your development stack is up and running. Perform your necessar
 perform the following command. This will start a new Keycloak instance inside the running container.
 
 ```shell
+docker compose -f compose.yaml -f compose.keycloak.yaml exec keycloak \
   /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm local --users realm_file
 ```
 
