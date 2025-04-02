@@ -1,6 +1,6 @@
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak:22.0
+    image: keycloak/keycloak:26.1
     ports:
       - "8180:8080"
     volumes:

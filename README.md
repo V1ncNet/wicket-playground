@@ -54,8 +54,11 @@ First, make sure your development stack is up and running. Perform your necessar
 perform the following command. This will start a new Keycloak instance inside the running container.
 
 ```shell
-docker compose -f compose.yaml -f compose.keycloak.yaml exec keycloak \
-  /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm local --users realm_file
+docker compose -f compose.yaml -f compose.keycloak.yaml exec keycloak sh -c \
+  "cp -rp /opt/keycloak/data/h2 /tmp ; \
+  /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm local --users realm_file \
+    --db dev-file \
+    --db-url 'jdbc:h2:file:/tmp/h2/keycloakdb;NON_KEYWORDS=VALUE'"
 ```
 
 
