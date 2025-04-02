@@ -1,4 +1,0 @@
-zeebe.client:
-  enabled: true
-  broker.gateway-address: localhost:8381
-  security.plaintext: true

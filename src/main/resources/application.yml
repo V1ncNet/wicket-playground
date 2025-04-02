@@ -16,5 +16,3 @@ app:
   note:
     codimd:
       base-url: http://localhost:8280
-
-zeebe.client.enabled: false
