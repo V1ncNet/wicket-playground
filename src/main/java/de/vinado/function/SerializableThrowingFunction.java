@@ -18,6 +18,7 @@ public interface SerializableThrowingFunction<T, R, E extends Exception> extends
         };
     }
 
+    @SuppressWarnings("unchecked")
     private static <T extends Exception, R> R sneakyThrow(Exception t) throws T {
         throw (T) t;
     }
