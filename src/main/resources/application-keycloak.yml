@@ -10,3 +10,8 @@ spring.security.oauth2.client:
       client-secret: etgWLsvbyKRdxFXIyeZpWbor99sKjQ42
       authorization-grant-type: authorization_code
       scope: openid
+
+app.security.oauth2.client:
+  registration:
+    keycloak:
+      roles-json-path: $.resource_access.playground.roles[*]
