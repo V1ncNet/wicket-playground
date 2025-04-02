@@ -1,6 +1,5 @@
 package de.vinado.app.playground.wicket;
 
-import jakarta.servlet.DispatcherType;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.spring.SpringWebApplicationFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -8,18 +7,18 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.web.SecurityFilterChain;
 
+import jakarta.servlet.DispatcherType;
 import java.util.EnumSet;
 
 import lombok.RequiredArgsConstructor;
 
-import static jakarta.servlet.DispatcherType.*;
-import static org.apache.wicket.protocol.http.WicketFilter.*;
+import static jakarta.servlet.DispatcherType.ERROR;
+import static jakarta.servlet.DispatcherType.FORWARD;
+import static jakarta.servlet.DispatcherType.REQUEST;
+import static org.apache.wicket.protocol.http.WicketFilter.APP_FACT_PARAM;
+import static org.apache.wicket.protocol.http.WicketFilter.FILTER_MAPPING_PARAM;
+import static org.apache.wicket.protocol.http.WicketFilter.IGNORE_PATHS_PARAM;
 
 @Profile("wicket")
 @Configuration
@@ -47,15 +46,5 @@ public class WicketConfiguration {
         registration.setAsyncSupported(true);
         registration.addUrlPatterns(APP_ROOT);
         return registration;
-    }
-
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    @Bean
-    public SecurityFilterChain wicketFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(AbstractHttpConfigurer::disable)
-        ;
-
-        return http.build();
     }
 }
