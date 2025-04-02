@@ -8,11 +8,17 @@ import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
 import org.apache.wicket.Page;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
+import org.apache.wicket.core.request.handler.PageProvider;
+import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.csp.CSPDirective;
 import org.apache.wicket.csp.CSPDirectiveSrcValue;
 import org.apache.wicket.csp.ContentSecurityPolicySettings;
 import org.apache.wicket.markup.html.HeaderResponseDecoratorCollection;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.cycle.IRequestCycleListener;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.cycle.RequestCycleListenerCollection;
 import org.apache.wicket.request.resource.caching.NoOpResourceCachingStrategy;
 import org.apache.wicket.settings.DebugSettings;
 import org.apache.wicket.settings.DebugSettings.ClassOutputStrategy;
@@ -83,9 +89,14 @@ public class WicketApplication extends WebApplication implements ApplicationCont
         HeaderResponseDecoratorCollection headerResponseDecorators = getHeaderResponseDecorators();
         configure(headerResponseDecorators);
 
+        RequestCycleListenerCollection requestCycleListeners = getRequestCycleListeners();
+        configure(requestCycleListeners);
+
         WicketWebjars.install(this, webjarsSettings);
 
         configurers().forEach(configurer -> configurer.init(this));
+
+        mountPage("error", ExceptionErrorPage.class);
     }
 
     private void configure(MarkupSettings settings) {
@@ -132,6 +143,10 @@ public class WicketApplication extends WebApplication implements ApplicationCont
         decorators.add(new JavaScriptFilteredIntoFooterHeaderResponseDecorator());
     }
 
+    private void configure(RequestCycleListenerCollection listeners) {
+        listeners.add(new ExceptionHandler());
+    }
+
     public WebjarsSettings getWebjarsSettings() {
         if (null == webjarsSettings) {
             webjarsSettings = new WebjarsSettings();
@@ -142,5 +157,16 @@ public class WicketApplication extends WebApplication implements ApplicationCont
     private Stream<WicketConfigurer> configurers() {
         return Optional.ofNullable(configurers).stream()
             .flatMap(List::stream);
+    }
+
+
+    private static class ExceptionHandler implements IRequestCycleListener {
+
+        @Override
+        public IRequestHandler onException(RequestCycle cycle, Exception ex) {
+            ExceptionErrorPage errorPage = new ExceptionErrorPage(ex);
+            PageProvider pageProvider = new PageProvider(errorPage);
+            return new RenderPageRequestHandler(pageProvider);
+        }
     }
 }
