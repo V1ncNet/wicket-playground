@@ -1,6 +1,6 @@
 {
   "id" : "92efc956-b221-478a-bded-00e5cd632922",
-  "realm" : "playground",
+  "realm" : "local",
   "notBefore" : 0,
   "defaultSignatureAlgorithm" : "RS256",
   "revokeRefreshToken" : false,
@@ -62,7 +62,7 @@
       "attributes" : { }
     }, {
       "id" : "9fe25229-026c-4f64-ae01-0215759d4847",
-      "name" : "default-roles-playground",
+      "name" : "default-roles-local",
       "description" : "${role_default-roles}",
       "composite" : true,
       "composites" : {
@@ -332,13 +332,13 @@
         "containerId" : "3fcdead9-909a-4024-b76b-c126a7baa8ee",
         "attributes" : { }
       } ],
-      "wicket" : [ ]
+      "playground" : [ ]
     }
   },
   "groups" : [ ],
   "defaultRole" : {
     "id" : "9fe25229-026c-4f64-ae01-0215759d4847",
-    "name" : "default-roles-playground",
+    "name" : "default-roles-local",
     "description" : "${role_default-roles}",
     "composite" : true,
     "clientRole" : false,
@@ -393,7 +393,7 @@
     } ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "default-roles-playground" ],
+    "realmRoles" : [ "default-roles-local" ],
     "notBefore" : 0,
     "groups" : [ ]
   } ],
@@ -412,12 +412,12 @@
     "clientId" : "account",
     "name" : "${client_account}",
     "rootUrl" : "${authBaseUrl}",
-    "baseUrl" : "/realms/playground/account/",
+    "baseUrl" : "/realms/local/account/",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
-    "redirectUris" : [ "/realms/playground/account/*" ],
+    "redirectUris" : [ "/realms/local/account/*" ],
     "webOrigins" : [ ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -442,12 +442,12 @@
     "clientId" : "account-console",
     "name" : "${client_account-console}",
     "rootUrl" : "${authBaseUrl}",
-    "baseUrl" : "/realms/playground/account/",
+    "baseUrl" : "/realms/local/account/",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
-    "redirectUris" : [ "/realms/playground/account/*" ],
+    "redirectUris" : [ "/realms/local/account/*" ],
     "webOrigins" : [ ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -604,12 +604,12 @@
     "clientId" : "security-admin-console",
     "name" : "${client_security-admin-console}",
     "rootUrl" : "${authAdminUrl}",
-    "baseUrl" : "/admin/playground/console/",
+    "baseUrl" : "/admin/local/console/",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
-    "redirectUris" : [ "/admin/playground/console/*" ],
+    "redirectUris" : [ "/admin/local/console/*" ],
     "webOrigins" : [ "+" ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -647,7 +647,7 @@
     "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
   }, {
     "id" : "013b357c-b22f-4d35-a96d-3bfed6753001",
-    "clientId" : "wicket",
+    "clientId" : "playground",
     "name" : "",
     "description" : "",
     "rootUrl" : "http://localhost:8080",

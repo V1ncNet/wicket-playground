@@ -38,10 +38,10 @@ clients, users, their roles and claims for the project.
 Keycloak is preconfigured with a variety of users that are more or less useful. The username-password-combination
 `adult:B4nk` might be the only one you ever need for development and manual testing.
 
-| Username             | Password            | Description            | Realm      | URL                                             |
-|----------------------|---------------------|------------------------|------------|-------------------------------------------------|
-| <mark>`adult`</mark> | <mark>`B4nk`</mark> | Realm superuser        | playground | http://localhost:8180/admin/playground/console/ |
-| `landlord`[^1]       | `Prop3r7y`[^1]      | Keycloak administrator | master     | http://localhost:8180/admin/master/console/     |
+| Username             | Password            | Description            | Realm  | URL                                         |
+|----------------------|---------------------|------------------------|--------|---------------------------------------------|
+| <mark>`adult`</mark> | <mark>`B4nk`</mark> | Realm superuser        | local  | http://localhost:8180/admin/local/console/  |
+| `landlord`[^1]       | `Prop3r7y`[^1]      | Keycloak administrator | master | http://localhost:8180/admin/master/console/ |
 
 [^1]: Corresponds to the values of `KEYCLOAK_ADMIN` and `KEYCLOAK_ADMIN_PASSWORD`, set for Composes' _keycloak-server_.
 
@@ -54,8 +54,7 @@ First, make sure your development stack is up and running. Perform your necessar
 perform the following command. This will start a new Keycloak instance inside the running container.
 
 ```shell
-docker compose -f docker-compose.yml -f docker-compose.keycloak.yml exec keycloak-server \
-  /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm playground --users realm_file
+  /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm local --users realm_file
 ```
 
 

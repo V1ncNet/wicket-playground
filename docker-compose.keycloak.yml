@@ -28,13 +28,13 @@ services:
     environment:
       CMD_ALLOW_ANONYMOUS: 'false'
       CMD_OAUTH2_PROVIDERNAME: Keycloak
-      CMD_OAUTH2_BASEURL: http://host.docker.internal:8180/realms/playground
+      CMD_OAUTH2_BASEURL: http://host.docker.internal:8180/realms/local
       CMD_OAUTH2_CLIENT_ID: codimd
       CMD_OAUTH2_CLIENT_SECRET: 0iGI3mWUwoBZAZpzEuGjAj0jJzt6YPSo
       CMD_OAUTH2_SCOPE: openid
-      CMD_OAUTH2_AUTHORIZATION_URL: http://host.docker.internal:8180/realms/playground/protocol/openid-connect/auth
-      CMD_OAUTH2_TOKEN_URL: http://host.docker.internal:8180/realms/playground/protocol/openid-connect/token
-      CMD_OAUTH2_USER_PROFILE_URL: http://host.docker.internal:8180/realms/playground/protocol/openid-connect/userinfo
+      CMD_OAUTH2_AUTHORIZATION_URL: http://host.docker.internal:8180/realms/local/protocol/openid-connect/auth
+      CMD_OAUTH2_TOKEN_URL: http://host.docker.internal:8180/realms/local/protocol/openid-connect/token
+      CMD_OAUTH2_USER_PROFILE_URL: http://host.docker.internal:8180/realms/local/protocol/openid-connect/userinfo
       CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR: preferred_username
       CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR: name
       CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR: email
