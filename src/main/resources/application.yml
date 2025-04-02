@@ -7,7 +7,7 @@ spring:
 
 app:
   wicket:
-    runtime-configuration: DEPLOYMENT
+    runtime-configuration: development
 
   document:
     preview:
