@@ -1,16 +1,13 @@
 package de.vinado.app.playground.bootstrap.presentation.ui;
 
 import de.vinado.app.playground.wicket.bootstrap.form.FormControl;
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import de.vinado.app.playground.wicket.bootstrap.modal.FormModalPanel;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
-import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
@@ -20,38 +17,18 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ModalForm extends GenericPanel<ModalForm.Bean> {
-
-    private final Form<Bean> form;
+public class ModalForm extends FormModalPanel<ModalForm.Bean> {
 
     public ModalForm(String id, IModel<Bean> model) {
         super(id, model);
-
-        this.form = form("form");
     }
 
     @Override
     protected void onInitialize() {
         super.onInitialize();
 
-        queue(form);
-        queue(messageInput("message"));
-        queue(amountInput("amount"));
-    }
-
-    protected Form<Bean> form(String wicketId) {
-        return new Form<>(wicketId, ModalForm.this.getModel()) {
-
-            @Override
-            protected void onValidate() {
-                RequestCycle.get().find(AjaxRequestTarget.class)
-                    .ifPresent(target -> visitFormComponents((formComponent, visit) -> {
-                        if (formComponent.isRequired() || !formComponent.getValidators().isEmpty()) {
-                            target.add(formComponent);
-                        }
-                    }));
-            }
-        };
+        add(messageInput("message"));
+        add(amountInput("amount"));
     }
 
     protected FormControl<String> messageInput(String wicketId) {
