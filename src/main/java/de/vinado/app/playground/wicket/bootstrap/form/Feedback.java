@@ -139,7 +139,7 @@ public class Feedback extends Panel implements IFeedback {
                 if (obj == null || getClass() != obj.getClass()) return false;
                 DeduplifiableFeedbackMessage that = (DeduplifiableFeedbackMessage) obj;
                 return this.getLevel() == that.getLevel()
-                    && isRendered() == that.isRendered()
+                    && this.isRendered() == that.isRendered()
                     && Objects.equals(this.getMessage(), that.getMessage())
                     && Objects.equals(this.getReporter(), that.getReporter());
             }
