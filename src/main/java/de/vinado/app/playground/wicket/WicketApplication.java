@@ -3,9 +3,11 @@ package de.vinado.app.playground.wicket;
 import de.agilecoders.wicket.webjars.WicketWebjars;
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
 import de.vinado.app.playground.document.presentation.ui.PreviewPage;
+import de.vinado.app.playground.security.web.oauth2.AuthenticationResolver;
 import de.vinado.app.playground.wicket.bootstrap.BootstrapResourceAppender;
 import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
 import org.apache.wicket.Page;
+import org.apache.wicket.Session;
 import org.apache.wicket.application.ComponentInitializationListenerCollection;
 import org.apache.wicket.application.ComponentInstantiationListenerCollection;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
@@ -20,6 +22,8 @@ import org.apache.wicket.csp.ContentSecurityPolicySettings;
 import org.apache.wicket.markup.html.HeaderResponseDecoratorCollection;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.cycle.RequestCycleListenerCollection;
@@ -33,7 +37,9 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -46,11 +52,19 @@ import lombok.experimental.Accessors;
 
 @Profile("wicket")
 @Component
-public class WicketApplication extends AuthenticatedWebApplication implements ApplicationContextAware {
+public class WicketApplication extends AuthenticatedWebApplication implements ApplicationContextAware, EnvironmentAware {
 
     @Setter
     @Accessors(fluent = false)
     private ApplicationContext applicationContext;
+
+    @Setter
+    @Accessors(fluent = false)
+    private Environment environment;
+
+    @Setter(onMethod = @__(@Autowired))
+    @Accessors(fluent = false)
+    private AuthenticationResolver authenticationResolver;
 
     @Setter
     private WebjarsSettings webjarsSettings;
@@ -67,8 +81,13 @@ public class WicketApplication extends AuthenticatedWebApplication implements Ap
     }
 
     @Override
+    public Session newSession(Request request, Response response) {
+        return new WicketSession(request, environment, authenticationResolver);
+    }
+
+    @Override
     protected Class<? extends AbstractAuthenticatedWebSession> getWebSessionClass() {
-        return WicketSession.class;
+        return null;
     }
 
     @Override

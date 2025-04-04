@@ -3,9 +3,7 @@ package de.vinado.app.playground.wicket;
 import de.vinado.app.playground.security.web.oauth2.AuthenticationResolver;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
-import org.apache.wicket.injection.Injector;
 import org.apache.wicket.request.Request;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,16 +16,14 @@ import java.util.stream.Collectors;
 
 public class WicketSession extends AbstractAuthenticatedWebSession {
 
-    @SpringBean
-    private Environment environment;
+    private final Environment environment;
+    private final AuthenticationResolver authenticationResolver;
 
-    @SpringBean
-    private AuthenticationResolver authenticationResolver;
-
-    public WicketSession(Request request) {
+    public WicketSession(Request request, Environment environment, AuthenticationResolver authenticationResolver) {
         super(request);
 
-        Injector.get().inject(this);
+        this.environment = environment;
+        this.authenticationResolver = authenticationResolver;
     }
 
     @Override
