@@ -26,6 +26,7 @@ public abstract class BootstrapPage extends WebPage {
 
         add(html("html"));
         add(title("title"));
+        add(homePageLink("navbarHomePageLink"));
         add(footerBucket("footer-bucket"));
     }
 

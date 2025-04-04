@@ -2,21 +2,57 @@
 <html lang="en" xmlns:wicket="http://wicket.apache.org">
 <body>
 <wicket:border>
-    <div class="d-flex flex-nowrap">
-        <nav id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-light">
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item" wicket:id="items">
-                    <a wicket:id="link"><i wicket:id="icon"></i><span wicket:id="label"></span></a>
-                </li>
-            </ul>
-            <hr wicket:id="hr">
-            <a class="btn btn-outline-secondary" wicket:id="login"></a>
-            <a class="btn btn-outline-secondary" wicket:id="logout"></a>
-        </nav>
-        <div class="b-example-divider b-example-vr"></div>
-        <main class="flex-grow-1 d-flex align-self-stretch">
+    <div class="container-fluid flex-grow-1">
+        <div class="row h-100 flex-nowrap">
+            <div class="border-end col-md-3 col-lg-2 p-0 bg-body-tertiary flex-shrink-1">
+                <div
+                    class="offcanvas-md offcanvas-end bg-body-tertiary"
+                    tabindex="-1"
+                    id="sidebarMenu"
+                    aria-labelledby="sidebarMenuLabel"
+                >
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="sidebarMenuLabel">Playground</h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="offcanvas"
+                            data-bs-target="#sidebarMenu"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+                        <ul class="nav flex-column">
+                            <li class="nav-item" wicket:id="items">
+                                <a wicket:id="link">
+                                    <i wicket:id="icon"></i>
+                                    <span wicket:id="label"></span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <hr class="my-3" wicket:id="hr">
+
+                        <ul class="nav flex-column mb-auto">
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center gap-2" wicket:id="login">
+                                    <i class="bi bi-door-open"></i>
+                                    Sign in
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center gap-2" wicket:id="logout">
+                                    <i class="bi bi-door-closed"></i>
+                                    Sign out
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
             <wicket:body></wicket:body>
-        </main>
+        </div>
     </div>
 </wicket:border>
 </body>

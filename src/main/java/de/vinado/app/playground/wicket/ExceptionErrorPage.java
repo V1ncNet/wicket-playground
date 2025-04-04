@@ -1,6 +1,5 @@
 package de.vinado.app.playground.wicket;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.MarkupException;
@@ -10,7 +9,6 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.lang.Generics;
@@ -79,7 +77,7 @@ public class ExceptionErrorPage extends ErrorPage {
                 target.add(stacktraceContainer);
             }
         });
-        add(new BookmarkablePageLink<Void>("homePageLink", Application.get().getHomePage()));
+        add(homePageLink("homePageLink"));
 
         markupContainer.add(new Label("resource", resource));
         MultiLineLabel markup = new MultiLineLabel("markup", this.markup);
