@@ -20,6 +20,12 @@ The application provides the following features:
 * Profile-driven test executions
 * Social Login for HackMD's CodiMD with Keycloak
 * Embed CodiMD notes in a Wicket page
+* JWT role claim mapping for Spring Security and Wicket
+* Wicket Bootstrap 5 Modal component
+* Native OIDC front-channel logout
+* Wicket Bootstrap form components with server-side validation and feedback messages
+* Keycloak Docker Compose service healthcheck
+* Clean dependency management
 
 To enable authentication start the Sprint Boot application with the
 [_Spring profile_](https://docs.spring.io/spring-framework/reference/core/beans/environment.html#beans-definition-profiles-enable)
