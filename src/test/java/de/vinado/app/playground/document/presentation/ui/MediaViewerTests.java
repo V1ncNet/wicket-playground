@@ -4,7 +4,7 @@ import de.vinado.app.playground.wicket.test.SpringEnabledWicketTestCase;
 import org.apache.wicket.model.Model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.net.URI;
 import java.net.URL;
@@ -19,7 +19,7 @@ class MediaViewerTests extends SpringEnabledWicketTestCase {
 
     private static final String WICKET_ID = "viewer";
 
-    @MockBean
+    @MockitoBean
     private PreviewUrlProvider previewUrlProvider;
 
     @BeforeEach

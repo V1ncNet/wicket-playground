@@ -4,7 +4,7 @@ import de.vinado.app.playground.wicket.test.SpringEnabledWicketTestCase;
 import org.apache.wicket.model.Model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.net.URL;
 import java.util.UUID;
@@ -18,7 +18,7 @@ class CodiMdTests extends SpringEnabledWicketTestCase {
 
     private static final String WICKET_ID = "pad";
 
-    @MockBean
+    @MockitoBean
     private CodiMdUrlProvider urlProvider;
 
     @BeforeEach

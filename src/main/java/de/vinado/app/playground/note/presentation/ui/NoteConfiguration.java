@@ -60,7 +60,7 @@ public class NoteConfiguration implements WicketConfigurer {
 
     @Bean
     public CodiMdUrlProvider codiMdUrlProvider() {
-        return note -> UriComponentsBuilder.fromHttpUrl(getCodiMdBaseUrl().toString())
+        return note -> UriComponentsBuilder.fromUriString(getCodiMdBaseUrl().toString())
             .path("{noteId}")
             .build(note.getId())
             .toURL();

@@ -8,8 +8,8 @@ import org.apache.wicket.markup.html.TransparentWebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.stream.Stream;
 
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 @ContextConfiguration(classes = EmptyPageConfiguration.class)
 class EmptyPageTests extends SpringEnabledWicketTestCase {
 
-    @MockBean
+    @MockitoBean
     private NavigationItemSupplier supplier;
 
     @BeforeEach

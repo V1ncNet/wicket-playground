@@ -6,8 +6,8 @@ import de.vinado.app.playground.wicket.navigation.NavigationItemSupplier;
 import de.vinado.app.playground.wicket.test.SpringEnabledWicketTestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.net.URL;
 import java.util.UUID;
@@ -21,10 +21,10 @@ import static org.mockito.Mockito.*;
 @ContextConfiguration(classes = NoteConfiguration.class)
 class NotePageTests extends SpringEnabledWicketTestCase {
 
-    @MockBean
+    @MockitoBean
     private NavigationItemSupplier supplier;
 
-    @MockBean
+    @MockitoBean
     private CodiMdUrlProvider urlProvider;
 
     @BeforeEach
