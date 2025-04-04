@@ -2,58 +2,48 @@ package de.vinado.app.playground.testcontainers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dasniko.testcontainers.keycloak.KeycloakContainer;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+import java.util.function.Supplier;
 
 import lombok.Data;
 
 @Testcontainers
-public class KeycloakTestCase {
+public class KeycloakIntegrationTestSuite {
 
-    static final String REALM_NAME = "playground";
+    static final String REALM_NAME = "test";
     static final String CLIENT_ID = "wicket";
     static final String CLIENT_SECRET = "etgWLsvbyKRdxFXIyeZpWbor99sKjQ42";
     static final String GRANT_TYPE = "password";
     static final String SCOPE = "openid";
 
     @Container
-    static final KeycloakContainer keycloak = new KeycloakContainer("quay.io/keycloak/keycloak:22.0")
+    static final KeycloakContainer keycloak = new KeycloakContainer()
         .withAdminUsername("landlord")
         .withAdminPassword("Prop3r7y")
         .withRealmImportFile("/" + REALM_NAME + "-realm.json");
 
     protected static String retrieveAccessToken() throws RestClientException {
-        RestTemplate client = new RestTemplate();
-        HttpEntity<MultiValueMap<String, String>> entity = prepareTokenRetrieval();
-        ResponseEntity<TokenResponse> response = client.exchange(
-            keycloak.getAuthServerUrl() + "/realms/" + REALM_NAME + "/protocol/openid-connect/token",
-            HttpMethod.POST,
-            entity,
-            TokenResponse.class);
+        MultiValueMap<String, String> body = prepareBody();
+        RestClient.ResponseSpec response = RestClient.create()
+            .post()
+            .uri(keycloak.getAuthServerUrl() + "/realms/{realmName}/protocol/openid-connect/token", REALM_NAME)
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+            .accept(MediaType.APPLICATION_JSON)
+            .body(body)
+            .retrieve();
 
-        return response.getBody().accessToken();
-    }
-
-    private static HttpEntity<MultiValueMap<String, String>> prepareTokenRetrieval() {
-        HttpHeaders headers = prepareHeaders();
-        MultiValueMap<String, String> properties = prepareBody();
-        return new HttpEntity<>(properties, headers);
-    }
-
-    private static HttpHeaders prepareHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE);
-        headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-        return headers;
+        TokenResponse tokenResponse = response.body(TokenResponse.class);
+        return tokenResponse.accessToken();
     }
 
     private static MultiValueMap<String, String> prepareBody() {
@@ -65,6 +55,21 @@ public class KeycloakTestCase {
         properties.add("client_secret", CLIENT_SECRET);
         properties.add("scope", SCOPE);
         return properties;
+    }
+
+    @DynamicPropertySource
+    static void keycloakProperties(DynamicPropertyRegistry registry) {
+        Supplier<Object> issuerUri = resolveIssuerUri();
+        registry.add("spring.security.oauth2.resourceserver.jwt.issuer-uri", issuerUri);
+    }
+
+    static Supplier<Object> resolveIssuerUri() {
+        return () -> UriComponentsBuilder.newInstance()
+            .scheme("http")
+            .host(keycloak.getHost())
+            .port(keycloak.getHttpPort())
+            .pathSegment("realms", REALM_NAME)
+            .toUriString();
     }
 
 
