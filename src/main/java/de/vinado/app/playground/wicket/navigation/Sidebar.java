@@ -2,10 +2,13 @@ package de.vinado.app.playground.wicket.navigation;
 
 import de.vinado.app.playground.wicket.image.Icon;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.IGenericComponent;
 import org.apache.wicket.Page;
+import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border;
 import org.apache.wicket.markup.html.link.AbstractLink;
@@ -14,11 +17,17 @@ import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.core.env.Environment;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 public class Sidebar extends Border implements IGenericComponent<Stream<NavigationItem>, Sidebar> {
+
+    @SpringBean
+    private Environment environment;
 
     public Sidebar(String id, IModel<Stream<NavigationItem>> model) {
         super(id, model);
@@ -30,13 +39,33 @@ public class Sidebar extends Border implements IGenericComponent<Stream<Navigati
 
         RepeatingView items = items("items");
         addToBorder(items);
-        addToBorder(login("login"));
+
+        AbstractLink login;
+        addToBorder(login = login("login"));
+        AbstractLink logout;
+        addToBorder(logout = logout("logout"));
+        addToBorder(hr("hr", login, logout));
 
         getModelObject().forEach(item -> add(item, items));
     }
 
     private AbstractLink login(String wicketId) {
-        return new ExternalLink(wicketId, "/login", "Login");
+        ExternalLink link = new ExternalLink(wicketId, "/login", "Login");
+        link.setVisible(environment.matchesProfiles("oauth2") && !AbstractAuthenticatedWebSession.get().isSignedIn());
+        return link;
+    }
+
+    private AbstractLink logout(String wicketId) {
+        ExternalLink link = new ExternalLink(wicketId, "/logout", "Logout");
+        link.setVisible(environment.matchesProfiles("oauth2") && AbstractAuthenticatedWebSession.get().isSignedIn());
+        return link;
+    }
+
+    private Component hr(String wicketId, Component... components) {
+        boolean anyVisible = Arrays.stream(components).anyMatch(Component::isVisible);
+        WebComponent hr = new WebComponent(wicketId);
+        hr.setVisible(anyVisible);
+        return hr;
     }
 
     private RepeatingView items(String wicketId) {

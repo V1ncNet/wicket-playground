@@ -12,6 +12,7 @@ spring.security.oauth2.client:
       scope: openid
 
 app.security.oauth2.client:
+  post-logout-redirect-uri: http://localhost:8080/
   registration:
     keycloak:
       roles-json-path: $.resource_access.playground.roles[*]
