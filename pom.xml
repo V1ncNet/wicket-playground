@@ -24,7 +24,7 @@
         <sass.target.directory>${project.build.directory}/generated-sources/src/main/resources/css</sass.target.directory>
         <webjars.target.directory>${project.build.directory}/webjars</webjars.target.directory>
 
-        <dependency.closure.version>v20230502</dependency.closure.version>
+        <dependency.closure.version>v20240317</dependency.closure.version>
         <dependency.sass.version>1.62.1</dependency.sass.version>
         <dependency.wicket.version>10.4.0</dependency.wicket.version>
         <dependency.wicket-webjars.version>4.0.6</dependency.wicket-webjars.version>
