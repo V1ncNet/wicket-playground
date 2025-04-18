@@ -313,6 +313,9 @@
                         <goals>
                             <goal>check</goal>
                         </goals>
+                        <configuration>
+                            <suppressionsLocation>${project.basedir}/checkstyle-suppressions.xml</suppressionsLocation>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>lint-tests</id>
@@ -322,6 +325,7 @@
                         </goals>
                         <configuration>
                             <sourceDirectories>${project.basedir}/src/test/</sourceDirectories>
+                            <suppressionsLocation>${project.basedir}/checkstyle-suppressions.xml</suppressionsLocation>
                             <suppressionsLocation>${project.basedir}/checkstyle-suppressions-tests.xml</suppressionsLocation>
                         </configuration>
                     </execution>
