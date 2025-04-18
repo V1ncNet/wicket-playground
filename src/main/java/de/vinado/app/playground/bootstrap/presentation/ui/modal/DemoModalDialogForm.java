@@ -1,4 +1,4 @@
-package de.vinado.app.playground.bootstrap.presentation.ui;
+package de.vinado.app.playground.bootstrap.presentation.ui.modal;
 
 import de.vinado.app.playground.wicket.bootstrap.form.FormControl;
 import de.vinado.app.playground.wicket.bootstrap.modal.FormModalPanel;
@@ -11,13 +11,9 @@ import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
-import java.io.Serializable;
+public class DemoModalDialogForm extends FormModalPanel<DemoDto> {
 
-import lombok.Data;
-
-public class ModalForm extends FormModalPanel<ModalForm.Bean> {
-
-    public ModalForm(String id, IModel<Bean> model) {
+    public DemoModalDialogForm(String id, IModel<DemoDto> model) {
         super(id, model);
     }
 
@@ -72,14 +68,5 @@ public class ModalForm extends FormModalPanel<ModalForm.Bean> {
 
     protected IModel<String> amountNumberFieldLabelModel() {
         return new ResourceModel("amount", "Amount");
-    }
-
-
-    @Data
-    public static class Bean implements Serializable {
-
-        private String message;
-
-        private Integer amount = 0;
     }
 }
