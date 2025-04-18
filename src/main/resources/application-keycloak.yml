@@ -20,7 +20,7 @@ spring:
 
 app:
   security.oauth2.client:
-    post-logout-redirect-uri: http://localhost:8080/
+    post-logout-redirect-uri: http://localhost:8080${server.servlet.context-path:/}
     registration:
       keycloak:
         roles-json-path: $.resource_access.playground.roles[*]
