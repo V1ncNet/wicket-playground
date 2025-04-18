@@ -14,9 +14,7 @@ import org.apache.wicket.validation.validator.StringValidator;
 import java.io.Serializable;
 
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class ModalForm extends FormModalPanel<ModalForm.Bean> {
 
     public ModalForm(String id, IModel<Bean> model) {
