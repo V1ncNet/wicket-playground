@@ -21,11 +21,15 @@ import org.springframework.core.env.Environment;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
+import jakarta.servlet.ServletContext;
 
 public class Sidebar extends Border implements IGenericComponent<Stream<NavigationItem>, Sidebar> {
 
     @SpringBean
     private Environment environment;
+
+    @SpringBean
+    private ServletContext servletContext;
 
     public Sidebar(String id, IModel<Stream<NavigationItem>> model) {
         super(id, model);
@@ -48,13 +52,15 @@ public class Sidebar extends Border implements IGenericComponent<Stream<Navigati
     }
 
     private AbstractLink login(String wicketId) {
-        ExternalLink link = new ExternalLink(wicketId, "/login");
+        String href = servletContext.getContextPath() + "/oauth2/authorization/keycloak";
+        ExternalLink link = new ExternalLink(wicketId, href);
         link.setVisible(environment.matchesProfiles("oauth2") && !AbstractAuthenticatedWebSession.get().isSignedIn());
         return link;
     }
 
     private AbstractLink logout(String wicketId) {
-        ExternalLink link = new ExternalLink(wicketId, "/logout");
+        String href = servletContext.getContextPath() + "/logout";
+        ExternalLink link = new ExternalLink(wicketId, href);
         link.setVisible(environment.matchesProfiles("oauth2") && AbstractAuthenticatedWebSession.get().isSignedIn());
         return link;
     }

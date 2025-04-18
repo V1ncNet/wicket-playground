@@ -11,6 +11,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import jakarta.servlet.ServletContext;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -21,6 +22,9 @@ public abstract class SpringEnabledWicketTestCase extends WicketTestCase {
 
     @MockitoBean
     private Environment environment;
+
+    @MockitoBean
+    private ServletContext servletContext;
 
     @MockitoBean
     private AuthenticationResolver authenticationResolver;
