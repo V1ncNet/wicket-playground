@@ -18,12 +18,14 @@
 
     <properties>
         <java.version>17</java.version>
+        <skipLint>false</skipLint>
         <skipDependencyConvergence>false</skipDependencyConvergence>
 
         <sass.source.directory>${project.basedir}/src/main/resources/scss</sass.source.directory>
         <sass.target.directory>${project.build.directory}/generated-sources/src/main/resources/css</sass.target.directory>
         <webjars.target.directory>${project.build.directory}/webjars</webjars.target.directory>
 
+        <dependency.checkstyle.version>10.17.0</dependency.checkstyle.version>
         <dependency.closure.version>v20240317</dependency.closure.version>
         <dependency.sass.version>1.62.1</dependency.sass.version>
         <dependency.wicket.version>10.4.0</dependency.wicket.version>
@@ -37,6 +39,7 @@
 
         <convergence.error_prone_annotations.version>2.27.0</convergence.error_prone_annotations.version>
 
+        <plugin.checkstyle.version>3.4.0</plugin.checkstyle.version>
         <plugin.sass.version>1.0.3</plugin.sass.version>
     </properties>
 
@@ -231,6 +234,18 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${plugin.checkstyle.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${dependency.checkstyle.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
                     <groupId>us.hebi.sass</groupId>
                     <artifactId>sass-cli-maven-plugin</artifactId>
                     <version>${plugin.sass.version}</version>
@@ -283,6 +298,34 @@
                         </artifactItem>
                     </artifactItems>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <configLocation>${project.basedir}/checkstyle.xml</configLocation>
+                    <skip>${skipLint}</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>lint-sources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>lint-tests</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectories>${project.basedir}/src/test/</sourceDirectories>
+                            <suppressionsLocation>${project.basedir}/checkstyle-suppressions-tests.xml</suppressionsLocation>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

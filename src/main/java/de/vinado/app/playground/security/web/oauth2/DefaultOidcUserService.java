@@ -68,6 +68,16 @@ public class DefaultOidcUserService extends OidcUserService {
             .orElseGet(principal::getAuthorities);
     }
 
+    private Set<GrantedAuthority> authorities(OAuth2AuthenticatedPrincipal principal, Registration registration) {
+        Set<GrantedAuthority> authorities = roles(principal, registration).stream()
+            .distinct()
+            .map(prepend(ROLE_PREFIX))
+            .map(SimpleGrantedAuthority::new)
+            .collect(Collectors.toSet());
+        authorities.addAll(principal.getAuthorities());
+        return authorities;
+    }
+
     private String registrationId(OidcUserRequest userRequest) {
         return userRequest.getClientRegistration().getRegistrationId();
     }
@@ -77,18 +87,9 @@ public class DefaultOidcUserService extends OidcUserService {
         return Optional.ofNullable(registration.get(registrationId));
     }
 
-    private Function<Registration, Collection<? extends GrantedAuthority>> authoritiesOf(OAuth2AuthenticatedPrincipal principal) {
+    private Function<Registration, Collection<? extends GrantedAuthority>> authoritiesOf(
+        OAuth2AuthenticatedPrincipal principal) {
         return registration -> authorities(principal, registration);
-    }
-
-    private Set<GrantedAuthority> authorities(OAuth2AuthenticatedPrincipal principal, Registration registration) {
-        Set<GrantedAuthority> authorities = roles(principal, registration).stream()
-            .distinct()
-            .map(prepend(ROLE_PREFIX))
-            .map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toSet());
-        authorities.addAll(principal.getAuthorities());
-        return authorities;
     }
 
     private List<String> roles(OAuth2AuthenticatedPrincipal principal, Registration registration) {

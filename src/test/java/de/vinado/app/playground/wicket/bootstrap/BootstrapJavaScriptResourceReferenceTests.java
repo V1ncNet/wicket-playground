@@ -34,7 +34,8 @@ class BootstrapJavaScriptResourceReferenceTests extends SpringMockedWicketTestCa
 
     @Test
     void resourceReference_shouldExist() {
-        JavaScriptResourceReference reference = (JavaScriptResourceReference) tester.startResourceReference(this.reference);
+        JavaScriptResourceReference reference = (JavaScriptResourceReference)
+            tester.startResourceReference(this.reference);
 
         JavaScriptPackageResource resource = reference.getResource();
 

@@ -96,7 +96,8 @@ public class Feedback extends Panel implements IFeedback {
         }
 
         @Override
-        protected IModel<FeedbackMessage> getListItemModel(IModel<? extends List<FeedbackMessage>> listViewModel, int index) {
+        protected IModel<FeedbackMessage> getListItemModel(IModel<? extends List<FeedbackMessage>> listViewModel,
+                                                           int index) {
             return () -> {
                 List<DeduplifiableFeedbackMessage> messages = listViewModel.getObject().stream()
                     .map(DeduplifiableFeedbackMessage::new)
@@ -134,6 +135,7 @@ public class Feedback extends Panel implements IFeedback {
                 super(subject.getReporter(), subject.getMessage(), subject.getLevel());
             }
 
+            // @checkstyle:off: NeedBraces
             @Override
             public boolean equals(Object obj) {
                 if (obj == null || getClass() != obj.getClass()) return false;
@@ -143,6 +145,7 @@ public class Feedback extends Panel implements IFeedback {
                     && Objects.equals(this.getMessage(), that.getMessage())
                     && Objects.equals(this.getReporter(), that.getReporter());
             }
+            // @checkstyle:on: NeedBraces
 
             @Override
             public int hashCode() {

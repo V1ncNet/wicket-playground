@@ -33,7 +33,8 @@ class BootstrapCssResourceReferenceTests extends SpringMockedWicketTestCase {
 
     @Test
     void resourceReference_shouldExist() {
-        BootstrapCssResourceReference reference = (BootstrapCssResourceReference) tester.startResourceReference(this.reference);
+        BootstrapCssResourceReference reference = (BootstrapCssResourceReference)
+            tester.startResourceReference(this.reference);
 
         IResource resource = reference.getResource();
 

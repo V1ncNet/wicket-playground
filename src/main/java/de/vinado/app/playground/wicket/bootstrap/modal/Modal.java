@@ -150,10 +150,12 @@ public class Modal extends Panel {
         return this;
     }
 
+    // @checkstyle:off: OverloadMethodsDeclarationOrder
     public Modal title(IModel<?> title) {
         this.title.setDefaultModel(title);
         return this;
     }
+    // @checkstyle:on: OverloadMethodsDeclarationOrder
 
     public <T extends Component> Modal content(SerializableFunction<String, T> constructor) {
         Component component = constructor.apply(CONTENT_WICKET_ID);
@@ -242,7 +244,7 @@ public class Modal extends Panel {
     }
 
 
-    public static abstract class Action extends TransparentWebMarkupContainer {
+    public abstract static class Action extends TransparentWebMarkupContainer {
 
         private final IModel<String> label;
         private final Color color;
@@ -306,7 +308,7 @@ public class Modal extends Panel {
         }
     }
 
-    public static abstract class AjaxAction extends Action {
+    public abstract static class AjaxAction extends Action {
 
         public AjaxAction(String id, IModel<String> label) {
             super(id, label, Color.SECONDARY);

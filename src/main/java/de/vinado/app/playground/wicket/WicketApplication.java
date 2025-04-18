@@ -52,7 +52,8 @@ import lombok.experimental.Accessors;
 
 @Profile("wicket")
 @Component
-public class WicketApplication extends AuthenticatedWebApplication implements ApplicationContextAware, EnvironmentAware {
+public class WicketApplication extends AuthenticatedWebApplication
+    implements ApplicationContextAware, EnvironmentAware {
 
     @Setter
     @Accessors(fluent = false)
@@ -108,7 +109,8 @@ public class WicketApplication extends AuthenticatedWebApplication implements Ap
         ComponentInstantiationListenerCollection componentInstantiationListeners = getComponentInstantiationListeners();
         configure(componentInstantiationListeners);
 
-        ComponentInitializationListenerCollection componentInitializationListeners = getComponentInitializationListeners();
+        ComponentInitializationListenerCollection componentInitializationListeners =
+            getComponentInitializationListeners();
         configure(componentInitializationListeners);
 
         WebjarsSettings webjarsSettings = getWebjarsSettings();

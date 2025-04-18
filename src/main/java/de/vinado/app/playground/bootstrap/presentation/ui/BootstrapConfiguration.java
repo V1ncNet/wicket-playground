@@ -29,6 +29,8 @@ public class BootstrapConfiguration implements WicketConfigurer {
 
     @Override
     public void addNavigationItems(NavigationItemRegistry registry) {
-        registry.register(NavigationItem.builder(BootstrapComponentsPage.class, "Bootstrap").icon(Bi.BOOTSTRAP).build());
+        registry.register(NavigationItem.builder(BootstrapComponentsPage.class, "Bootstrap")
+            .icon(Bi.BOOTSTRAP)
+            .build());
     }
 }

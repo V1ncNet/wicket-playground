@@ -24,7 +24,8 @@ public class Oauth2WebSecurityConfiguration extends WebSecurityConfigurationSupp
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        OidcClientInitiatedLogoutSuccessHandler frontChannelLogoutHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
+        OidcClientInitiatedLogoutSuccessHandler frontChannelLogoutHandler = new OidcClientInitiatedLogoutSuccessHandler(
+            clientRegistrationRepository);
         frontChannelLogoutHandler.setPostLogoutRedirectUri(properties.getPostLogoutRedirectUri().toString());
 
         http
