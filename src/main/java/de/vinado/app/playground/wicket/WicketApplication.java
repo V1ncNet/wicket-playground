@@ -63,7 +63,7 @@ public class WicketApplication extends AuthenticatedWebApplication
     @Accessors(fluent = false)
     private Environment environment;
 
-    @Setter(onMethod = @__(@Autowired))
+    @Setter(onMethod_ = {@Autowired})
     @Accessors(fluent = false)
     private AuthenticationResolver authenticationResolver;
 
