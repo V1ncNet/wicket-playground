@@ -20,6 +20,7 @@
         <java.version>17</java.version>
         <skipLint>false</skipLint>
         <skipDependencyConvergence>false</skipDependencyConvergence>
+        <skipDependencyAudit>true</skipDependencyAudit>
 
         <sass.source.directory>${project.basedir}/src/main/resources/scss</sass.source.directory>
         <sass.target.directory>${project.build.directory}/generated-sources/src/main/resources/css</sass.target.directory>
@@ -40,6 +41,7 @@
         <convergence.error_prone_annotations.version>2.27.0</convergence.error_prone_annotations.version>
 
         <plugin.checkstyle.version>3.4.0</plugin.checkstyle.version>
+        <plugin.dependency-check.version>12.1.1</plugin.dependency-check.version>
         <plugin.sass.version>1.0.3</plugin.sass.version>
     </properties>
 
@@ -246,6 +248,11 @@
                     </dependencies>
                 </plugin>
                 <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>${plugin.dependency-check.version}</version>
+                </plugin>
+                <plugin>
                     <groupId>us.hebi.sass</groupId>
                     <artifactId>sass-cli-maven-plugin</artifactId>
                     <version>${plugin.sass.version}</version>
@@ -345,6 +352,29 @@
                             <rules>
                                 <dependencyConvergence/>
                             </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <configuration>
+                    <failBuildOnCVSS>9</failBuildOnCVSS>
+                    <suppressionFiles>
+                        <suppressionFile>${project.basedir}/dependency-audit-suppression.xml</suppressionFile>
+                    </suppressionFiles>
+                    <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>dependency-vulnerability-check</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${skipDependencyAudit}</skip>
                         </configuration>
                     </execution>
                 </executions>
