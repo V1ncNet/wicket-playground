@@ -24,11 +24,11 @@ public class BootstrapConfiguration implements WicketConfigurer {
     }
 
     private void mountPages(WebApplication webApplication) {
-        webApplication.mountPage("bootstrap", BootstrapPage.class);
+        webApplication.mountPage("bootstrap", BootstrapComponentsPage.class);
     }
 
     @Override
     public void addNavigationItems(NavigationItemRegistry registry) {
-        registry.register(NavigationItem.builder(BootstrapPage.class, "Bootstrap").icon(Bi.BOOTSTRAP).build());
+        registry.register(NavigationItem.builder(BootstrapComponentsPage.class, "Bootstrap").icon(Bi.BOOTSTRAP).build());
     }
 }

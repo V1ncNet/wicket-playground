@@ -12,12 +12,12 @@ import org.apache.wicket.model.ResourceModel;
 import static de.vinado.app.playground.wicket.bootstrap.modal.Modal.CloseAction;
 import static de.vinado.app.playground.wicket.bootstrap.modal.Modal.SubmitAction;
 
-public class BootstrapPage extends PlaygroundPage {
+public class BootstrapComponentsPage extends PlaygroundPage {
 
     private final IModel<ModalForm.Bean> model;
     private final Modal modal;
 
-    public BootstrapPage() {
+    public BootstrapComponentsPage() {
         this.model = new CompoundPropertyModel<>(new ModalForm.Bean());
         this.modal = modal("modal");
     }
