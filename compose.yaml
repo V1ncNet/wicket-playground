@@ -28,3 +28,5 @@ services:
     image: postgres:17.4-alpine
     environment:
       POSTGRES_PASSWORD: BTton2dQ4o9-8m_s
+    labels:
+      org.springframework.boot.ignore: 'true'

@@ -1,4 +1,10 @@
 spring:
+  docker:
+    compose:
+      file:
+        - compose.yaml
+        - compose.keycloak.yaml
+
   security.oauth2.client:
     provider:
       keycloak:
