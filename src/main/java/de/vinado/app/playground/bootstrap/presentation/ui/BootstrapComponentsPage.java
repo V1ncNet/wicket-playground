@@ -1,6 +1,7 @@
 package de.vinado.app.playground.bootstrap.presentation.ui;
 
 import de.vinado.app.playground.bootstrap.presentation.ui.modal.DemoForm;
+import de.vinado.app.playground.bootstrap.presentation.ui.modal.UploadFormDialog;
 import de.vinado.app.playground.wicket.PlaygroundPage;
 import de.vinado.app.playground.wicket.bootstrap.BootstrapPage;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -20,6 +21,9 @@ public class BootstrapComponentsPage extends PlaygroundPage {
         super.onInitialize();
 
         queue(demoFormModalDialogButton("demoFormModalDialogButton"));
+
+        UploadFormDialog uploadFormDialog = new UploadFormDialog();
+        queue(uploadFormDialog.showButton("showUploadFormDialogButton"));
     }
 
     private AjaxLink<Object> demoFormModalDialogButton(String wicketId) {
