@@ -27,8 +27,8 @@ public class Toast extends GenericPanel<Serializable> {
     protected void onInitialize() {
         super.onInitialize();
 
-        setOutputMarkupPlaceholderTag(true);
-        setVisible(false);
+//        setOutputMarkupPlaceholderTag(true);
+//        setVisible(false);
 
         add(body("body"));
         add(closeButton("closeButton"));
@@ -51,7 +51,9 @@ public class Toast extends GenericPanel<Serializable> {
         super.renderHead(response);
 
         String markupId = getMarkupId(true);
-        String initializationScript = createInitializationScript(markupId);
+        String initializationScript = createInitializationScript(markupId)
+            + "\n"
+            + createActionScript(markupId, "show");
         response.render(OnDomReadyHeaderItem.forScript(initializationScript));
     }
 
@@ -101,7 +103,7 @@ public class Toast extends GenericPanel<Serializable> {
         return "bootstrap.Toast.getInstance(document.getElementById('" + markupId + "'))." + action + "();";
     }
 
-    private static class CloseButton extends AjaxLink<Void> {
+    public static class CloseButton extends AjaxLink<Void> {
 
         public CloseButton(String id) {
             super(id);

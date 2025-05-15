@@ -8,6 +8,7 @@ import de.vinado.app.playground.bootstrap.presentation.ui.modal.UploadFormDialog
 import de.vinado.app.playground.wicket.PlaygroundPage;
 import de.vinado.app.playground.wicket.bootstrap.BootstrapPage;
 import de.vinado.app.playground.wicket.bootstrap.modal.Modal;
+import de.vinado.app.playground.wicket.bootstrap.toast.Toaster;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.event.IEvent;
@@ -24,9 +25,11 @@ import static de.vinado.app.playground.wicket.bootstrap.modal.Modal.SubmitAction
 
 public class BootstrapComponentsPage extends PlaygroundPage {
 
+    private final Toaster toaster;
     private final Modal modal;
 
     public BootstrapComponentsPage() {
+        this.toaster = new Toaster("toaster");
         this.modal = new Modal("modal");
     }
 
@@ -34,11 +37,15 @@ public class BootstrapComponentsPage extends PlaygroundPage {
     protected void onInitialize() {
         super.onInitialize();
 
+        queue(toaster);
         queue(modal);
         queue(demoFormModalDialogButton("demoFormModalDialogButton"));
 
         UploadFormDialog uploadFormDialog = new UploadFormDialog();
         queue(uploadFormDialog.showButton("showUploadFormDialogButton"));
+
+        ShowToastButton showToastButton = new ShowToastButton("showToastButton");
+        queue(showToastButton);
     }
 
     private AjaxLink<Object> demoFormModalDialogButton(String wicketId) {
@@ -76,6 +83,20 @@ public class BootstrapComponentsPage extends PlaygroundPage {
             Upload payload = event.payload();
             RequestCycle.get().find(AjaxRequestTarget.class)
                 .ifPresent(onFileUploaded(payload));
+        }
+    }
+
+
+    private class ShowToastButton extends AjaxLink<Void> {
+
+        public ShowToastButton(String id) {
+            super(id);
+        }
+
+        @Override
+        public void onClick(AjaxRequestTarget target) {
+            info("Hello, World!");
+            toaster.update(target);
         }
     }
 }

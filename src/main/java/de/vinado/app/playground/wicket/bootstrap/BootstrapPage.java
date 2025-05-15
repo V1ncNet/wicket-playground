@@ -2,10 +2,16 @@ package de.vinado.app.playground.wicket.bootstrap;
 
 import de.vinado.app.playground.wicket.PlaygroundCssResourceReference;
 import de.vinado.app.playground.wicket.bootstrap.modal.Modal;
+import de.vinado.app.playground.wicket.bootstrap.toast.Toaster;
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.ajax.AjaxRequestHandler;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPageRequestHandler;
+import org.apache.wicket.event.IEvent;
+import org.apache.wicket.feedback.FeedbackMessages;
+import org.apache.wicket.feedback.IFeedbackMessageFilter;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.filter.HeaderResponseContainer;
@@ -13,6 +19,8 @@ import org.apache.wicket.markup.html.TransparentWebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
 
 import java.util.Locale;
@@ -24,9 +32,13 @@ import static de.vinado.app.playground.wicket.JavaScriptFilteredIntoFooterHeader
 public abstract class BootstrapPage extends WebPage {
 
     @Getter
+    private final Toaster toaster;
+
+    @Getter
     private final Modal modal;
 
     public BootstrapPage() {
+        this.toaster = new Toaster("toaster");
         this.modal = modal("modal");
     }
 
@@ -37,8 +49,16 @@ public abstract class BootstrapPage extends WebPage {
         add(html("html"));
         add(title("title"));
         add(homePageLink("navbarHomePageLink"));
+        add(toaster);
         add(modal);
         add(footerBucket("footer-bucket"));
+    }
+
+    @Override
+    public void onEvent(IEvent<?> event) {
+        System.out.println("Event: " + event.getPayload());
+        RequestCycle.get().find(AjaxRequestTarget.class)
+            .ifPresent(toaster::update);
     }
 
     private TransparentWebMarkupContainer html(String wicketId) {
