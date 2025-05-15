@@ -27,6 +27,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.string.Strings;
 import org.danekja.java.util.function.serializable.SerializableFunction;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -46,6 +47,8 @@ public class Modal extends Panel {
     private final List<Component> actions = new LinkedList<>();
 
     private Size size = Size.DEFAULT;
+    private boolean centered = false;
+    private boolean scrollable = false;
 
     public Modal(String id) {
         super(id);
@@ -73,7 +76,7 @@ public class Modal extends Panel {
         add(dialog = dialog("dialog"));
         dialog.add(header, body, footer);
 
-        add(new ModalCloseBehavior());
+        add(new ModalHiddenEventBehavior());
     }
 
     @Override
@@ -147,6 +150,16 @@ public class Modal extends Panel {
 
     public Modal size(Size size) {
         this.size = size;
+        return this;
+    }
+
+    public Modal centered(boolean centered) {
+        this.centered = centered;
+        return this;
+    }
+
+    public Modal scrollable(boolean scrollable) {
+        this.scrollable = scrollable;
         return this;
     }
 
@@ -365,8 +378,8 @@ public class Modal extends Panel {
             return new AjaxSubmitLink(wicketId, form) {
 
                 @Override
-                protected void onSubmit(AjaxRequestTarget target) {
-                    SubmitAction.this.onSubmit(target);
+                protected void onAfterSubmit(AjaxRequestTarget target) {
+                    SubmitAction.this.onAfterSubmit(target);
                 }
             };
         }
@@ -375,8 +388,10 @@ public class Modal extends Panel {
         protected void configure(AbstractLink link) {
             super.configure(link);
 
-            link.add(new AttributeModifier("type", "submit"));
-            form().ifPresent(form -> link.add(new AttributeModifier("form", form.getMarkupId(true))));
+            form().ifPresent(form -> {
+                link.add(new AttributeModifier("type", "submit"));
+                link.add(new AttributeModifier("form", form.getMarkupId(true)));
+            });
         }
 
         @SuppressWarnings("rawtypes")
@@ -388,13 +403,13 @@ public class Modal extends Panel {
                 .findFirst();
         }
 
-        protected void onSubmit(AjaxRequestTarget target) {
+        protected void onAfterSubmit(AjaxRequestTarget target) {
             Modal modal = findParent(Modal.class);
             modal.appendHideDialogJavaScript(target);
         }
     }
 
-    private static class CloseButton extends AjaxLink<Void> {
+    public static class CloseButton extends AjaxLink<Void> {
 
         public CloseButton(String id) {
             super(id);
@@ -427,20 +442,28 @@ public class Modal extends Panel {
         protected void onComponentTag(ComponentTag tag) {
             super.onComponentTag(tag);
 
-            tag.put("class", "modal-dialog " + size.cssClassName);
+            List<String> cssClassNames = new ArrayList<>();
+            cssClassNames.add("modal-dialog");
+            cssClassNames.add(size.cssClassName);
+            // @checkstyle:off: NeedBraces
+            if (centered) cssClassNames.add("modal-dialog-centered");
+            if (scrollable) cssClassNames.add("modal-dialog-scrollable");
+            // @checkstyle:on: NeedBraces
+
+            tag.put("class", String.join(" ", cssClassNames));
         }
     }
 
-    private class ModalCloseBehavior extends AjaxEventBehavior {
+    private class ModalHiddenEventBehavior extends AjaxEventBehavior {
 
-        public ModalCloseBehavior() {
+        public ModalHiddenEventBehavior() {
             super("hidden.bs.modal");
         }
 
         @Override
         protected void onEvent(AjaxRequestTarget target) {
             if (isVisibleInHierarchy()) {
-                handleCloseEvent(target);
+                handleHiddenEvent(target);
             }
         }
 
@@ -451,16 +474,19 @@ public class Modal extends Panel {
             attributes.setEventPropagation(EventPropagation.BUBBLE);
         }
 
-        private void handleCloseEvent(AjaxRequestTarget target) {
+        private void handleHiddenEvent(AjaxRequestTarget target) {
             resetComponents();
-            hideDialog(target);
+            discardDialog(target);
         }
 
         private void resetComponents() {
+            size(Size.DEFAULT);
+            centered(false);
+            scrollable(false);
             clearActions();
         }
 
-        private void hideDialog(AjaxRequestTarget target) {
+        private void discardDialog(AjaxRequestTarget target) {
             Modal modal = Modal.this;
             modal.setVisible(false);
             target.add(modal);
