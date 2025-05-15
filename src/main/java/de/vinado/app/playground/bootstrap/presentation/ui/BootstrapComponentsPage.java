@@ -1,7 +1,6 @@
 package de.vinado.app.playground.bootstrap.presentation.ui;
 
-import de.vinado.app.playground.bootstrap.presentation.ui.modal.DemoDto;
-import de.vinado.app.playground.bootstrap.presentation.ui.modal.DemoModalDialogForm;
+import de.vinado.app.playground.bootstrap.presentation.ui.modal.DemoForm;
 import de.vinado.app.playground.wicket.PlaygroundPage;
 import de.vinado.app.playground.wicket.bootstrap.BootstrapPage;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -24,14 +23,14 @@ public class BootstrapComponentsPage extends PlaygroundPage {
     }
 
     private AjaxLink<Object> demoFormModalDialogButton(String wicketId) {
-        IModel<DemoDto> model = new CompoundPropertyModel<>(new DemoDto());
+        IModel<DemoForm.Data> model = new CompoundPropertyModel<>(new DemoForm.Data());
         return new AjaxLink<>(wicketId) {
 
             @Override
             public void onClick(AjaxRequestTarget target) {
                 BootstrapPage.get().modal()
                     .title(Model.of("Bootstrap Modal Dialog Demo"))
-                    .content(id -> new DemoModalDialogForm(id, model))
+                    .content(id -> new DemoForm(id, model))
                     .addAction(id -> new CloseAction(id, new ResourceModel("cancel", "Cancel")))
                     .addAction(id -> new SubmitAction(id, new ResourceModel("submit", "Submit")))
                     .show(target);

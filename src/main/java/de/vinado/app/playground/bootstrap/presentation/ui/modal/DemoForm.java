@@ -11,9 +11,11 @@ import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
-public class DemoModalDialogForm extends FormModalPanel<DemoDto> {
+import java.io.Serializable;
 
-    public DemoModalDialogForm(String id, IModel<DemoDto> model) {
+public class DemoForm extends FormModalPanel<DemoForm.Data> {
+
+    public DemoForm(String id, IModel<Data> model) {
         super(id, model);
     }
 
@@ -72,5 +74,13 @@ public class DemoModalDialogForm extends FormModalPanel<DemoDto> {
 
     protected IModel<String> amountNumberFieldLabelModel() {
         return new ResourceModel("amount", "Amount");
+    }
+
+
+    @lombok.Data
+    public static class Data implements Serializable {
+
+        private String message;
+        private Integer amount = 0;
     }
 }
