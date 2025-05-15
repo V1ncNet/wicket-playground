@@ -3,6 +3,7 @@ package de.vinado.app.playground.bootstrap.presentation.ui.modal;
 import de.vinado.app.playground.wicket.bootstrap.form.BaseFormControl;
 import de.vinado.app.playground.wicket.bootstrap.form.Form;
 import de.vinado.app.playground.wicket.bootstrap.modal.FormModalPanel;
+import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
@@ -31,6 +32,9 @@ public class UploadForm extends FormModalPanel<UploadForm.Data> {
 
     @Override
     protected void onSubmit() {
+        Data.Upload upload = getModelObject().upload();
+        Uploaded event = new Uploaded(upload);
+        send(getPage(), Broadcast.DEPTH, event);
     }
 
     @Override
@@ -106,5 +110,8 @@ public class UploadForm extends FormModalPanel<UploadForm.Data> {
             private long size;
             private File file;
         }
+    }
+
+    public record Uploaded(Data.Upload payload) {
     }
 }
