@@ -1,14 +1,14 @@
 package de.vinado.app.playground.wicket.bootstrap.modal;
 
+import de.vinado.app.playground.wicket.bootstrap.form.Form;
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 
 import lombok.Getter;
 
 @Getter
-public class FormModalPanel<T> extends GenericPanel<T> {
+public abstract class FormModalPanel<T> extends GenericPanel<T> {
 
     private final Form<T> form;
 
@@ -23,14 +23,27 @@ public class FormModalPanel<T> extends GenericPanel<T> {
     }
 
     protected Form<T> form(String wicketId) {
-        return new de.vinado.app.playground.wicket.bootstrap.form.Form<>(wicketId, getModel());
+        return new Form<>(wicketId, getModel()) {
+
+            @Override
+            protected void onSubmit() {
+                FormModalPanel.this.onSubmit();
+            }
+        };
     }
+
+    protected abstract void onSubmit();
 
     @Override
     protected void onInitialize() {
         super.onInitialize();
 
+        configure(form);
+
         add(form);
+    }
+
+    protected void configure(Form<T> form) {
     }
 
     @Override

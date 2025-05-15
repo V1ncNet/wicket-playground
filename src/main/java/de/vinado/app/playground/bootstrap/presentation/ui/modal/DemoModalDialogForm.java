@@ -18,6 +18,10 @@ public class DemoModalDialogForm extends FormModalPanel<DemoDto> {
     }
 
     @Override
+    protected void onSubmit() {
+    }
+
+    @Override
     protected void onInitialize() {
         super.onInitialize();
 
