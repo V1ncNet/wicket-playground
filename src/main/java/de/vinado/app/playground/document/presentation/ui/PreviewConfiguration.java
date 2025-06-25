@@ -17,7 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.RequiredArgsConstructor;
 
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(Ordered.HIGHEST_PRECEDENCE + 1)
 @Profile("wicket")
 @Configuration
 @EnableConfigurationProperties(PreviewProperties.class)

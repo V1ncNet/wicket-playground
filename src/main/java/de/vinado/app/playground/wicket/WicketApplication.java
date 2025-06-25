@@ -2,7 +2,7 @@ package de.vinado.app.playground.wicket;
 
 import de.agilecoders.wicket.webjars.WicketWebjars;
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
-import de.vinado.app.playground.document.presentation.ui.PreviewPage;
+import de.vinado.app.playground.inbound.presentation.ui.ImportPage;
 import de.vinado.app.playground.security.web.oauth2.AuthenticationResolver;
 import de.vinado.app.playground.wicket.bootstrap.BootstrapResourceAppender;
 import de.vinado.app.playground.wicket.configuration.WicketConfigurer;
@@ -78,7 +78,7 @@ public class WicketApplication extends AuthenticatedWebApplication
 
     @Override
     public Class<? extends Page> getHomePage() {
-        return PreviewPage.class;
+        return ImportPage.class;
     }
 
     @Override
