@@ -39,11 +39,10 @@ public class WicketConfiguration {
         FilterRegistrationBean<WicketFilter> registration = new FilterRegistrationBean<>(filter);
         registration.setName("wicket.playground");
         registration.addInitParameter(APP_FACT_PARAM, SpringWebApplicationFactory.class.getName());
-        registration.addInitParameter(IGNORE_PATHS_PARAM, "/static");
+        registration.addInitParameter(IGNORE_PATHS_PARAM, "/static,/api");
         registration.addInitParameter(FILTER_MAPPING_PARAM, APP_ROOT);
         registration.addInitParameter(RUNTIME_CONFIGURATION_PARAM, properties.getRuntimeConfiguration().name());
         registration.setDispatcherTypes(DISPATCHER_TYPES);
-        registration.addUrlPatterns(APP_ROOT);
         return registration;
     }
 }

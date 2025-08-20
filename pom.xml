@@ -49,7 +49,6 @@
         <webjars.target.directory>${project.build.directory}/webjars</webjars.target.directory>
 
         <dependency.checkstyle.version>10.17.0</dependency.checkstyle.version>
-        <dependency.closure.version>v20240317</dependency.closure.version>
         <dependency.sass.version>1.62.1</dependency.sass.version>
         <dependency.wicket.version>10.4.0</dependency.wicket.version>
         <dependency.wicket-webjars.version>4.0.6</dependency.wicket-webjars.version>
@@ -94,11 +93,6 @@
                 <groupId>com.yahoo.platform.yui</groupId>
                 <artifactId>yuicompressor</artifactId>
                 <version>${dependency.yuicompressor.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.javascript</groupId>
-                <artifactId>closure-compiler-unshaded</artifactId>
-                <version>${dependency.closure.version}</version>
             </dependency>
             <dependency>
                 <groupId>de.agilecoders.wicket.webjars</groupId>
@@ -154,10 +148,6 @@
         <dependency>
             <groupId>com.yahoo.platform.yui</groupId>
             <artifactId>yuicompressor</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.javascript</groupId>
-            <artifactId>closure-compiler-unshaded</artifactId>
         </dependency>
         <dependency>
             <groupId>de.agilecoders.wicket.webjars</groupId>

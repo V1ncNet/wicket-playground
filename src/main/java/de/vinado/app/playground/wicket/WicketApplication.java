@@ -163,7 +163,6 @@ public class WicketApplication extends AuthenticatedWebApplication
     private void configure(ResourceSettings settings) {
         settings.setResourcePollFrequency(null);
         settings.setCssCompressor(new YuiCssCompressor());
-        settings.setJavaScriptCompressor(new GoogleClosureJavaScriptCompressor());
         settings.setCachingStrategy(new NoOpResourceCachingStrategy());
     }
 
