@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import java.util.EnumSet;
 import jakarta.servlet.DispatcherType;
+import java.util.EnumSet;
 
 import lombok.RequiredArgsConstructor;
 

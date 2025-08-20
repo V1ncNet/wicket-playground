@@ -18,10 +18,10 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.core.env.Environment;
 
+import jakarta.servlet.ServletContext;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
-import jakarta.servlet.ServletContext;
 
 public class Sidebar extends Border implements IGenericComponent<Stream<NavigationItem>, Sidebar> {
 
