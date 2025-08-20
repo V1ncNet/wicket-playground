@@ -64,6 +64,7 @@
 
         <plugin.checkstyle.version>3.4.0</plugin.checkstyle.version>
         <plugin.dependency-check.version>12.1.1</plugin.dependency-check.version>
+        <plugin.frontend.version>1.15.1</plugin.frontend.version>
         <plugin.sass.version>1.0.3</plugin.sass.version>
     </properties>
 
@@ -281,6 +282,15 @@
                     <version>${plugin.dependency-check.version}</version>
                 </plugin>
                 <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>${plugin.frontend.version}</version>
+                    <configuration>
+                        <workingDirectory>apps/dashboard/</workingDirectory>
+                        <installDirectory>${project.build.directory}</installDirectory>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <groupId>us.hebi.sass</groupId>
                     <artifactId>sass-cli-maven-plugin</artifactId>
                     <version>${plugin.sass.version}</version>
@@ -403,6 +413,39 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>install-node-and-npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v22.16.0</nodeVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm-install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>clean-install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm-run-build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run build</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>us.hebi.sass</groupId>
                 <artifactId>sass-cli-maven-plugin</artifactId>
                 <executions>
@@ -421,6 +464,32 @@
                         <arg>${sass.source.directory}:${sass.target.directory}</arg>
                     </args>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-react-build</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>apps/dashboard/dist/</directory>
+                                    <includes>
+                                        <include>**/*</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                            <outputDirectory>
+                                ${project.build.outputDirectory}/de/vinado/app/playground/dashboard/presentation/ui/
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

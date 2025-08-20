@@ -7,6 +7,7 @@ The application provides the following features:
 
 * Spring Boot application bootstrapper
 * Pluggable Wicket modules
+* React dashboard island within a Wicket page
 * 3rd-party PDF preview service embedded in an iframe
 * Bootstrap 5
 * Wicket Webjars
@@ -66,6 +67,13 @@ docker compose -f compose.yaml -f compose.keycloak.yaml exec keycloak sh -c \
     --db dev-file \
     --db-url 'jdbc:h2:file:/tmp/h2/keycloakdb;NON_KEYWORDS=VALUE'"
 ```
+
+
+## React island
+
+Maven is configured to compile the React sources into the Classpath when using targets like compile or package. Any
+subsequent changes to the React code need a re-package so the new stuff gets picked up by Wicket. You may also just run
+the vite dev server.
 
 
 ## CodiMD Pads

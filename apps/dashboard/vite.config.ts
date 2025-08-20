@@ -6,4 +6,13 @@ export default defineConfig({
   plugins: [
     react(),
   ],
+  build: {
+    rollupOptions: {
+      input: "./src/main.tsx",
+      output: {
+        entryFileNames: "dashboard.js",
+        assetFileNames: "[name].[ext]",
+      },
+    },
+  },
 });
