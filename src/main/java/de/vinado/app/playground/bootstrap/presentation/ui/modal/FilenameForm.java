@@ -24,7 +24,7 @@ public class FilenameForm extends FormModalPanel<Upload> {
     protected void onInitialize() {
         super.onInitialize();
 
-        IModel<String> filenameModel = LambdaModel.of(getModel(), Upload::fileName, Upload::fileName);
+        IModel<String> filenameModel = LambdaModel.of(getModel(), Upload::getFileName, Upload::setFileName);
         FilenameFormControl filenameFormControl = new FilenameFormControl("filename", filenameModel);
         filenameFormControl.setRequired(true);
         filenameFormControl.setLabel(new ResourceModel("filename.field.label", "Filename"));

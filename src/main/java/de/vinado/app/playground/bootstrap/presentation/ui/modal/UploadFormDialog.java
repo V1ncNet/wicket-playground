@@ -19,7 +19,7 @@ public class UploadFormDialog extends GenericPanel<UploadForm.Data> {
     public UploadFormDialog() {
         super(Modal.CONTENT_WICKET_ID, model());
 
-        this.modal = BootstrapPage.get().modal();
+        this.modal = BootstrapPage.get().getModal();
         this.form = new UploadForm("form", getModel());
     }
 

@@ -43,7 +43,7 @@ public class KeycloakIntegrationTestSuite {
             .retrieve();
 
         TokenResponse tokenResponse = response.body(TokenResponse.class);
-        return tokenResponse.accessToken();
+        return tokenResponse.getAccessToken();
     }
 
     private static MultiValueMap<String, String> prepareBody() {

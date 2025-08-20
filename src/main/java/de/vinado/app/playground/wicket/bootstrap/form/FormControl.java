@@ -16,13 +16,13 @@ public abstract class FormControl<T extends Serializable> extends BaseFormContro
 
     @Override
     public void convertInput() {
-        setConvertedInput(control().getConvertedInput());
+        setConvertedInput(getControl().getConvertedInput());
     }
 
     @Override
     protected void onBeforeRender() {
         super.onBeforeRender();
 
-        control().setModelObject(getModelObject());
+        getControl().setModelObject(getModelObject());
     }
 }

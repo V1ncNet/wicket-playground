@@ -9,11 +9,9 @@ import java.io.Serializable;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
-import lombok.experimental.Accessors;
 
 @Value
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-@Accessors(fluent = false)
 public class NavigationItem implements Serializable {
 
     Class<? extends Page> page;

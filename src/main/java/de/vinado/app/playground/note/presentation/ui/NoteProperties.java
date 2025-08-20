@@ -6,11 +6,9 @@ import java.net.URL;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 @Getter
 @Setter
-@Accessors(fluent = false)
 @ConfigurationProperties("app.note")
 public class NoteProperties {
 
@@ -19,7 +17,6 @@ public class NoteProperties {
 
     @Getter
     @Setter
-    @Accessors(fluent = false)
     public static class Codimd {
 
         private URL baseUrl;

@@ -48,7 +48,6 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 @Profile("wicket")
 @Component
@@ -56,15 +55,12 @@ public class WicketApplication extends AuthenticatedWebApplication
     implements ApplicationContextAware, EnvironmentAware {
 
     @Setter
-    @Accessors(fluent = false)
     private ApplicationContext applicationContext;
 
     @Setter
-    @Accessors(fluent = false)
     private Environment environment;
 
     @Setter(onMethod_ = {@Autowired})
-    @Accessors(fluent = false)
     private AuthenticationResolver authenticationResolver;
 
     @Setter

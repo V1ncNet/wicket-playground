@@ -47,7 +47,7 @@ public class BootstrapComponentsPage extends PlaygroundPage {
 
             @Override
             public void onClick(AjaxRequestTarget target) {
-                BootstrapPage.get().modal()
+                BootstrapPage.get().getModal()
                     .title(Model.of("Bootstrap Modal Dialog Demo"))
                     .content(id -> new DemoForm(id, model))
                     .addAction(id -> new CloseAction(id, new ResourceModel("cancel", "Cancel")))

@@ -32,7 +32,7 @@ public class UploadForm extends FormModalPanel<UploadForm.Data> {
 
     @Override
     protected void onSubmit() {
-        Data.Upload upload = getModelObject().upload();
+        Data.Upload upload = getModelObject().getUpload();
         Uploaded event = new Uploaded(upload);
         send(getPage(), Broadcast.DEPTH, event);
     }
@@ -41,7 +41,7 @@ public class UploadForm extends FormModalPanel<UploadForm.Data> {
     protected void onInitialize() {
         super.onInitialize();
 
-        IModel<Data.Upload> uploadModel = LambdaModel.of(getModel(), Data::upload, Data::upload);
+        IModel<Data.Upload> uploadModel = LambdaModel.of(getModel(), Data::getUpload, Data::setUpload);
         UploadFormControl upload = new UploadFormControl("upload", uploadModel);
         upload.setRequired(true);
         upload.setLabel(new ResourceModel("upload.field.label", "Upload"));
@@ -72,7 +72,7 @@ public class UploadForm extends FormModalPanel<UploadForm.Data> {
         @Override
         public void convertInput() {
             try {
-                List<FileUpload> fileUploads = control().getConvertedInput();
+                List<FileUpload> fileUploads = getControl().getConvertedInput();
                 if (null == fileUploads || fileUploads.isEmpty()) {
                     setConvertedInput(null);
                     return;
@@ -80,11 +80,11 @@ public class UploadForm extends FormModalPanel<UploadForm.Data> {
 
                 FileUpload fileUpload = fileUploads.get(0);
                 File file = fileUpload.writeToTempFile();
-                Data.Upload upload = new Data.Upload()
-                    .contentType(MimeType.valueOf(fileUpload.getContentType()))
-                    .fileName(fileUpload.getClientFileName())
-                    .size(fileUpload.getSize())
-                    .file(file);
+                Data.Upload upload = new Data.Upload();
+                upload.setContentType(MimeType.valueOf(fileUpload.getContentType()));
+                upload.setFileName(fileUpload.getClientFileName());
+                upload.setSize(fileUpload.getSize());
+                upload.setFile(file);
 
                 setConvertedInput(upload);
             } catch (Exception e) {

@@ -8,11 +8,9 @@ import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 @Getter
 @Setter
-@Accessors(fluent = false)
 @ConfigurationProperties("app.security.oauth2.client")
 public class OidcClientProperties {
 
@@ -23,7 +21,6 @@ public class OidcClientProperties {
 
     @Getter
     @Setter
-    @Accessors(fluent = false)
     public static class Registration {
 
         private String rolesJsonPath;

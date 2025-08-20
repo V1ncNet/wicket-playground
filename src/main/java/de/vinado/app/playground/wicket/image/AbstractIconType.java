@@ -4,10 +4,10 @@ public abstract class AbstractIconType implements IconType {
 
     @Override
     public String toCssClasses() {
-        return style() + " " + name();
+        return getStyle() + " " + getName();
     }
 
-    protected abstract String style();
+    protected abstract String getStyle();
 
-    protected abstract String name();
+    protected abstract String getName();
 }
