@@ -42,9 +42,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <skipLint>false</skipLint>
-        <skipDependencyConvergence>false</skipDependencyConvergence>
-        <skipDependencyAudit>true</skipDependencyAudit>
+        <dependency-check.skip>true</dependency-check.skip>
 
         <sass.source.directory>${project.basedir}/src/main/resources/scss</sass.source.directory>
         <sass.target.directory>${project.build.directory}/generated-sources/src/main/resources/css</sass.target.directory>
@@ -341,7 +339,6 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <configuration>
                     <configLocation>${project.basedir}/checkstyle.xml</configLocation>
-                    <skip>${skipLint}</skip>
                 </configuration>
                 <executions>
                     <execution>
@@ -378,7 +375,6 @@
                             <goal>enforce</goal>
                         </goals>
                         <configuration>
-                            <skip>${skipDependencyConvergence}</skip>
                             <rules>
                                 <dependencyConvergence/>
                             </rules>
@@ -403,9 +399,6 @@
                         <goals>
                             <goal>check</goal>
                         </goals>
-                        <configuration>
-                            <skip>${skipDependencyAudit}</skip>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
