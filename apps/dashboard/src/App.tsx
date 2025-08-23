@@ -1,17 +1,14 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { lazy } from "react";
+import { type Register, RouterProvider } from "@tanstack/react-router";
 
 type Props = {
   queryClient: QueryClient
-}
+} & Register
 
-const Greeter = lazy(() => import("./Greeter"));
-
-export default function App({ queryClient }: Props) {
+export default function App({ queryClient, router }: Props) {
   return (
     <QueryClientProvider client={queryClient}>
-      <h1>Works!</h1>
-      <Greeter />
+      <RouterProvider router={router} />
     </QueryClientProvider>
   );
 }
