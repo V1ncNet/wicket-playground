@@ -1,32 +1,18 @@
-import { useEffect, useState } from "react";
+import { queryOptions, useQuery } from "@tanstack/react-query";
+
+async function greet(signal?: AbortSignal) {
+  return await fetch("http://localhost:8080/api/v1/dashboard/greet", { signal })
+    .then(res => res.text());
+}
+
+const greetQueryOptions = queryOptions({
+  queryKey: ["greet"],
+  queryFn: ({ signal }) => greet(signal),
+});
 
 export default function Greeter() {
 
-  const [message, setMessage] = useState<string>();
-
-  useEffect(() => {
-    const abortController = new AbortController();
-
-    fetch("http://localhost:8080/api/v1/dashboard/greet", {
-      signal: abortController.signal,
-      headers: {
-        "Accept": "text/plain",
-      },
-    })
-      .then(res => res.text())
-      .then(data => setMessage(data))
-      .catch(error => {
-        if (error === "Component unmounted") {
-          console.debug(error);
-        } else {
-          throw error;
-        }
-      });
-
-    return () => {
-      abortController.abort("Component unmounted");
-    };
-  }, [setMessage]);
+  const { data: message } = useQuery(greetQueryOptions);
 
   return (
     <>
