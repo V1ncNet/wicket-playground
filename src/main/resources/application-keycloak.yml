@@ -5,18 +5,22 @@ spring:
         - compose.yaml
         - compose.keycloak.yaml
 
-  security.oauth2.client:
-    provider:
-      keycloak:
+  security.oauth2:
+    client:
+      provider:
+        keycloak:
+          issuer-uri: http://localhost:8180/realms/local
+          user-name-attribute: preferred_username
+      registration:
+        keycloak:
+          client-name: Keycloak
+          client-id: playground
+          client-secret: etgWLsvbyKRdxFXIyeZpWbor99sKjQ42
+          authorization-grant-type: authorization_code
+          scope: openid
+    resourceserver:
+      jwt:
         issuer-uri: http://localhost:8180/realms/local
-        user-name-attribute: preferred_username
-    registration:
-      keycloak:
-        client-name: Keycloak
-        client-id: playground
-        client-secret: etgWLsvbyKRdxFXIyeZpWbor99sKjQ42
-        authorization-grant-type: authorization_code
-        scope: openid
 
 app:
   security.oauth2.client:

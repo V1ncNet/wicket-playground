@@ -30,7 +30,7 @@ public class DashboardConfigResource extends CharSequenceResource {
         HttpServletRequest request = this.request.get();
         UriComponents uriComponents = ServletUriComponentsBuilder.fromContextPath(request).build();
         properties.put("BASE_URL", uriComponents.toUriString());
-        properties.put("BASE_PATH", uriComponents.getPath() + DashboardPage.PATH);
+        properties.put("BASE_PATH", uriComponents.getPath() + "/" + DashboardPage.PATH);
 
         StringBuilder builder = new StringBuilder("window.__ENV__={");
         properties.forEach(appendTo(builder));

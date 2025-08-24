@@ -1,11 +1,13 @@
 package de.vinado.app.playground.dashboard.presentation.ui;
 
 import de.vinado.app.playground.wicket.PlaygroundPage;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.head.IHeaderResponse;
 
+@AuthorizeInstantiation({"USER"})
 public class DashboardPage extends PlaygroundPage {
 
-    public static final String PATH = "/dashboard";
+    public static final String PATH = "dashboard";
 
     @Override
     protected void onInitialize() {
