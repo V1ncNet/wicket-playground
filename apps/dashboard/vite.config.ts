@@ -1,5 +1,6 @@
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
+import { resolve } from "node:path";
 import { defineConfig, loadEnv, type UserConfig } from "vite";
 
 // https://vite.dev/config/
@@ -14,6 +15,11 @@ export default ({ mode }: { mode: string }): UserConfig => {
       }),
       react(),
     ],
+    resolve: {
+      alias: {
+        "@": resolve(__dirname, "./src"),
+      },
+    },
     build: {
       rollupOptions: {
         input: "./src/main.tsx",

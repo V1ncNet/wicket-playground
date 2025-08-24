@@ -5,7 +5,7 @@ export const Route = createFileRoute("/_root/_default/")({
   component: HomePage,
 });
 
-const Greeter = lazy(() => import("../../../Greeter"));
+const Greeter = lazy(() => import("@/features/greeting/components/Greeter"));
 
 function HomePage() {
   return (
