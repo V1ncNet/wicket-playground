@@ -17,5 +17,6 @@ function resolve(key: keyof NonNullable<Window["__ENV__"]>, fallback?: string | 
 }
 
 export const env = {
+  BASE_URL: resolve("BASE_URL"),
   BASE_PATH: resolve("BASE_PATH", null),
 };

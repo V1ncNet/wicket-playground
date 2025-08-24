@@ -1,7 +1,8 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
+import { env } from "./config/env.ts";
 
 async function greet(signal?: AbortSignal) {
-  return await fetch("http://localhost:8080/api/v1/dashboard/greet", { signal })
+  return await fetch(`${env.BASE_URL}/api/v1/dashboard/greet`, { signal })
     .then(res => res.text());
 }
 
