@@ -15,12 +15,14 @@ import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.core.env.Environment;
 
 import jakarta.servlet.ServletContext;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.StringTokenizer;
 import java.util.stream.Stream;
 
 public class Sidebar extends Border implements IGenericComponent<Stream<NavigationItem>, Sidebar> {
@@ -91,7 +93,9 @@ public class Sidebar extends Border implements IGenericComponent<Stream<Navigati
     }
 
     private AbstractLink linkFor(String wicketId, NavigationItem item) {
-        BookmarkablePageLink<Page> link = new BookmarkablePageLink<>(wicketId, item.getPage(), item.getParameters());
+        Class<? extends Page> page = item.getPage();
+        PageParameters parameters = item.getParameters();
+        BookmarkablePageLink<Page> link = new AbsoluteBookmarkablePageLink(wicketId, page, parameters);
         link.setEnabled(item.isEnabled());
         if (isActive(item)) {
             link.add(new AttributeModifier("class", "nav-link d-flex align-items-center gap-2 active"));
@@ -114,5 +118,38 @@ public class Sidebar extends Border implements IGenericComponent<Stream<Navigati
 
     private Label labelFor(String wicketId, NavigationItem item) {
         return new Label(wicketId, item.getLabel());
+    }
+
+
+    private static class AbsoluteBookmarkablePageLink extends BookmarkablePageLink<Page> {
+
+        @SpringBean
+        private ServletContext servletContext;
+
+        public <C extends Page> AbsoluteBookmarkablePageLink(String id, Class<C> pageClass, PageParameters parameters) {
+            super(id, pageClass, parameters);
+        }
+
+        @Override
+        protected CharSequence getURL() {
+            CharSequence url = super.getURL();
+
+            StringTokenizer segments = new StringTokenizer(url.toString(), "/");
+            StringBuilder path = new StringBuilder(servletContext.getContextPath());
+
+            while (segments.hasMoreTokens()) {
+                String segment = segments.nextToken();
+                if (!segment.startsWith(".")) {
+                    path.append('/').append(segment);
+                    break;
+                }
+            }
+
+            while (segments.hasMoreTokens()) {
+                path.append('/').append(segments.nextToken());
+            }
+
+            return path;
+        }
     }
 }
