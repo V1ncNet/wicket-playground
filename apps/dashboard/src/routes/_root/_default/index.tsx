@@ -1,3 +1,5 @@
+import EntryForm from "@/features/entry/components/EntryForm";
+import EntryList from "@/features/entry/components/EntryList";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { lazy } from "react";
 
@@ -12,6 +14,8 @@ function HomePage() {
     <>
       <h1>Works!</h1>
       <Greeter />
+      <EntryForm />
+      <EntryList />
       <Link to="/about">About</Link>
     </>
   );
