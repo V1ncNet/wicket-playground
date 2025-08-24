@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RootRouteRouteImport } from './routes/_root/route'
+import { Route as RootAboutRouteImport } from './routes/_root/about'
 import { Route as RootDefaultIndexRouteImport } from './routes/_root/_default/index'
 
 const RootRouteRoute = RootRouteRouteImport.update({
   id: '/_root',
   getParentRoute: () => rootRouteImport,
+} as any)
+const RootAboutRoute = RootAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => RootRouteRoute,
 } as any)
 const RootDefaultIndexRoute = RootDefaultIndexRouteImport.update({
   id: '/_default/',
@@ -23,22 +29,25 @@ const RootDefaultIndexRoute = RootDefaultIndexRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/about': typeof RootAboutRoute
   '/': typeof RootDefaultIndexRoute
 }
 export interface FileRoutesByTo {
+  '/about': typeof RootAboutRoute
   '/': typeof RootDefaultIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_root': typeof RootRouteRouteWithChildren
+  '/_root/about': typeof RootAboutRoute
   '/_root/_default/': typeof RootDefaultIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/about' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/_root' | '/_root/_default/'
+  to: '/about' | '/'
+  id: '__root__' | '/_root' | '/_root/about' | '/_root/_default/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -54,6 +63,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RootRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_root/about': {
+      id: '/_root/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof RootAboutRouteImport
+      parentRoute: typeof RootRouteRoute
+    }
     '/_root/_default/': {
       id: '/_root/_default/'
       path: '/'
@@ -65,10 +81,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface RootRouteRouteChildren {
+  RootAboutRoute: typeof RootAboutRoute
   RootDefaultIndexRoute: typeof RootDefaultIndexRoute
 }
 
 const RootRouteRouteChildren: RootRouteRouteChildren = {
+  RootAboutRoute: RootAboutRoute,
   RootDefaultIndexRoute: RootDefaultIndexRoute,
 }
 

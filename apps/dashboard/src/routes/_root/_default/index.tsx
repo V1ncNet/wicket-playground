@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { lazy } from "react";
 
 export const Route = createFileRoute("/_root/_default/")({
@@ -12,6 +12,7 @@ function HomePage() {
     <>
       <h1>Works!</h1>
       <Greeter />
+      <Link to="/about">About</Link>
     </>
   );
 }
