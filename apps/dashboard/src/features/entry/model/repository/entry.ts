@@ -27,3 +27,10 @@ export async function findAllEntries(signal?: AbortSignal): Promise<z.infer<type
   const json = await res.json();
   return z.array(Entry).parseAsync(json.entries);
 }
+
+export async function deleteEntry(id: string, signal?: AbortSignal): Promise<void> {
+  const method = "DELETE";
+
+  const res = await fetch(`${env.BASE_URL}/api/v1/dashboard/entries/${id}`, { method, signal });
+  if (!res.ok) throw new Error(await res.text());
+}

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import lombok.NonNull;
@@ -25,6 +26,17 @@ class InMemoryEntryRepository implements EntryRepository {
     public Stream<Entry> findAll() {
         return entities.entrySet().stream()
             .map(entry -> new Entry(entry.getKey(), entry.getValue()));
+    }
+
+    @Override
+    public Optional<Entry> findBy(@NonNull Entry.Id id) {
+        return Optional.ofNullable(entities.get(id))
+            .map(state -> new Entry(id, state));
+    }
+
+    @Override
+    public void delete(@NonNull Entry entity) {
+        entities.remove(entity.id());
     }
 
     private void save(Entry entity) {

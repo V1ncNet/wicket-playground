@@ -23,6 +23,13 @@ public class EntryCommandHandler {
         log.debug("Created {}", entry);
     }
 
+    public void execute(@NonNull DeleteEntry command) {
+        DeleteEntry.Payload payload = command.payload();
+        Entry entry = payload.entry();
+        entryRepository.delete(entry);
+        log.debug("Deleted {}", entry);
+    }
+
     private Entry createEntry(CreateEntry.Payload payload) {
         Entry.Id id = payload.id();
         String text = payload.text();
