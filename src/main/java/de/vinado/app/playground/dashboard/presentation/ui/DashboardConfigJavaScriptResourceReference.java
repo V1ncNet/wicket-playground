@@ -5,24 +5,25 @@ import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
 
-import java.util.Properties;
-
 public class DashboardConfigJavaScriptResourceReference extends ResourceReference {
 
-    private final Properties properties;
-
-    private DashboardConfigJavaScriptResourceReference(Properties properties) {
+    private DashboardConfigJavaScriptResourceReference() {
         super(DashboardConfigJavaScriptResourceReference.class, "dashboard-config.js");
-        this.properties = properties;
     }
 
     @Override
     public IResource getResource() {
-        return new DashboardConfigResource(properties);
+        return new DashboardConfigResource();
     }
 
-    public static JavaScriptReferenceHeaderItem asHeaderItem(Properties properties) {
-        ResourceReference reference = new DashboardConfigJavaScriptResourceReference(properties);
-        return JavaScriptHeaderItem.forReference(reference);
+    public static JavaScriptReferenceHeaderItem asHeaderItem() {
+        return JavaScriptHeaderItem.forReference(Holder.INSTANCE);
+    }
+
+
+    private static class Holder {
+
+        private static final DashboardConfigJavaScriptResourceReference INSTANCE
+            = new DashboardConfigJavaScriptResourceReference();
     }
 }

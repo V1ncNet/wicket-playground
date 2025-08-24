@@ -5,18 +5,13 @@ import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
 import org.apache.wicket.markup.head.JavaScriptReferenceType;
 import org.apache.wicket.request.resource.PackageResource;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.request.resource.ResourceReference;
 
 import java.util.List;
-import java.util.Properties;
 
 public class DashboardJavaScriptResourceReference extends PackageResourceReference {
 
-    private final Properties properties;
-
-    private DashboardJavaScriptResourceReference(Properties properties) {
+    private DashboardJavaScriptResourceReference() {
         super(DashboardJavaScriptResourceReference.class, "dashboard.js");
-        this.properties = properties;
     }
 
     @Override
@@ -29,14 +24,19 @@ public class DashboardJavaScriptResourceReference extends PackageResourceReferen
     @Override
     public List<HeaderItem> getDependencies() {
         List<HeaderItem> dependencies = super.getDependencies();
-        dependencies.add(DashboardConfigJavaScriptResourceReference.asHeaderItem(properties));
+        dependencies.add(DashboardConfigJavaScriptResourceReference.asHeaderItem());
         return dependencies;
     }
 
-    public static JavaScriptReferenceHeaderItem asHeaderItem(Properties properties) {
-        ResourceReference reference = new DashboardJavaScriptResourceReference(properties);
-        JavaScriptReferenceHeaderItem item = new JavaScriptReferenceHeaderItem(reference, null, null);
+    public static JavaScriptReferenceHeaderItem asHeaderItem() {
+        JavaScriptReferenceHeaderItem item = new JavaScriptReferenceHeaderItem(Holder.INSTANCE, null, null);
         item.setType(JavaScriptReferenceType.MODULE);
         return item;
+    }
+
+
+    private static class Holder {
+
+        private static final DashboardJavaScriptResourceReference INSTANCE = new DashboardJavaScriptResourceReference();
     }
 }
