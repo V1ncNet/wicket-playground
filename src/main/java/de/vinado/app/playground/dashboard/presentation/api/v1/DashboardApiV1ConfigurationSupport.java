@@ -2,6 +2,7 @@ package de.vinado.app.playground.dashboard.presentation.api.v1;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -15,6 +16,7 @@ class DashboardApiV1ConfigurationSupport {
     @Bean
     public SecurityFilterChain dashboardApiV1FilterChain(HttpSecurity http) throws Exception {
         http.securityMatcher(antMatcher(PATH + "/**"))
+            .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors
                 .configurationSource(dashboardApiV1CorsConfigurationSource()))
         ;
