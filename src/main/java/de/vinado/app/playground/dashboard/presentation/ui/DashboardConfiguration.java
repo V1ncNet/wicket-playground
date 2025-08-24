@@ -24,7 +24,7 @@ public class DashboardConfiguration implements WicketConfigurer {
     }
 
     private void mountPages(WebApplication webApplication) {
-        webApplication.mountPage("dashboard", DashboardPage.class);
+        webApplication.mountPage(DashboardPage.PATH, DashboardPage.class);
     }
 
     @Override

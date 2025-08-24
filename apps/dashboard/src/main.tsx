@@ -3,6 +3,7 @@ import { createRouter } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
+import { env } from "./config/env";
 import { routeTree } from "./routeTree.gen";
 
 const queryClient = new QueryClient();
@@ -12,7 +13,7 @@ const router = createRouter({
   context: {
     queryClient,
   },
-  basepath: "/dashboard",
+  basepath: env.BASE_PATH,
   defaultPreload: "intent",
   scrollRestoration: true,
   defaultStructuralSharing: true,
