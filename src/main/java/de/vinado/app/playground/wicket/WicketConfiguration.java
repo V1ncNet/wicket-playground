@@ -13,8 +13,6 @@ import java.util.EnumSet;
 
 import lombok.RequiredArgsConstructor;
 
-import static jakarta.servlet.DispatcherType.ERROR;
-import static jakarta.servlet.DispatcherType.FORWARD;
 import static jakarta.servlet.DispatcherType.REQUEST;
 import static org.apache.wicket.protocol.http.WicketFilter.APP_FACT_PARAM;
 import static org.apache.wicket.protocol.http.WicketFilter.FILTER_MAPPING_PARAM;
@@ -29,7 +27,13 @@ public class WicketConfiguration {
     public static final String APP_ROOT = "/*";
 
     private static final String RUNTIME_CONFIGURATION_PARAM = "configuration";
-    private static final EnumSet<DispatcherType> DISPATCHER_TYPES = EnumSet.of(REQUEST, ERROR, FORWARD);
+    private static final EnumSet<DispatcherType> DISPATCHER_TYPES = EnumSet.of(REQUEST);
+    private static final String[] IGNORED_PATHS = {
+        "/favicon.ico",
+        "/robots.txt",
+        "/static",
+        "/api/*",
+    };
 
     private final WicketProperties properties;
 
@@ -39,7 +43,7 @@ public class WicketConfiguration {
         FilterRegistrationBean<WicketFilter> registration = new FilterRegistrationBean<>(filter);
         registration.setName("wicket.playground");
         registration.addInitParameter(APP_FACT_PARAM, SpringWebApplicationFactory.class.getName());
-        registration.addInitParameter(IGNORE_PATHS_PARAM, "/static,/api");
+        registration.addInitParameter(IGNORE_PATHS_PARAM, String.join(",", IGNORED_PATHS));
         registration.addInitParameter(FILTER_MAPPING_PARAM, APP_ROOT);
         registration.addInitParameter(RUNTIME_CONFIGURATION_PARAM, properties.getRuntimeConfiguration().name());
         registration.setDispatcherTypes(DISPATCHER_TYPES);
