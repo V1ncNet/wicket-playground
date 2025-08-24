@@ -30,6 +30,8 @@ public class WicketSession extends AbstractAuthenticatedWebSession {
     public Roles getRoles() {
         if (!isSignedIn()) {
             return new Roles();
+        } else if (!environment.matchesProfiles("oauth2")) {
+            return new AlwaysAuthorizedRoles();
         }
 
         Authentication authentication = authentication();
@@ -59,5 +61,29 @@ public class WicketSession extends AbstractAuthenticatedWebSession {
 
     private static Predicate<String> byPrefix(String prefix) {
         return self -> self.startsWith(prefix);
+    }
+
+
+    private static class AlwaysAuthorizedRoles extends Roles {
+
+        @Override
+        public boolean hasRole(String role) {
+            return true;
+        }
+
+        @Override
+        public boolean hasAnyRole(Roles roles) {
+            return true;
+        }
+
+        @Override
+        public boolean hasAllRoles(Roles roles) {
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "*";
+        }
     }
 }
