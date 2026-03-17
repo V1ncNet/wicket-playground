@@ -51,7 +51,7 @@
         <dependency.checkstyle.version>10.17.0</dependency.checkstyle.version>
         <dependency.sass.version>1.62.1</dependency.sass.version>
         <dependency.wicket.version>10.8.0</dependency.wicket.version>
-        <dependency.wicket-webjars.version>4.0.6</dependency.wicket-webjars.version>
+        <dependency.wicket-webjars.version>4.0.14</dependency.wicket-webjars.version>
         <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
 
         <webjar.bootstrap.version>5.3.3</webjar.bootstrap.version>
