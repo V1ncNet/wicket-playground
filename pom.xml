@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.4</version>
+        <version>3.5.11</version>
         <relativePath/>
     </parent>
 
@@ -59,7 +59,7 @@
 
         <testcontainer.keycloak.version>3.6.0</testcontainer.keycloak.version>
 
-        <convergence.error_prone_annotations.version>2.27.0</convergence.error_prone_annotations.version>
+        <convergence.nimbus-jose-jwt.version>9.37.4</convergence.nimbus-jose-jwt.version>
 
         <plugin.checkstyle.version>3.4.0</plugin.checkstyle.version>
         <plugin.dependency-check.version>12.1.1</plugin.dependency-check.version>
@@ -116,9 +116,9 @@
             </dependency>
 
             <dependency>
-                <groupId>com.google.errorprone</groupId>
-                <artifactId>error_prone_annotations</artifactId>
-                <version>${convergence.error_prone_annotations.version}</version>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${convergence.nimbus-jose-jwt.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
