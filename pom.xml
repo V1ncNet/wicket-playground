@@ -50,7 +50,7 @@
 
         <dependency.checkstyle.version>10.17.0</dependency.checkstyle.version>
         <dependency.sass.version>1.62.1</dependency.sass.version>
-        <dependency.wicket.version>10.4.0</dependency.wicket.version>
+        <dependency.wicket.version>10.8.0</dependency.wicket.version>
         <dependency.wicket-webjars.version>4.0.6</dependency.wicket-webjars.version>
         <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
 
@@ -59,6 +59,7 @@
 
         <testcontainer.keycloak.version>3.6.0</testcontainer.keycloak.version>
 
+        <convergence.asm.version>9.9</convergence.asm.version>
         <convergence.nimbus-jose-jwt.version>9.37.4</convergence.nimbus-jose-jwt.version>
 
         <plugin.checkstyle.version>3.4.0</plugin.checkstyle.version>
@@ -115,6 +116,11 @@
                 <version>${testcontainer.keycloak.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm</artifactId>
+                <version>${convergence.asm.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.nimbusds</groupId>
                 <artifactId>nimbus-jose-jwt</artifactId>
