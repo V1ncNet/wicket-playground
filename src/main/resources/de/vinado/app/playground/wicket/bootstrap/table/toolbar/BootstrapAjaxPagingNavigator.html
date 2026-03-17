@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+<body>
+<wicket:panel>
+    <li class="page-item" wicket:id="firstItem">
+        <a class="page-link first" wicket:id="first">&lt;&lt;</a>
+    </li>
+    <li class="page-item" wicket:id="prevItem">
+        <a class="page-link prev" wicket:id="prev" rel="prev">&lt;</a>
+    </li>
+    <li class="page-item" wicket:id="navigation">
+        <a wicket:id="pageLink">
+            <wicket:container wicket:id="pageNumber"></wicket:container>
+        </a>
+    </li>
+    <li class="page-item" wicket:id="nextItem">
+        <a wicket:id="next" class="page-link next" rel="next">&gt;</a>
+    </li>
+    <li class="page-item" wicket:id="lastItem">
+        <a wicket:id="last" class="page-link last">&gt;&gt;</a>
+    </li>
+</wicket:panel>
+</body>
+</html>

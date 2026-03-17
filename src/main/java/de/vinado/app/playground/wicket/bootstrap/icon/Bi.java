@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 public class Bi extends AbstractIconType {
 
     public static final IconType BOOTSTRAP = new Bi("bootstrap");
+    public static final IconType CHEVRON_DOWN = new Bi("chevron-down");
+    public static final IconType CHEVRON_EXPAND = new Bi("chevron-expand");
+    public static final IconType CHEVRON_UP = new Bi("chevron-up");
     public static final IconType FILE = new Bi("file");
     public static final IconType FILETYPE_PDF = new Bi("filetype-pdf");
     public static final IconType LOCK = new Bi("lock");
