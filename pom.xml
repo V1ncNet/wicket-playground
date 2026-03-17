@@ -54,7 +54,7 @@
         <dependency.wicket-webjars.version>4.0.14</dependency.wicket-webjars.version>
         <dependency.yuicompressor.version>2.4.8</dependency.yuicompressor.version>
 
-        <webjar.bootstrap.version>5.3.3</webjar.bootstrap.version>
+        <webjar.bootstrap.version>5.3.8</webjar.bootstrap.version>
         <webjar.bootstrap-icons.version>1.11.3</webjar.bootstrap-icons.version>
 
         <testcontainer.keycloak.version>3.6.0</testcontainer.keycloak.version>
