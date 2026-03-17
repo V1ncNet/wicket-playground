@@ -45,6 +45,11 @@ class EntryRestController {
         return ResponseEntity.created(location).build();
     }
 
+    private void create(Entry.Id id, EntryRepresentation rep) {
+        CreateEntry command = createEntryCommand(id, rep);
+        entryCommandHandler.execute(command);
+    }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EntryCollectionResponse> list() {
         return entryRepository.findAll()
@@ -57,11 +62,6 @@ class EntryRestController {
         entryRepository.findBy(id)
             .ifPresent(this::delete);
         return ResponseEntity.noContent().build();
-    }
-
-    private void create(Entry.Id id, EntryRepresentation rep) {
-        CreateEntry command = createEntryCommand(id, rep);
-        entryCommandHandler.execute(command);
     }
 
     private void delete(Entry entry) {
