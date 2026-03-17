@@ -13,10 +13,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
 import lombok.RequiredArgsConstructor;
-
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @Order(Ordered.HIGHEST_PRECEDENCE + 2)
 @Profile("wicket")
@@ -47,7 +46,7 @@ public class DashboardConfiguration implements WicketConfigurer {
 
         @Bean
         public SecurityFilterChain dashboardFilterChain(HttpSecurity http) throws Exception {
-            http.securityMatcher(antMatcher("/" + DashboardPage.PATH + "/**"))
+            http.securityMatcher(PathPatternRequestMatcher.withDefaults().matcher("/" + DashboardPage.PATH + "/**"))
                 .authorizeHttpRequests(authorize -> authorize
                     .anyRequest().authenticated())
                 .oauth2Login(Customizer.withDefaults())

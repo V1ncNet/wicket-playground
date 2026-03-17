@@ -4,8 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
 public class WebSecurityConfigurationSupport {
 
@@ -13,7 +12,7 @@ public class WebSecurityConfigurationSupport {
     public SecurityFilterChain rootFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(AbstractHttpConfigurer::disable)
-            .securityMatcher(antMatcher("/**"))
+            .securityMatcher(PathPatternRequestMatcher.withDefaults().matcher("/**"))
             .authorizeHttpRequests(authorize -> authorize
                 .anyRequest().permitAll())
         ;

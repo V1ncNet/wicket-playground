@@ -4,18 +4,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static de.vinado.app.playground.dashboard.presentation.api.v1.DashboardRestController.PATH;
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 class DashboardApiV1ConfigurationSupport {
 
     @Bean
     public SecurityFilterChain dashboardApiV1FilterChain(HttpSecurity http) throws Exception {
-        http.securityMatcher(antMatcher(PATH + "/**"))
+        http.securityMatcher(PathPatternRequestMatcher.withDefaults().matcher(PATH + "/**"))
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors
                 .configurationSource(dashboardApiV1CorsConfigurationSource()))

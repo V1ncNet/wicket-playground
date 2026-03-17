@@ -17,13 +17,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URL;
 
 import lombok.RequiredArgsConstructor;
-
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @Order(Ordered.HIGHEST_PRECEDENCE + 200)
 @Profile("wicket")
@@ -78,7 +77,7 @@ public class NoteConfiguration implements WicketConfigurer {
 
         @Bean
         public SecurityFilterChain noteFilterChain(HttpSecurity http) throws Exception {
-            http.securityMatcher(antMatcher("/" + PATH + "/**"))
+            http.securityMatcher(PathPatternRequestMatcher.withDefaults().matcher("/" + PATH + "/**"))
                 .authorizeHttpRequests(authorize -> authorize
                     .anyRequest().authenticated())
                 .oauth2Login(Customizer.withDefaults())
