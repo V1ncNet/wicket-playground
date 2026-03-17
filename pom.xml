@@ -57,7 +57,7 @@
         <webjar.bootstrap.version>5.3.8</webjar.bootstrap.version>
         <webjar.bootstrap-icons.version>1.13.1</webjar.bootstrap-icons.version>
 
-        <testcontainer.keycloak.version>3.6.0</testcontainer.keycloak.version>
+        <testcontainer.keycloak.version>4.1.1</testcontainer.keycloak.version>
 
         <convergence.asm.version>9.9</convergence.asm.version>
         <convergence.nimbus-jose-jwt.version>9.37.4</convergence.nimbus-jose-jwt.version>
