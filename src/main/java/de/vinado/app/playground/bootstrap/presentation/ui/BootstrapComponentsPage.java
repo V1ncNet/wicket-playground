@@ -5,6 +5,7 @@ import de.vinado.app.playground.bootstrap.presentation.ui.modal.FilenameForm;
 import de.vinado.app.playground.bootstrap.presentation.ui.modal.UploadForm;
 import de.vinado.app.playground.bootstrap.presentation.ui.modal.UploadForm.Data.Upload;
 import de.vinado.app.playground.bootstrap.presentation.ui.modal.UploadFormDialog;
+import de.vinado.app.playground.bootstrap.presentation.ui.table.simple.SimpleBootstrapTablePanel;
 import de.vinado.app.playground.wicket.PlaygroundPage;
 import de.vinado.app.playground.wicket.bootstrap.BootstrapPage;
 import de.vinado.app.playground.wicket.bootstrap.modal.Modal;
@@ -33,6 +34,8 @@ public class BootstrapComponentsPage extends PlaygroundPage {
     @Override
     protected void onInitialize() {
         super.onInitialize();
+
+        queue(new SimpleBootstrapTablePanel("tablePanel"));
 
         queue(modal);
         queue(demoFormModalDialogButton("demoFormModalDialogButton"));
