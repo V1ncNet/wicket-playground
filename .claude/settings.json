@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read -r f; if [[ \"$f\" =~ /apps/dashboard/.*\\.(ts|tsx|jsx|js)$ ]]; then cd \"${f%%/apps/dashboard/*}/apps/dashboard\" && export NVM_DIR=\"/opt/homebrew/opt/nvm\" && . /opt/homebrew/opt/nvm/nvm.sh --no-use 2>/dev/null && nvm use default >/dev/null 2>&1 && npm run lint; fi; }",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

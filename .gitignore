@@ -33,3 +33,6 @@ build/
 /application.properties
 /application.yml
 /application.yaml
+
+### Claude Code ###
+/.claude/settings.local.json
